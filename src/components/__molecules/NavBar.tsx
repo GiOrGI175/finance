@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLinks } from '@/commons/hooks/NavBarData';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Logo, BanerArrow, BanerArowHover } from '@/utility/images/imgExport';
+import { Logo, BanerArrow, BanerArowHover } from '@/utility/images/ImgExport';
 import logo_Short from '../../utility/images/Logo_short.svg';
 
 const NavBar = () => {
@@ -13,10 +13,27 @@ const NavBar = () => {
   const [arrowhover, setArrowhover] = useState(false);
   const [popUpNavBar, setPopUpNavBar] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const value = localStorage.getItem('PopUpShow');
+      if (value) {
+        setPopUpNavBar(JSON.parse(value));
+      }
+    }
+  }, []);
+
+  const handleSave = () => {
+    if (typeof window !== 'undefined') {
+      const newState = !popUpNavBar;
+      localStorage.setItem('PopUpShow', JSON.stringify(newState));
+      setPopUpNavBar(newState);
+    }
+  };
+
   return (
     <div
       className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px] fixed flex flex-col justify-between duration-500 ${
-        popUpNavBar && 'w-[88px] pl-0 pr-0 pt-[40px]'
+        popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
       } `}
     >
       <div>
@@ -61,7 +78,7 @@ const NavBar = () => {
                       width={25}
                       height={25}
                       alt='icon'
-                      className={`mr-[16px]  ${popUpNavBar && 'mr-0'}`}
+                      className={`mr-[16px]  ${popUpNavBar && 'mr-[0px]'}`}
                     />
                     <span
                       className={`font-publicSans font-bold leading-[24px] group-hover:text-[#F2F2F2] duration-500  ${
@@ -86,14 +103,14 @@ const NavBar = () => {
         } group `}
         onMouseMove={() => setArrowhover(true)}
         onMouseLeave={() => setArrowhover(false)}
-        onClick={() => setPopUpNavBar((perv) => !perv)}
+        onClick={handleSave}
       >
         <Image
           src={arrowhover ? BanerArowHover : BanerArrow}
           width={24}
           height={24}
           alt='icon'
-          className={`mr-[16px] ${popUpNavBar && 'mr-0 rotate-180'}`}
+          className={`mr-[16px] ${popUpNavBar && 'mr-[0px] rotate-180'}`}
         />
         <span
           className={`duration-500 font-publicSans font-bold leading-[24px] text-[#B3B3B3] text-[19px] group-hover:text-[#F2F2F2]  ${
