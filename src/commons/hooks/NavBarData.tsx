@@ -9,7 +9,7 @@ import {
   recurringBillsActive,
   transactions,
   transactionsActive,
-} from '@/utility/images/imgExport';
+} from '@/utility/images/ImgExport';
 
 export type NavLink = {
   icon: string;
