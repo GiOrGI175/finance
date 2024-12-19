@@ -7,10 +7,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className='flex min-h-screen '>
-        <NavBar />
-        {children}
+    <html lang='en' className='flex justify-center'>
+      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0]'>
+        <div className='w-fit'>
+          <NavBar />
+        </div>
+        <div className='w-full '>{children}</div>
       </body>
     </html>
   );

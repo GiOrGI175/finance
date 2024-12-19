@@ -14,7 +14,7 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
 
   return (
     <ul
-      className={`duration-500 ${
+      className={`duration-1000 ${
         popUpNavBar && 'w-full flex flex-col justify-center items-center'
       }`}
     >
@@ -23,7 +23,7 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
         return (
           <li
             key={item.name}
-            className={`mb-[4px] flex duration-500 ${
+            className={`mb-[4px] flex duration-1000  ${
               isActive && ' bg-white '
             }rounded-tr-[12px] rounded-br-[12px]  ${
               popUpNavBar &&
@@ -32,7 +32,7 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
           >
             <Link
               href={item.link}
-              className={`w-full h-[56px] duration-500 flex items-center ${
+              className={`w-full h-[56px] duration-1000  flex items-center ${
                 popUpNavBar && 'justify-center'
               }  group`}
             >
@@ -44,7 +44,7 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
                 className={`mr-[16px]  ${popUpNavBar && 'mr-[0px]'}`}
               />
               <span
-                className={`font-publicSans font-bold leading-[24px] group-hover:text-[#F2F2F2] duration-500  ${
+                className={`font-publicSans font-bold leading-[24px] group-hover:text-[#F2F2F2] duration-1000  ${
                   isActive
                     ? 'text-[#201F24] group-hover:text-[#201F24]'
                     : 'text-[#B3B3B3]'
