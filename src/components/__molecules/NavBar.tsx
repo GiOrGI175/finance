@@ -29,7 +29,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px] fixed flex flex-col justify-between duration-1000 overflow-hidden ${
+      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
       } `}
     >
