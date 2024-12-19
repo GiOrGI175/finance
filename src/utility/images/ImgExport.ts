@@ -12,6 +12,12 @@ import transactions from './transactions.svg';
 import transactionsActive from './transactions_active.svg';
 import Logo from './Logo.svg';
 import logo_short from './Logo_short.svg';
+import circle_1 from './circle_1.svg';
+import circle_2 from './circle_2.svg';
+import circle_3 from './circle_3.svg';
+import circle_4 from './circle_4.svg';
+import circle_5 from './circle_5.svg';
+import paramsIcon from './parametr_Icon.svg';
 
 export {
   Logo,
@@ -28,4 +34,10 @@ export {
   transactionsActive,
   BanerArowHover,
   logo_short,
+  circle_1,
+  circle_2,
+  circle_3,
+  circle_4,
+  circle_5,
+  paramsIcon,
 };
