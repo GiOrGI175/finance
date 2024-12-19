@@ -29,13 +29,13 @@ const NavBar = () => {
 
   return (
     <div
-      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px] fixed flex flex-col justify-between duration-500 ${
+      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px] fixed flex flex-col justify-between duration-1000 overflow-hidden ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
       } `}
     >
       <div>
         <div
-          className={`w-full mb-[64px] flex duration-500 ${
+          className={`w-full mb-[64px] flex duration-1000 ${
             popUpNavBar && 'justify-center'
           }`}
         >
@@ -43,7 +43,7 @@ const NavBar = () => {
             src={popUpNavBar ? logo_Short : Logo}
             width={popUpNavBar ? 16 : 121}
             height={21}
-            alt='logo duration-500'
+            alt='logo duration-1000'
           />
         </div>
         <nav>
@@ -67,7 +67,7 @@ const NavBar = () => {
           className={`mr-[16px] ${popUpNavBar && 'mr-[0px] rotate-180'}`}
         />
         <span
-          className={`duration-500 font-publicSans font-bold leading-[24px] text-[#B3B3B3] text-[19px] group-hover:text-[#F2F2F2]  ${
+          className={`duration-1000 font-publicSans font-bold leading-[24px] text-[#B3B3B3] text-[19px] group-hover:text-[#F2F2F2]  ${
             popUpNavBar && 'hidden'
           }`}
         >
