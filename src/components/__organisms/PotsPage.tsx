@@ -17,11 +17,11 @@ const PotsPage = () => {
           </span>
         </button>
       </div>
-      <div className='w-full flex gap-[24px] flex-wrap'>
+      <div className='w-full flex flex-wrap justify-between border-[1px] border-[black]'>
         {Potss.map((item) => (
           <div
             key={item.id}
-            className='max-w-[218px] w-full h-[303px] flex flex-col justify-between p-[24px] bg-white'
+            className='max-w-[518px] w-full h-[303px] flex flex-col justify-between p-[24px] bg-white'
           >
             <div className='flex justify-between mb-[32px]'>
               <div>
