@@ -13,9 +13,27 @@ export const Potss: Pots[] = [
     limit: 2000,
   },
   {
-    method: 'Savings',
+    method: 'Concert Ticket',
     sum: 110.0,
-    procent: 99,
-    limit: 2000,
+    procent: 73.3,
+    limit: 150,
+  },
+  {
+    method: 'Gift',
+    sum: 40.0,
+    procent: 66.6,
+    limit: 60,
+  },
+  {
+    method: 'New Laptop',
+    sum: 10.0,
+    procent: 1.0,
+    limit: 1000,
+  },
+  {
+    method: 'Holiday',
+    sum: 531.0,
+    procent: 36.8,
+    limit: 1440,
   },
 ];
