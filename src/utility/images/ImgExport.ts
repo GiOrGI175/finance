@@ -13,6 +13,11 @@ import transactionsActive from './transactions_active.svg';
 import Logo from './Logo.svg';
 import logo_short from './Logo_short.svg';
 import Emma from "./Emma.png"
+import SavoryLogo from "./SavoryLogo.png"
+import Daniel from "./Daniel.png"
+import Sun from "./Sun.png"
+import UrbanLogo from "./UrbanLogo.png"
+import Liam from "./Liam.png"
 
 export {
   Logo,
@@ -30,4 +35,9 @@ export {
   BanerArowHover,
   logo_short,
   Emma,
+  Sun,
+  SavoryLogo,
+  Daniel,
+  UrbanLogo,
+  Liam,
 };
