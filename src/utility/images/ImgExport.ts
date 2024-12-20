@@ -12,6 +12,7 @@ import transactions from './transactions.svg';
 import transactionsActive from './transactions_active.svg';
 import Logo from './Logo.svg';
 import logo_short from './Logo_short.svg';
+import Emma from "./Emma.png"
 
 export {
   Logo,
@@ -28,4 +29,5 @@ export {
   transactionsActive,
   BanerArowHover,
   logo_short,
+  Emma,
 };
