@@ -18,6 +18,9 @@ const config: Config = {
         '400': '400ms',
       },
     },
+    options: {
+      safelist: [/w-\[\d+%\]/, /bg-\[.*\]/],
+    },
   },
   plugins: [],
 };

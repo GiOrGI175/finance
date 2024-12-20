@@ -7,7 +7,7 @@ import { paramsIcon } from '@/utility/images/ImgExport';
 const PotsPage = () => {
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen p-[40px] bg-[#F8F4F0] '>
-      <div className='w-full flex justify-between'>
+      <div className='w-full mb-[32px] flex justify-between'>
         <h2 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
           Pots
         </h2>
@@ -17,47 +17,67 @@ const PotsPage = () => {
           </span>
         </button>
       </div>
-      <div className='w-full flex flex-wrap justify-between border-[1px] border-[black]'>
+      <div className='w-full flex flex-wrap justify-center gap-[24px]'>
         {Potss.map((item) => (
           <div
             key={item.id}
-            className='max-w-[518px] w-full h-[303px] flex flex-col justify-between p-[24px] bg-white'
+            className='basis-[518px]  grow w-full h-[303px] rounded-[12px] flex flex-col justify-between p-[24px] bg-white'
           >
             <div className='flex justify-between mb-[32px]'>
-              <div>
+              <div className='flex'>
                 <Image src={item.icon} width={16} height={16} alt='icon' />
-                <span>{item.method}</span>
+                <span className='ml-[16px] font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
+                  {item.method}
+                </span>
               </div>
-              <div>
+              <button>
                 <Image src={paramsIcon} width={16} height={16} alt='icon' />
-              </div>
+              </button>
             </div>
             <div className='flex flex-col justify-between mb-[32px]'>
-              <div className='flex justify-between mb-[16px]'>
+              <div className='flex justify-between items-center mb-[16px]'>
                 <div>
-                  <span>Total Saved</span>
+                  <span className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                    Total Saved
+                  </span>
                 </div>
                 <div>
-                  <span>${item.sum}</span>
+                  <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+                    ${item.sum}
+                  </span>
                 </div>
               </div>
               <div className='flex flex-col justify-between'>
-                <div>
-                  <div />
+                <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
+                  <div
+                    style={{
+                      width: `${item.procent}%`,
+                      backgroundColor: item.color,
+                    }}
+                    className='h-full rounded-[8px]'
+                  />
                 </div>
                 <div className='flex justify-between mt-[13px]'>
                   <div>
-                    <span>{item.procent}%</span>
+                    <span className='font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
+                      {item.procent}%
+                    </span>
                   </div>
                   <div>
-                    <span>Target pf ${item.limit}</span>
+                    <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
+                      Target pf ${item.limit}
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className='flex justify-between'>
-              <button>+ Add Money</button>
-              <button>Withdraw</button>
+            <div className='flex justify-between gap-[16px]'>
+              <button className='min-w-[227px] w-full h-[53px] rounded-[8px] bg-[#F8F4F0]'>
+                + Add Money
+              </button>
+              <button className='min-w-[227px] w-full h-[53px] rounded-[8px] bg-[#F8F4F0]'>
+                Withdraw
+              </button>
             </div>
           </div>
         ))}
