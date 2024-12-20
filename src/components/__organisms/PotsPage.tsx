@@ -3,6 +3,8 @@
 import { Potss } from '@/commons/hooks/PotsData';
 import Image from 'next/image';
 import { paramsIcon } from '@/utility/images/ImgExport';
+import AddNewPot from '../__atoms/AddNewPot';
+import CreatePot from '../__molecules/CreatePot';
 
 const PotsPage = () => {
   return (
@@ -11,11 +13,9 @@ const PotsPage = () => {
         <h2 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
           Pots
         </h2>
-        <button className='w-[128px] h-[53px] rounded-[8px] padding-[16px] bg-[#201F24]'>
-          <span className='font-publicSans font-bold text-[14px] leading-[21px] text-white'>
-            + Add New Pot
-          </span>
-        </button>
+        <>
+          <AddNewPot />
+        </>
       </div>
       <div className='w-full flex flex-wrap justify-center gap-[24px]'>
         {Potss.map((item) => (
@@ -82,6 +82,9 @@ const PotsPage = () => {
           </div>
         ))}
       </div>
+      <>
+        <CreatePot />
+      </>
     </div>
   );
 };
