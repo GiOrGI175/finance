@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Logo, BanerArrow, BanerArowHover } from '@/utility/images/ImgExport';
 import logo_Short from '../../utility/images/Logo_short.svg';
-import NavLinks from '../__atoms/NavLinks';
+import NavLinks from './NavLinks';
 
 const NavBar = () => {
   const [arrowhover, setArrowhover] = useState(false);
