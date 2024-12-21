@@ -31,13 +31,13 @@ const NavBar = () => {
     <div
       className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
-      } `}
+      }  max-md:w-full max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px]`}
     >
       <div>
         <div
           className={`w-full mb-[64px] flex duration-1000 ${
             popUpNavBar && 'justify-center'
-          }`}
+          }  max-md:hidden`}
         >
           <Image
             src={popUpNavBar ? logo_Short : Logo}

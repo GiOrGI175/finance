@@ -12,8 +12,10 @@ export default function RootLayout({
   const setOverlay = useAppBtn((state) => state.setOverlay);
   return (
     <html lang='en' className='flex justify-center'>
-      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0]'>
-        <div className='w-fit'>{/* <NavBar /> */}</div>
+      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0] max-md:flex-col-reverse'>
+        <div className='w-fit max-md:max-w-[1024px]: max-md:w-full '>
+          <NavBar />
+        </div>
         <div className='w-full '>{children}</div>
         {/* overlay start */}
         <div
