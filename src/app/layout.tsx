@@ -1,5 +1,5 @@
-import './globals.css';
-import NavBar from '@/components/__molecules/NavBar';
+import "./globals.css";
+import NavBar from "@/components/__molecules/NavBar";
 
 export default function RootLayout({
   children,
@@ -7,12 +7,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className='flex justify-center'>
-      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0]'>
-        <div className='w-fit'>
+    <html lang="en" className="flex justify-center">
+      <body className="flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0] sm:flex-col-reverse lg:flex-row">
+        <div className="  lg:w-fit">
           <NavBar />
         </div>
-        <div className='w-full '>{children}</div>
+        <div className="w-full ">{children}</div>
       </body>
     </html>
   );

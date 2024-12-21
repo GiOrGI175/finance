@@ -1,12 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import usersData from "@/commons/hooks/UsersData";
 import Image from "next/image";
 
 export default function TransactionsPage() {
+  const [activePage, setActivePage] = useState(1); 
+
   return (
-    <div className="p-8 ">
-      <div className=" mx-auto">
+    <div className="p-8">
+      <div className="mx-auto">
         <h2 className="font-publicSans font-bold text-4xl text-[#201F24] mb-6">
           Transactions
         </h2>
@@ -22,7 +24,10 @@ export default function TransactionsPage() {
             </div>
             <div className="flex gap-6 items-center">
               <div>
-                <label htmlFor="sortBy" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="sortBy"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Sort By
                 </label>
                 <select
@@ -38,7 +43,10 @@ export default function TransactionsPage() {
                 </select>
               </div>
               <div>
-                <label htmlFor="category" className="text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="category"
+                  className="text-sm font-medium text-gray-700"
+                >
                   Category
                 </label>
                 <select
@@ -58,31 +66,59 @@ export default function TransactionsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-4 text-sm font-semibold text-gray-600 border-b border-gray-200 pb-4 mb-6">
-            <div>Recipient / Sender</div>
-            <div>Category</div>
-            <div>Transaction Date</div>
-            <div>Amount</div>
+          <div className="flex justify-between py-4 px-6 text-sm font-semibold text-gray-600 border-b border-gray-200 pb-4 mb-6">
+            <h3 className="w-[428px]">Recipient / Sender</h3>
+            <h3 className="w-[120px]">Category</h3>
+            <h3>Transaction Date</h3>
+            <h3>Amount</h3>
           </div>
 
           <div className="space-y-6">
             {usersData.map((user, index) => (
-              <div key={index} className="flex justify-between items-center py-4 px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out">
-                <div className="flex items-center space-x-3">
+              <div
+                key={index}
+                className="flex justify-between items-center py-4 px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
+              >
+                <div className="flex items-center space-x-3 w-[428px] ">
                   <Image
                     src={user.Image}
                     width={40}
                     height={40}
-                    // alt={user.SenderName}
-                    
+                    alt={user.SenderName}
                   />
-                  <h3 className="font-medium text-gray-800">{user.SenderName}</h3>
+                  <h3 className="font-medium text-gray-800">
+                    {user.SenderName}
+                  </h3>
                 </div>
-                <div className="text-gray-600">{user.Category}</div>
-                <div className="text-gray-600">{user.TransDate}</div>
-                <div className="font-semibold text-gray-800">{user.Amount}</div>
+                <h3 className="text-gray-600 w-[120px]" >{user.Category}</h3>
+                <h3 className="text-gray-600">{user.TransDate}</h3>
+                <h3 className="font-semibold text-gray-800">{user.Amount}</h3>
               </div>
             ))}
+          </div>
+
+          <div className="flex justify-between mt-[48px]">
+            <button className="w-[94px] h-[40px] border-gray-300 rounded-md border-[1px] hover:bg-stone-500 transition duration-300">
+              Prev
+            </button>
+            <div className="flex gap-[8px]">
+              {[1, 2, 3, 4, 5].map((page) => (
+                <button
+                  key={page}
+                  className={`w-[40px] h-[40px] border-gray-300 rounded-md border-[1px] ${
+                    activePage === page
+                      ? "bg-black text-white transition duration-500"
+                      : ""
+                  }`}
+                  onClick={() => setActivePage(page)}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+            <button className="w-[94px] h-[40px] border-gray-300 rounded-md border-[1px] hover:bg-stone-500 transition duration-300">
+              Next
+            </button>
           </div>
         </div>
       </div>

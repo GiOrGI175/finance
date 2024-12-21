@@ -29,13 +29,13 @@ const NavBar = () => {
 
   return (
     <div
-      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
+      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-tl-[25px]  lr:rounded-br-[25px]  flex flex-col justify-between  duration-1000 overflow-hidden sm:w-full sm:min-h-[52px] lg:min-h-screen  lg:w-fit   ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
       } `}
     >
       <div>
         <div
-          className={`w-full mb-[64px] flex duration-1000 ${
+          className={`w-full  flex duration-1000 sm:mb-0 lg:mb-[64px] ${
             popUpNavBar && 'justify-center'
           }`}
         >
@@ -44,6 +44,7 @@ const NavBar = () => {
             width={popUpNavBar ? 16 : 121}
             height={21}
             alt='logo duration-1000'
+            className='sm:hidden lg:flex'
           />
         </div>
         <nav>
@@ -52,7 +53,7 @@ const NavBar = () => {
       </div>
 
       <button
-        className={`mb-[128px] w-full flex items-center   ${
+        className={`mb-[128px] w-full flex items-center sm:hidden lg:flex   ${
           popUpNavBar && 'justify-center'
         } group `}
         onMouseMove={() => setArrowhover(true)}
