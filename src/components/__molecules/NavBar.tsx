@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Logo, BanerArrow, BanerArowHover } from '@/utility/images/ImgExport';
 import logo_Short from '../../utility/images/Logo_short.svg';
 import NavLinks from './NavLinks';
+import ResponsiveNavLinks from './ResponsiveNavLinks';
 
 const NavBar = () => {
   const [arrowhover, setArrowhover] = useState(false);
@@ -31,7 +32,7 @@ const NavBar = () => {
     <div
       className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
-      }  max-md:w-full max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px]`}
+      }  max-md:w-full max-md:min-h-fit max-md:h-[74px] max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px] max-md:pl-[0px] max-md:pr-[0px] max-md:pt-[10px]  max-sm:h-[52px] `}
     >
       <div>
         <div
@@ -48,13 +49,14 @@ const NavBar = () => {
         </div>
         <nav>
           <NavLinks popUpNavBar={popUpNavBar} />
+          <ResponsiveNavLinks />
         </nav>
       </div>
 
       <button
         className={`mb-[128px] w-full flex items-center   ${
           popUpNavBar && 'justify-center'
-        } group `}
+        } max-md:hidden group `}
         onMouseMove={() => setArrowhover(true)}
         onMouseLeave={() => setArrowhover(false)}
         onClick={handleSave}
