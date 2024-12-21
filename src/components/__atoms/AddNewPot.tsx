@@ -11,7 +11,7 @@ const AddNewPot = () => {
   return (
     <div>
       <button
-        className=' w-[128px] h-[53px] rounded-[8px] padding-[16px] bg-[#201F24]'
+        className=' w-[128px] h-[53px] rounded-[8px] padding-[16px] bg-[#201F24] max-sm:w-[154px]'
         onClick={() => {
           toggleOverlay();
           toggleAddPot();

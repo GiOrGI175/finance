@@ -5,36 +5,36 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
+import SaveChange from '../__atoms/SaveChange';
 
-const CreatePot = () => {
-  const showAddPot = useAppBtn((state) => state.showAddPot);
-  const toggleAddPot = useAppBtn((state) => state.toggleAddPot);
+const EditPot = () => {
+  const showEditPot = useAppBtn((state) => state.showEditPot);
+  const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
   return (
     <div
-      className={`absolute  max-w-[560px] w-full h-[542px] rounded-[12px] p-[32px] bg-white  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 duration-500
+      className={`absolute  max-w-[560px] w-full h-[512px] rounded-[12px] p-[32px] bg-white  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 duration-500
         ${
-          showAddPot ? 'block  opacity-[1]' : 'hidden  opacity-0'
-        }    max-ss:max-w-[335px]   max-ss:h-fit`}
+          showEditPot ? 'block  opacity-[1]' : 'hidden  opacity-0'
+        }   max-ss:max-w-[335px]   max-ss:h-fit`}
     >
       <div>
         <div className='flex justify-between mb-[20px]'>
-          <h4 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]  max-ss:text-[20px]   '>
-            Add New Pot
+          <h4 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]  max-ss:text-[20px]  '>
+            Edit Pot
           </h4>
           <button
             onClick={() => {
               toggleOverlay();
-              toggleAddPot();
+              toggleEditPot();
             }}
           >
             <Image src={CloseBtn} width={32} height={32} alt='delete' />
           </button>
         </div>
         <p className='mb-[20px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
-          Create a pot to set savings targets. These can help keep you on track
-          as you save for special purchases.
+          If your saving targets change, feel free to update your pots.
         </p>
       </div>
       <div>
@@ -67,10 +67,10 @@ const CreatePot = () => {
         </form>
       </div>
       <>
-        <AddPot />
+        <SaveChange />
       </>
     </div>
   );
 };
 
-export default CreatePot;
+export default EditPot;
