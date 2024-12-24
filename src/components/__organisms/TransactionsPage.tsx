@@ -1,11 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import usersData from "@/commons/hooks/UsersData";
-import Image from "next/image";
+import Pagination from "@/components/__molecules/Pagination";
 
 export default function TransactionsPage() {
-  const [activePage, setActivePage] = useState(1); 
-
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("");
+  const [sort, setSort] = useState("Latest");
+  console.log(category)
+  console.log(sort)
   return (
     <div className="p-8">
       <div className="mx-auto">
@@ -20,6 +22,7 @@ export default function TransactionsPage() {
                 type="text"
                 className="border border-gray-300 rounded-md p-3 w-full sm:w-96 h-12 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Search transaction"
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <div className="flex gap-6 items-center">
@@ -31,6 +34,7 @@ export default function TransactionsPage() {
                   Sort By
                 </label>
                 <select
+                  onChange={(e) => setSort(e.target.value)}
                   name="price"
                   id="price"
                   className="w-32 h-12 border border-gray-300 rounded-md mt-2 text-gray-600 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 ml-[8px]"
@@ -50,17 +54,18 @@ export default function TransactionsPage() {
                   Category
                 </label>
                 <select
+                  onChange={(e) => setCategory(e.target.value)}
                   name="Category"
                   id="Category"
                   className="w-40 h-12 border border-gray-300 rounded-md mt-2 text-gray-600 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 ml-[8px]"
                 >
                   <option value="">All Transaction</option>
-                  <option value="A">Entertainment</option>
-                  <option value="Z">Bills</option>
-                  <option value="">Groceries</option>
-                  <option value="">Dining Out</option>
-                  <option value="">Transportation</option>
-                  <option value="">Personal Care</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Bills">Bills</option>
+                  <option value="Groceries">Groceries</option>
+                  <option value="Dining Out">Dining Out</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Personal">Personal Care</option>
                 </select>
               </div>
             </div>
@@ -72,54 +77,7 @@ export default function TransactionsPage() {
             <h3>Transaction Date</h3>
             <h3>Amount</h3>
           </div>
-
-          <div className="space-y-6">
-            {usersData.map((user, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center py-4 px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
-              >
-                <div className="flex items-center space-x-3 w-[428px] ">
-                  <Image
-                    src={user.Image}
-                    width={40}
-                    height={40}
-                    alt={user.SenderName}
-                  />
-                  <h3 className="font-medium text-gray-800">
-                    {user.SenderName}
-                  </h3>
-                </div>
-                <h3 className="text-gray-600 w-[120px]" >{user.Category}</h3>
-                <h3 className="text-gray-600">{user.TransDate}</h3>
-                <h3 className="font-semibold text-gray-800">{user.Amount}</h3>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-between mt-[48px]">
-            <button className="w-[94px] h-[40px] border-gray-300 rounded-md border-[1px] hover:bg-stone-500 transition duration-300">
-              Prev
-            </button>
-            <div className="flex gap-[8px]">
-              {[1, 2, 3, 4, 5].map((page) => (
-                <button
-                  key={page}
-                  className={`w-[40px] h-[40px] border-gray-300 rounded-md border-[1px] ${
-                    activePage === page
-                      ? "bg-black text-white transition duration-500"
-                      : ""
-                  }`}
-                  onClick={() => setActivePage(page)}
-                >
-                  {page}
-                </button>
-              ))}
-            </div>
-            <button className="w-[94px] h-[40px] border-gray-300 rounded-md border-[1px] hover:bg-stone-500 transition duration-300">
-              Next
-            </button>
-          </div>
+          <Pagination search={search}  sort={sort} category={category} />
         </div>
       </div>
     </div>

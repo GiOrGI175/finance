@@ -7,6 +7,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+
     extend: {
       fontFamily: {
         publicSans: ["PublicSans", "serif"],
@@ -19,9 +20,9 @@ const config: Config = {
       },
     },
     screens: {
-      sm: '375px', 
-      md: '768px',
-      lg:'1024px' 
+      sm: "375px",
+      md: "768px",
+      lg: "1024px",
     },
   },
   plugins: [],
