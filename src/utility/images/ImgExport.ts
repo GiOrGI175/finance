@@ -19,6 +19,9 @@ import circle_4 from './circle_4.svg';
 import circle_5 from './circle_5.svg';
 import paramsIcon from './parametr_Icon.svg';
 import CloseBtn from './CloseButton.svg';
+import user1 from './user1.svg';
+import user2 from './user2.svg';
+import user3 from './user3.svg';
 
 export {
   Logo,
@@ -42,4 +45,7 @@ export {
   circle_5,
   paramsIcon,
   CloseBtn,
+  user1,
+  user2,
+  user3,
 };
