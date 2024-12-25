@@ -23,11 +23,11 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
         return (
           <li
             key={item.name}
-            className={`mb-[4px] flex duration-1000  ${
-              isActive && ' bg-white '
-            }rounded-tr-[12px] rounded-br-[12px]  ${
+            className={`mb-[4px] pl-[32px] flex duration-1000  ${
+              isActive && 'bg-white border-l-[4px] border-[#277C78] '
+            } rounded-tr-[12px] rounded-br-[12px]  ${
               popUpNavBar &&
-              'rounded-[50%] w-[56px] h-[56px] rounded-tr-[50%] rounded-br-[50%] justify-center items-center'
+              'rounded-[50%] w-[56px] h-[56px] rounded-tr-[50%] rounded-br-[50%] justify-center items-center !border-[0px]  !pl-[0px]'
             }`}
           >
             <Link

@@ -30,7 +30,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`w-[300px] min-h-screen pt-[32px] pl-[32px] pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
+      className={`w-[300px] min-h-screen pt-[32px]  pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between duration-1000 overflow-hidden ${
         popUpNavBar && 'w-[88px] pl-[0px] pr-[0px] pt-[40px]'
       }  max-md:w-full max-md:min-h-fit max-md:h-[74px] max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px] max-md:pl-[0px] max-md:pr-[0px] max-md:pt-[10px]  max-sm:h-[52px] `}
     >
@@ -44,7 +44,8 @@ const NavBar = () => {
             src={popUpNavBar ? logo_Short : Logo}
             width={popUpNavBar ? 16 : 121}
             height={21}
-            alt='logo duration-1000'
+            alt='logo'
+            className='ml-[32px] duration-1000'
           />
         </div>
         <nav>
@@ -54,8 +55,8 @@ const NavBar = () => {
       </div>
 
       <button
-        className={`mb-[128px] w-full flex items-center   ${
-          popUpNavBar && 'justify-center'
+        className={`mb-[128px] ml-[32px] w-full flex items-center   ${
+          popUpNavBar && 'justify-center ml-[0px]'
         } max-md:hidden group `}
         onMouseMove={() => setArrowhover(true)}
         onMouseLeave={() => setArrowhover(false)}
