@@ -1,7 +1,12 @@
 import AddNewBudget from '../__atoms/AddNewBudget';
 import { BudgetView } from '@/commons/hooks/BudgetData';
-import { transactions } from '@/utility/images/ImgExport';
 import Image from 'next/image';
+import { arrowR } from '@/utility/images/ImgExport';
+import Link from 'next/link';
+import BudgetSetting from '../__atoms/BudgetSetting';
+import CreateBudget from '../__molecules/CreateBudget';
+import EditBudget from '../__molecules/EditBudget';
+import DeleteBudget from '../__molecules/DeleteBudget';
 
 const BudgetPage = () => {
   return (
@@ -25,7 +30,7 @@ const BudgetPage = () => {
             {BudgetView.map((item) => (
               <div
                 key={item.id}
-                className='mb-[33px] w-full  flex justify-between '
+                className='mb-[33px] w-full  flex justify-between \ '
               >
                 <div className='flex items-center'>
                   <div
@@ -50,63 +55,99 @@ const BudgetPage = () => {
             ))}
           </div>
         </div>
-        <div className='basis-[608px]  grow w-full rounded-[12px] flex flex-col justify-between '>
-          {BudgetView.map((item) => (
+        <div className='basis-[608px]  grow w-full  flex flex-col justify-between '>
+          {BudgetView.map((item, Index) => (
             <div
               key={item.id}
-              className='w-full bg-white p-[32px] rounded-none-[12px] mb-[24px]'
+              className='w-full h-fit bg-white p-[32px] rounded-[12px] mb-[24px]'
             >
               <div className='w-full flex justify-between '>
-                <div className='flex items-center'>
+                <div className='flex items-center mb-[20px]'>
                   <div
                     className=' w-[16px] h-[16px] mr-[16px] rounded-full'
                     style={{
                       backgroundColor: item.color,
                     }}
                   />
-                  <span>{item.BudgetCategory}</span>
+                  <span className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
+                    {item.BudgetCategory}
+                  </span>
                 </div>
-                <div>settings icon</div>
+                <>
+                  <BudgetSetting index={Index} />
+                </>
               </div>
               <div>
                 <div className='flex flex-col justify-between'>
-                  <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                    Target pf ${item.limit}
+                  <span className='mb-[16px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                    Maximum of ${item.limit}
                   </span>
-                  <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
+                  <div className='w-full h-[32px] rounded-[8px] bg-[#F8F4F0] mb-[16px] flex items-center'>
                     <div
                       style={{
                         width: `${item.procent}%`,
                         backgroundColor: item.color,
                       }}
-                      className='h-full rounded-[8px]'
+                      className='h-[24px] rounded-[5px]'
                     />
                   </div>
                   <div className='flex justify-between'>
-                    <div className='flex flex-col'>
-                      <span>Spent</span>
-                      <span>{item.budget}$</span>
+                    <div className='flex  justify-start max-w-[264px] w-full '>
+                      <div
+                        className='w-[4px] h-full rounded-[8px] mr-[16px] '
+                        style={{
+                          backgroundColor: item.color,
+                        }}
+                      />
+                      <div className=' flex flex-col justify-between'>
+                        <span className=' font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                          Spent
+                        </span>
+                        <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
+                          {item.budget}$
+                        </span>
+                      </div>
                     </div>
-                    <div className='flex flex-col'>
-                      <span>Remaining</span>
-                      <span>35$</span>
+                    <div className='flex justify-start  max-w-[280px] w-full '>
+                      <div className='w-[4px] h-full rounded-[8px] mr-[16px] bg-[#F8F4F0]' />
+                      <div className='flex flex-col justify-between'>
+                        <span className=' font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                          Remaining
+                        </span>
+                        <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
+                          35$
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div>
-                <div>
+              <div className='rounded-[12px] mt-[20px] p-[20px] bg-[#F8F4F0]'>
+                <div className='mb-[20px] flex justify-between'>
                   <div>
-                    <p>Latest Spending</p>
+                    <p className=' font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
+                      Latest Spending
+                    </p>
                   </div>
                   <div>
-                    <span>see all</span>
-                    <img src='' alt='' />
+                    <Link href='/Transactions' className='flex items-center'>
+                      <span className='mr-[12px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868] '>
+                        see all
+                      </span>
+                      <Image src={arrowR} width={12} height={12} alt='arrow' />
+                    </Link>
                   </div>
                 </div>
                 {item.translations.map((translation, index) => (
-                  <div key={index}>
-                    <div>
+                  <div
+                    key={index}
+                    className={`flex justify-between items-center py-[12px] ${
+                      index === item.translations.length - 1
+                        ? ' items-end'
+                        : 'border-b-[1px] border-opacity-[15%] border-[#696868]  '
+                    }`}
+                  >
+                    <div className='flex items-center'>
                       <div>
                         <Image
                           src={translation.userImg}
@@ -115,11 +156,17 @@ const BudgetPage = () => {
                           alt='userImg'
                         />
                       </div>
-                      <span>{translation.userName}</span>
+                      <span className='ml-[16px] font-publicSans font-bold text-[12px] leading-[18px] text-[#201F24]'>
+                        {translation.userName}
+                      </span>
                     </div>
-                    <div>
-                      <span>-${translation.translation}</span>
-                      <span>{translation.data}</span>
+                    <div className='flex flex-col items-end'>
+                      <span className='mb-[4px] font-publicSans font-bold text-[12px] leading-[18px] text-[#201F24]'>
+                        -${translation.translation}
+                      </span>
+                      <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
+                        {translation.data}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -128,6 +175,13 @@ const BudgetPage = () => {
           ))}
         </div>
       </div>
+      <>
+        <CreateBudget />
+
+        <EditBudget />
+
+        <DeleteBudget />
+      </>
     </div>
   );
 };
