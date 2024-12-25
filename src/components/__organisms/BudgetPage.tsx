@@ -1,5 +1,7 @@
 import AddNewBudget from '../__atoms/AddNewBudget';
 import { BudgetView } from '@/commons/hooks/BudgetData';
+import { transactions } from '@/utility/images/ImgExport';
+import Image from 'next/image';
 
 const BudgetPage = () => {
   return (
@@ -50,7 +52,10 @@ const BudgetPage = () => {
         </div>
         <div className='basis-[608px]  grow w-full rounded-[12px] flex flex-col justify-between '>
           {BudgetView.map((item) => (
-            <div key={item.id} className='w-full bg-white p-[32px] '>
+            <div
+              key={item.id}
+              className='w-full bg-white p-[32px] rounded-none-[12px] mb-[24px]'
+            >
               <div className='w-full flex justify-between '>
                 <div className='flex items-center'>
                   <div
@@ -62,6 +67,62 @@ const BudgetPage = () => {
                   <span>{item.BudgetCategory}</span>
                 </div>
                 <div>settings icon</div>
+              </div>
+              <div>
+                <div className='flex flex-col justify-between'>
+                  <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
+                    Target pf ${item.limit}
+                  </span>
+                  <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
+                    <div
+                      style={{
+                        width: `${item.procent}%`,
+                        backgroundColor: item.color,
+                      }}
+                      className='h-full rounded-[8px]'
+                    />
+                  </div>
+                  <div className='flex justify-between'>
+                    <div className='flex flex-col'>
+                      <span>Spent</span>
+                      <span>{item.budget}$</span>
+                    </div>
+                    <div className='flex flex-col'>
+                      <span>Remaining</span>
+                      <span>35$</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    <p>Latest Spending</p>
+                  </div>
+                  <div>
+                    <span>see all</span>
+                    <img src='' alt='' />
+                  </div>
+                </div>
+                {item.translations.map((translation, index) => (
+                  <div key={index}>
+                    <div>
+                      <div>
+                        <Image
+                          src={translation.userImg}
+                          width={32}
+                          height={32}
+                          alt='userImg'
+                        />
+                      </div>
+                      <span>{translation.userName}</span>
+                    </div>
+                    <div>
+                      <span>-${translation.translation}</span>
+                      <span>{translation.data}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

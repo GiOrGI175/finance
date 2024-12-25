@@ -6,6 +6,7 @@ export type BudgetType = {
   limit: number;
   budget: number;
   color: string;
+  procent: number;
   translations: {
     userImg: string;
     userName: string;
@@ -21,23 +22,24 @@ export const BudgetView: BudgetType[] = [
     color: '#277C78',
     budget: 15.0,
     limit: 50.0,
+    procent: 15,
     translations: [
       {
         userImg: user1,
         userName: 'James Thompson',
-        translation: -5.0,
+        translation: 5.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user3,
         userName: 'JPixel Playground',
-        translation: -10.0,
+        translation: 10.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user2,
         userName: 'Rina Sato',
-        translation: -10.0,
+        translation: 10.0,
         data: '13 Aug 2024',
       },
     ],
@@ -48,23 +50,25 @@ export const BudgetView: BudgetType[] = [
     color: '#82C9D7',
     budget: 150.0,
     limit: 750.0,
+    procent: 35,
+
     translations: [
       {
         userImg: user2,
         userName: 'James Thompson',
-        translation: -5.0,
+        translation: 5.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user3,
         userName: 'JPixel Playground',
-        translation: -10.0,
+        translation: 10.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user1,
         userName: 'Rina Sato',
-        translation: -10.0,
+        translation: 30.0,
         data: '13 Aug 2024',
       },
     ],
@@ -75,23 +79,25 @@ export const BudgetView: BudgetType[] = [
     color: '#F2CDAC',
     budget: 133.0,
     limit: 75.0,
+    procent: 17,
+
     translations: [
       {
         userImg: user1,
         userName: 'James Thompson',
-        translation: -5.0,
+        translation: 5.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user2,
         userName: 'JPixel Playground',
-        translation: -10.0,
+        translation: 10.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user3,
         userName: 'Rina Sato',
-        translation: -10.0,
+        translation: 10.0,
         data: '13 Aug 2024',
       },
     ],
@@ -102,23 +108,24 @@ export const BudgetView: BudgetType[] = [
     color: '#626070',
     budget: 40.0,
     limit: 100.0,
+    procent: 7,
     translations: [
       {
         userImg: user1,
         userName: 'James Thompson',
-        translation: -5.0,
+        translation: 5.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user3,
         userName: 'JPixel Playground',
-        translation: -10.0,
+        translation: 10.0,
         data: '11 Aug 2024',
       },
       {
         userImg: user1,
         userName: 'Rina Sato',
-        translation: -10.0,
+        translation: 10.0,
         data: '13 Aug 2024',
       },
     ],
