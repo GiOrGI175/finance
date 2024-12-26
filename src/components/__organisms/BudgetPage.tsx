@@ -7,6 +7,7 @@ import BudgetSetting from '../__atoms/BudgetSetting';
 import CreateBudget from '../__molecules/CreateBudget';
 import EditBudget from '../__molecules/EditBudget';
 import DeleteBudget from '../__molecules/DeleteBudget';
+import { BudgetChart } from '../__molecules/BudgetChart';
 
 const BudgetPage = () => {
   return (
@@ -20,8 +21,11 @@ const BudgetPage = () => {
         </>
       </div>
       <div className='w-full flex  justify-center gap-[24px]'>
-        <div className='basis-[428px]  grow w-full h-[303px] rounded-[12px] flex flex-col justify-between p-[32px] bg-white max-sm:p-[20px]'>
-          <div>
+        <div className='basis-[428px]  grow w-full h-[600px] rounded-[12px] flex flex-col justify-between p-[32px] bg-white max-sm:p-[20px]'>
+          <div className=''>
+            <div className='w-full flex  justify-center'>
+              <BudgetChart />
+            </div>
             <div className='mb-[24px]'>
               <h5 className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
                 Spending Summary
