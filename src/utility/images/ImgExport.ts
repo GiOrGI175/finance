@@ -18,6 +18,15 @@ import Daniel from "./Daniel.png"
 import Sun from "./Sun.png"
 import UrbanLogo from "./UrbanLogo.png"
 import Liam from "./Liam.png"
+import circle_1 from './circle_1.svg';
+import circle_2 from './circle_2.svg';
+import circle_3 from './circle_3.svg';
+import circle_4 from './circle_4.svg';
+import circle_5 from './circle_5.svg';
+import paramsIcon from './parametr_Icon.svg';
+import CloseBtn from './CloseButton.svg';
+import Sort from "./sort.svg"
+import Category from "./Category.svg"
 
 export {
   Logo,
@@ -40,4 +49,14 @@ export {
   Daniel,
   UrbanLogo,
   Liam,
+  circle_1,
+  circle_2,
+  circle_3,
+  circle_4,
+  circle_5,
+  paramsIcon,
+  CloseBtn,
+  Sort,
+  Category,
+
 };

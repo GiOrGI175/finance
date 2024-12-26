@@ -6,7 +6,7 @@ import usersData from "../../commons/hooks/UsersData";
 type PaginationProps = {
   search: string;
   category?: string;
-  sort?: "A" | "Z" | "High" | "Low";
+  sort: "A" | "Z" | "High" | "Low" | "Latest";
 };
 
 export default function Pagination({
@@ -65,24 +65,34 @@ export default function Pagination({
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="space-y-3">
         {currentTransaction.map((user, index) => (
           <div
             key={user.id}
-            className="flex justify-between items-center py-4 px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
+            className="flex justify-between items-center py-4 md:px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
           >
-            <div className="flex items-center space-x-3 w-[428px] ">
+            <div className="flex items-center space-x-3  md:w-[240px] lg:w-[428px]  ">
               <Image
                 src={user.Image}
                 width={40}
                 height={40}
                 alt={user.SenderName}
               />
-              <h3 className="font-medium text-gray-800">{user.SenderName}</h3>
+              <div>
+                <h3 className="font-medium text-gray-800">{user.SenderName}</h3>
+                <h3 className="text-gray-600 w-[120px] md:hidden sm:flex">
+                  {user.Category}
+                </h3>
+              </div>
             </div>
-            <h3 className="text-gray-600 w-[120px]">{user.Category}</h3>
-            <h3 className="text-gray-600">{user.TransDate}</h3>
-            <h3 className="font-semibold text-gray-800">{user.Amount}$</h3>
+            <h3 className="text-gray-600 w-[120px] md:flex sm:hidden">
+              {user.Category}
+            </h3>
+            <h3 className="text-gray-600 sm:hidden md:flex">{user.TransDate}</h3>
+            <div>
+              <h3 className="font-semibold text-gray-800">{user.Amount}$</h3>
+              <h3 className="text-gray-600 md:hidden">{user.TransDate}</h3>
+            </div>
           </div>
         ))}
       </div>

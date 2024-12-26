@@ -14,9 +14,9 @@ const NavLinksArr: React.FC<PopUpNavBarProps> = ({ popUpNavBar }) => {
 
   return (
     <ul
-      className={`duration-1000 sm:flex sm:justify-between lg:flex-col ${
-        popUpNavBar && "w-full flex flex-col justify-center items-center"
-      }`}
+      className={`duration-1000 ${
+        popUpNavBar && 'w-full flex flex-col justify-center items-center'
+      }   max-md:hidden `}
     >
       {NavLinks.map((item) => {
         const isActive = PathName.startsWith(item.link);

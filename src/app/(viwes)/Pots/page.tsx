@@ -1,6 +1,6 @@
 'use client';
 
-import PotsPage from '../../../components/__organisms/PotsPage';
+import PotsPage from '@/components/__organisms/PotsPage';
 const Pots = () => {
   return (
     <div>
