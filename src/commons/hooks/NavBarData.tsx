@@ -9,7 +9,7 @@ import {
   recurringBillsActive,
   transactions,
   transactionsActive,
-} from '@/utility/images/ImgExport';
+} from "@/utility/images/ImgExport";
 
 export type NavLink = {
   icon: string;
@@ -22,31 +22,31 @@ export const NavLinks: NavLink[] = [
   {
     icon: Overview,
     icon_Active: OverviewActive,
-    link: '/Overview',
-    name: 'Overview',
+    link: "/Overview",
+    name: "Overview",
   },
   {
     icon: transactions,
     icon_Active: transactionsActive,
-    link: '/Transactions',
-    name: 'Transactions',
+    link: "/Transactions",
+    name: "Transactions",
   },
   {
     icon: Budgets,
     icon_Active: BudgetsActive,
-    link: '/Budgets',
-    name: 'Budgets',
+    link: "/Budgets",
+    name: "Budgets",
   },
   {
     icon: pots,
     icon_Active: potsActive,
-    link: '/Pots',
-    name: 'Pots',
+    link: "/Pots",
+    name: "Pots",
   },
   {
     icon: recurringBills,
     icon_Active: recurringBillsActive,
-    link: '/Recurring-bills',
-    name: 'Recurring bills',
+    link: "/Recurring-bills",
+    name: "Recurring bills",
   },
 ];
