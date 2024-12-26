@@ -55,7 +55,7 @@ export default function Register() {
             </p>
           </div>
         </div>
-        <div className="m-auto sm:w-[74%]     ">
+        <div className="m-auto sm:w-[74%]">
           <div className=" md:w-[560px] min-w-[300px] md:m-auto rounded-xl bg-white h-[550px] p-8 gap-[32px] flex flex-col ">
             <h2 className="text-[32px] font-bold text-[#201F24]">Sign Up</h2>
             <form
