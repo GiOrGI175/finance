@@ -20,12 +20,12 @@ export default function Pagination({
   const indexOfLastTransaction = currentPage * UsersPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - UsersPerPage;
 
-  // filter search
+  // search
   let filteredTransactions = usersData.filter((user) => {
     return (
       (user.SenderName.toLowerCase().includes(search.toLowerCase()) ||
         search === "") &&
-      (category ? user.Category === category : true) // filter category
+      (category ? user.Category === category : true) 
     );
   });
   /// sort
