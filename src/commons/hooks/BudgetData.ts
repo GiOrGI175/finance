@@ -4,7 +4,7 @@ export type BudgetType = {
   id: number;
   BudgetCategory: string;
   limit: number;
-  budget: number;
+  enterMoney: number;
   color: string;
   procent: number;
   translations: {
@@ -20,7 +20,7 @@ export const BudgetView: BudgetType[] = [
     id: 1,
     BudgetCategory: 'Entertainment',
     color: '#277C78',
-    budget: 15.0,
+    enterMoney: 15.0,
     limit: 50.0,
     procent: 15,
     translations: [
@@ -48,7 +48,7 @@ export const BudgetView: BudgetType[] = [
     id: 2,
     BudgetCategory: 'Bills',
     color: '#82C9D7',
-    budget: 150.0,
+    enterMoney: 150.0,
     limit: 750.0,
     procent: 35,
 
@@ -77,7 +77,7 @@ export const BudgetView: BudgetType[] = [
     id: 3,
     BudgetCategory: 'Dining Out',
     color: '#F2CDAC',
-    budget: 133.0,
+    enterMoney: 133.0,
     limit: 75.0,
     procent: 17,
 
@@ -106,7 +106,7 @@ export const BudgetView: BudgetType[] = [
     id: 4,
     BudgetCategory: 'Personal Case',
     color: '#626070',
-    budget: 40.0,
+    enterMoney: 40.0,
     limit: 100.0,
     procent: 7,
     translations: [

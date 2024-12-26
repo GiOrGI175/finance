@@ -4,6 +4,8 @@ import * as React from 'react';
 import { TrendingUp } from 'lucide-react';
 import { Label, Pie, PieChart } from 'recharts';
 
+import { BudgetView } from '@/commons/hooks/BudgetData';
+
 import {
   Card,
   CardContent,
@@ -18,16 +20,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
-const chartData = [
-  { browser: 'chrome', visitors: 275, fill: '#205F24' },
-  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
-  { browser: 'firefox', visitors: 287, fill: 'var(--color-firefox)' },
-  { browser: 'edge', visitors: 173, fill: 'var(--color-edge)' },
-  { browser: 'other', visitors: 190, fill: 'var(--color-other)' },
-];
 
 const chartConfig = {
-  visitors: {
+  enterMoney: {
     label: 'Visitors',
   },
   chrome: {
@@ -53,16 +48,26 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function BudgetChart() {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  const chartData = BudgetView.map((category) => ({
+    Category: category.BudgetCategory,
+    enterMoney: category.enterMoney,
+    fill: category.color,
+    limit: category.limit,
+  }));
+
+  const totalVEnteryMoney = chartData.reduce(
+    (acc, curr) => acc + curr.enterMoney,
+    0
+  );
+
+  const totalLimit = chartData.reduce((acc, curr) => acc + curr.limit, 0);
 
   return (
-    <Card className='flex flex-col border-[1px] border-red-700 max-w-[364px] w-full'>
+    <Card className=' flex flex-col border-none max-w-[364px] w-full '>
       <CardContent className='flex-1 pb-0'>
         <ChartContainer
           config={chartConfig}
-          className='mx-auto aspect-square max-h-[250px]'
+          className='mx-auto aspect-square max-h-[250px] '
         >
           <PieChart>
             <ChartTooltip
@@ -71,15 +76,18 @@ export function BudgetChart() {
             />
             <Pie
               data={chartData}
-              dataKey='visitors'
-              nameKey='browser'
+              dataKey='enterMoney'
+              nameKey='Category'
               innerRadius={80}
               outerRadius={120}
               strokeWidth={8}
             >
               <Label
+                className='relative '
                 content={({ viewBox }) => {
                   if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
+                    const safeTotalVisitors = totalVEnteryMoney || 0;
+
                     return (
                       <text
                         x={viewBox.cx}
@@ -90,17 +98,27 @@ export function BudgetChart() {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className='fill-foreground text-3xl font-bold'
+                          className='fill-foreground text-3xl font-bold relative z-40'
                         >
-                          {totalVisitors.toLocaleString()}
+                          {safeTotalVisitors.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 30}
+                          style={{
+                            fill: '#6B7280',
+                            fontSize: '12px',
+                            fontFamily: 'publicSans, serif',
+                            fontWeight: 'normal',
+                          }}
+                        >
+                          {`of $${totalLimit.toLocaleString()} limit`}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
                           y={(viewBox.cy || 0) + 24}
                           className='fill-muted-foreground'
-                        >
-                          Visitors
-                        </tspan>
+                        ></tspan>
                       </text>
                     );
                   }
