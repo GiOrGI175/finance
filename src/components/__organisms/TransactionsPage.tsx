@@ -19,7 +19,7 @@ export default function TransactionsPage() {
 
   return (
     <div className="p-8 w-full overflow-x-hidden overflow-scroll h-screen ">
-      <div className="mx-auto">
+      <div className="mx-auto sm:mb-10 lg:mb-[0px]">
         <h2 className="font-publicSans font-bold text-4xl text-[#201F24] mb-6">
           Transactions
         </h2>
