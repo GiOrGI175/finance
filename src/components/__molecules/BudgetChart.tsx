@@ -1,19 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { TrendingUp } from 'lucide-react';
 import { Label, Pie, PieChart } from 'recharts';
 
 import { BudgetView } from '@/commons/hooks/BudgetData';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
@@ -21,33 +13,16 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-const chartConfig = {
-  enterMoney: {
-    label: 'Visitors',
-  },
-  chrome: {
-    label: 'Chrome',
-    color: 'hsl(var(--chart-1))',
-  },
-  safari: {
-    label: 'Safari',
-    color: 'hsl(var(--chart-2))',
-  },
-  firefox: {
-    label: 'Firefox',
-    color: 'hsl(var(--chart-3))',
-  },
-  edge: {
-    label: 'Edge',
-    color: 'hsl(var(--chart-4))',
-  },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-5))',
-  },
-} satisfies ChartConfig;
-
 export function BudgetChart() {
+  const chartConfig: ChartConfig = {};
+
+  BudgetView.forEach((category) => {
+    chartConfig[category.BudgetCategory] = {
+      label: category.BudgetCategory,
+      color: category.color,
+    };
+  });
+
   const chartData = BudgetView.map((category) => ({
     Category: category.BudgetCategory,
     enterMoney: category.enterMoney,
@@ -63,8 +38,8 @@ export function BudgetChart() {
   const totalLimit = chartData.reduce((acc, curr) => acc + curr.limit, 0);
 
   return (
-    <Card className=' flex flex-col border-none max-w-[364px] w-full '>
-      <CardContent className='flex-1 pb-0'>
+    <Card className='flex flex-col border-none  w-full max-md:w-[270px]'>
+      <CardContent className='flex-1 w-full max-md:!p-[0px] '>
         <ChartContainer
           config={chartConfig}
           className='mx-auto aspect-square max-h-[250px] '

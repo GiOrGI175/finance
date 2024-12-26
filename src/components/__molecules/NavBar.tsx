@@ -34,7 +34,7 @@ const NavBar = () => {
         popUpNavBar && 'w-[88px] !px-[0px] !pr-[0px] items-center '
       }  max-md:w-full max-md:min-h-fit max-md:h-[74px] max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px] max-md:pl-[0px] max-md:pr-[0px] max-md:pt-[10px]  max-sm:h-[52px] `}
     >
-      <div>
+      <div className='max-md:w-full'>
         <div
           className={`w-full mb-[64px] flex ${
             popUpNavBar && 'justify-center'
