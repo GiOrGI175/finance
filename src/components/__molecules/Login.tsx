@@ -4,15 +4,24 @@ import Image from "next/image";
 import { Logo } from "@/utility/images/ImgExport";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/__molecules/Spinner"; 
 
 export default function Login() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false); 
+  
+  
+  interface FormData {
+    email: string;
+    password: string;
+  }
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
+
   const handleClick = () => {
     router.push("/");
   };
@@ -20,13 +29,19 @@ export default function Login() {
   const onSubmit = (data) => {
     const userData = JSON.parse(localStorage.getItem(data.email));
     if (userData) {
-      // getItem can return actual value or null
+      
       if (userData.password === data.password) {
-        console.log(userData.name + " You Are Successfully Logged In");
+        console.log(userData.name + " " + " You Are Successfully Logged In");
         alert(userData.name + "You Are Successfully Logged In");
+        
+        
+        setIsLoading(true);
+
+        
         setTimeout(() => {
-          router.push("/OverView");
-        }, 2000);
+          setIsLoading(false); 
+          router.push("/OverView"); 
+        }, 3000); 
       } else {
         alert("Email or Password is not matching");
       }
@@ -34,13 +49,18 @@ export default function Login() {
       alert("Email or Password is not matching");
     }
   };
+
+  if (isLoading) {
+    return <Spinner />; 
+  }
+
   return (
-    <div className="">
+    <div>
       <div className="w-full h-[70px] bg-[#201F24] lg:hidden flex justify-center ">
-      <Image src={Logo} width={121} height={22} alt="logo" />
+        <Image src={Logo} width={121} height={22} alt="logo" />
       </div>
-      <div className= " flex items-center w-full h-[100vh]">
-        <div className=" w-[35%] h-[95vh] overflow-x-hidden bg-[url('/loginsidebar.png')] bg-cover m-5 rounded-xl flex flex-col justify-between pt-[40px] pb-[40px] pl-[40px] sm:hidden lg:flex">
+      <div className="flex items-center w-full h-[100vh]">
+        <div className="w-[35%] h-[95vh] overflow-x-hidden bg-[url('/loginsidebar.png')] bg-cover m-5 rounded-xl flex flex-col justify-between pt-[40px] pb-[40px] pl-[40px] sm:hidden lg:flex">
           <Image src={Logo} width={121} height={22} alt="logo" />
           <div>
             <h3 className="text-[34px] text-white font-bold font-sans">
@@ -102,7 +122,7 @@ export default function Login() {
                 Login
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                Need to create account ?{" "}
+                Need to create an account?{" "}
                 <a
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer"
                   onClick={handleClick}

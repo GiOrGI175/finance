@@ -4,9 +4,11 @@ import Image from "next/image";
 import { Logo } from "@/utility/images/ImgExport";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Spinner from "@/components/__molecules/Spinner";
 
 export default function Register() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const handleClick = () => {
     router.push("/AuthLogin");
   };
@@ -32,10 +34,16 @@ export default function Register() {
     );
 
     alert("You have registered successfully!");
+    setIsLoading(true);
+
     setTimeout(() => {
+      setIsLoading(false);
       router.push("/OverView");
-    }, 2000);
+    }, 3000);
   };
+  if (isLoading) {
+    return <Spinner />; 
+  }
 
   return (
     <div className="h-[100vh]">
