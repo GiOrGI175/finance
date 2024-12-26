@@ -39,7 +39,7 @@ export default function Login() {
       <div className="w-full h-[70px] bg-[#201F24] lg:hidden flex justify-center ">
       <Image src={Logo} width={121} height={22} alt="logo" />
       </div>
-      <div className= " w-full md:flex md:items-center">
+      <div className= " flex items-center w-full h-[100vh]">
         <div className=" w-[35%] h-[95vh] overflow-x-hidden bg-[url('/loginsidebar.png')] bg-cover m-5 rounded-xl flex flex-col justify-between pt-[40px] pb-[40px] pl-[40px] sm:hidden lg:flex">
           <Image src={Logo} width={121} height={22} alt="logo" />
           <div>
