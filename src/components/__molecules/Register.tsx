@@ -38,11 +38,11 @@ export default function Register() {
   };
 
   return (
-    <div className="">
+    <div className="h-[100vh]">
       <div className="w-full h-[70px] bg-[#201F24] lg:hidden flex justify-center ">
         <Image src={Logo} width={121} height={22} alt="logo" />
       </div>
-      <div className="flex items-center w-full ">
+      <div className="flex items-center w-full h-[100vh] ">
         <div className="w-[35%] h-[95vh] overflow-x-hidden bg-[url('/loginsidebar.png')] bg-cover m-5 rounded-xl flex flex-col justify-between pt-[40px] pb-[40px] pl-[40px] sm:hidden lg:flex">
           <Image src={Logo} width={121} height={22} alt="logo" />
           <div>
@@ -55,7 +55,7 @@ export default function Register() {
             </p>
           </div>
         </div>
-        <div className="m-auto sm:w-[74%] md:m-auto   ">
+        <div className="m-auto sm:w-[74%]     ">
           <div className=" md:w-[560px] min-w-[300px] md:m-auto rounded-xl bg-white h-[550px] p-8 gap-[32px] flex flex-col ">
             <h2 className="text-[32px] font-bold text-[#201F24]">Sign Up</h2>
             <form
