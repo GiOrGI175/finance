@@ -22,7 +22,7 @@ export const NavLinks: NavLink[] = [
   {
     icon: Overview,
     icon_Active: OverviewActive,
-    link: "/Overview",
+    link: "/OverView",
     name: "Overview",
   },
   {

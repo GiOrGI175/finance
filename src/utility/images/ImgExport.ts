@@ -27,6 +27,7 @@ import paramsIcon from "./parametr_Icon.svg";
 import CloseBtn from "./CloseButton.svg";
 import Sort from "./sort.svg";
 import Category from "./Category.svg";
+import Money from "./Money.svg"
 
 
 export {
@@ -59,5 +60,6 @@ export {
   CloseBtn,
   Sort,
   Category,
+  Money,
   
 };
