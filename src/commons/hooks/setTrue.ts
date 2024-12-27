@@ -18,6 +18,15 @@ type useAppBtnState = {
 
   showAddMoney: boolean;
   toggleshowAddMoneyPot: () => void;
+
+  showAddBudget: boolean;
+  toggleshowAddBudget: () => void;
+
+  showEditBudget: boolean;
+  toggleshowEditBudget: () => void;
+
+  showDeleteBudget: boolean;
+  toggleDeleteBudget: () => void;
 };
 
 const useAppBtn = create<useAppBtnState>((set) => ({
@@ -41,6 +50,18 @@ const useAppBtn = create<useAppBtnState>((set) => ({
   showAddMoney: false,
   toggleshowAddMoneyPot: () =>
     set((state) => ({ showAddMoney: !state.showAddMoney })),
+
+  showAddBudget: false,
+  toggleshowAddBudget: () =>
+    set((state) => ({ showAddBudget: !state.showAddBudget })),
+
+  showEditBudget: false,
+  toggleshowEditBudget: () =>
+    set((state) => ({ showEditBudget: !state.showEditBudget })),
+
+  showDeleteBudget: false,
+  toggleDeleteBudget: () =>
+    set((state) => ({ showDeleteBudget: !state.showDeleteBudget })),
 }));
 
 export default useAppBtn;
