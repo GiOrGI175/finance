@@ -7,7 +7,7 @@ export default function OverView() {
   return (
     <>
       <OverViewBalances />
-      <div className=" flex md:flex-col lg:flex-row gap-6">
+      <div className=" flex  sm:flex-col  lg:flex-row gap-6">
         <PotsAndTransaction />
         <BudgetAndBills />
       </div>
