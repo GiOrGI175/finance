@@ -18,7 +18,7 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data:any) => {
     const existingUser = localStorage.getItem(data.email);
 
     if (existingUser) {

@@ -26,8 +26,8 @@ export default function Login() {
     router.push("/");
   };
 
-  const onSubmit = (data) => {
-    const userData = JSON.parse(localStorage.getItem(data.email));
+  const onSubmit = (data:any) => {
+    const userData: any = JSON.parse(localStorage.getItem(data.email) || '{}');
     if (userData) {
       
       if (userData.password === data.password) {
