@@ -15,7 +15,7 @@ export default function RecurringBills() {
         <h2 className="text-[32px] font-bold text-gray-900">Recurring Bills</h2>
       </div>
       <div className="w-full flex flex-col gap-[24px] sm:flex-col md:flex-row">
-        <div className="flex flex-col sm:flex-row md:flex-col gap-y-[24px] max-w-[337px] sm:max-w-none md:max-w-[337px] sm:gap-x-[24px] w-full">
+        <div className="flex flex-col  md:flex-col gap-y-[24px] max-w-[337px] sm:max-w-none md:max-w-[337px] sm:gap-x-[24px] w-full">
           {/* zeda */}
           <div className="p-[24px] sm:flex-[1] md:flex-none h-[190px] bg-gray-900 rounded-[12px]">
             <div className="mb-[32px]">
