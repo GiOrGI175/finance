@@ -21,46 +21,46 @@ const BudgetPage = () => {
         </>
       </div>
       <div className='w-full flex  justify-center gap-[24px] max-md:flex-col'>
-        <div className='basis-[428px]  grow w-full h-[600px] rounded-[12px] flex flex-col justify-between p-[32px] bg-white max-md:justify-center '>
-          <div className='relative flex flex-col justify-between items-center max-sm:flex-col max-md:flex-row max-md:h-[345px] max-md:justify-end'>
-            <div className='relative w-full flex  justify-center mb-[32px] max-md:mb-[0px] max-md:mr-[60px] max-md:absolute max-md:left-[-210px]'>
+        <div className='basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex'>
+          <div className='max-sm:flex max-sm:justify-center '>
+            <div className='relative w-full max-md:w-[400px]  justify-center flex   '>
               <BudgetChart />
               <div className='absolute top-[45px] left-1/2 transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10' />
             </div>
-            <div>
-              <div className='mb-[24px] min-w-[365px] max-w-[450px] w-full'>
-                <h5 className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24] text-start'>
-                  Spending Summary
-                </h5>
-              </div>
-              <div className='min-w-[365px] max-w-[450px] w-full'>
-                {BudgetView.map((item) => (
-                  <div
-                    key={item.id}
-                    className='mb-[33px] w-full  flex justify-between \ '
-                  >
-                    <div className='flex items-center'>
-                      <div
-                        className='w-[4px] h-[21px] rounded-[8px] mr-[16px] '
-                        style={{
-                          backgroundColor: item.color,
-                        }}
-                      />
-                      <p className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
-                        {item.BudgetCategory}
-                      </p>
-                    </div>
-                    <div className='flex items-center'>
-                      <span className='font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
-                        ${item.enterMoney}
-                      </span>
-                      <span className='ml-[8px] font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                        of ${item.limit}
-                      </span>
-                    </div>
+          </div>
+          <div className=' w-full  flex flex-col items-center'>
+            <div className='mb-[24px]  w-full max-w-[374px]'>
+              <h5 className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24] text-start'>
+                Spending Summary
+              </h5>
+            </div>
+            <div className=' w-full max-w-[374px]  '>
+              {BudgetView.map((item) => (
+                <div
+                  key={item.id}
+                  className='mb-[33px] w-full  flex justify-between \ '
+                >
+                  <div className='flex items-center'>
+                    <div
+                      className='w-[4px] h-[21px] rounded-[8px] mr-[16px] '
+                      style={{
+                        backgroundColor: item.color,
+                      }}
+                    />
+                    <p className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                      {item.BudgetCategory}
+                    </p>
                   </div>
-                ))}
-              </div>
+                  <div className='flex items-center'>
+                    <span className='font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
+                      ${item.enterMoney}
+                    </span>
+                    <span className='ml-[8px] font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
+                      of ${item.limit}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
