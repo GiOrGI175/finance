@@ -26,12 +26,11 @@ const config: Config = {
       colors: {},
     },
     screens: {
-      'max-xs': {
-        max: '480px',
-      },
-      'max-ss': {
-        max: '620px',
-      },
+      sm: '300px',
+      md: '768px',
+      lg: '1024px',
+      'max-xs': { max: '480px' },
+      'max-ss': { max: '620px' },
       ss: '620px',
       'max-sm': {
         max: '768px',

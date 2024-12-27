@@ -3,6 +3,8 @@
 import useAppBtn from '@/commons/hooks/setTrue';
 import './globals.css';
 import NavBar from '@/components/__molecules/NavBar';
+import { usePathname } from 'next/navigation';
+import { disableNavWithFooter } from '../components/__atoms/DisableNavWithFooter';
 
 export default function RootLayout({
   children,
@@ -10,11 +12,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const setOverlay = useAppBtn((state) => state.setOverlay);
+  const path = usePathname();
   return (
     <html lang='en' className='flex justify-center'>
-      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0] max-md:flex-col-reverse'>
+      <body className='flex max-w-[3000px] w-full min-h-screen bg-[#F8F4F0] max-md:flex-col-reverse '>
         <div className='w-fit max-md:max-w-[1024px]: max-md:w-full max-md:fixed'>
-          <NavBar />
+          {!disableNavWithFooter.includes(path) && <NavBar />}
         </div>
         <div className='w-full '>{children}</div>
         {/* overlay start */}

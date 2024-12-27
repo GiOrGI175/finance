@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'PublicSans';
-  src: local('PublicSans Regular'),
-    url('../utility/fonts/PublicSans-Regular.ttf') format('truetype');
+  font-family: "PublicSans";
+  src: local("PublicSans Regular"),
+    url("../utility/fonts/PublicSans-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
