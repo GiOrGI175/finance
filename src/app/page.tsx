@@ -1,5 +1,8 @@
+import Register from '@/components/__molecules/Register';
 import Image from 'next/image';
 
 export default function Home() {
-  return <main>arafer jer</main>;
+  return <main>
+    <Register/>
+  </main>;
 }
