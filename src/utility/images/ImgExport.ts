@@ -32,6 +32,11 @@ import CloseBtn from './CloseButton.svg';
 import Sort from './sort.svg';
 import Category from './Category.svg';
 import Money from './Money.svg';
+import NoteRe from "./total.svg"
+import Search from "./search.svg"
+import Active from "./Active.svg"
+import Overdue from "./overdue.svg"
+
 
 export {
   Logo,
@@ -41,6 +46,7 @@ export {
   Overview,
   OverviewActive,
   pots,
+  NoteRe,
   potsActive,
   recurringBills,
   recurringBillsActive,
@@ -68,4 +74,7 @@ export {
   Sort,
   Category,
   Money,
+  Search,
+  Active,
+  Overdue,
 };
