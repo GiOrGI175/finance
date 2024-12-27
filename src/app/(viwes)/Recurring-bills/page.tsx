@@ -1,7 +1,12 @@
-import React from 'react';
+import React from "react";
+import RecurringBills from "@/components/__organisms/RecurringBills";
 
 const recurringBills = () => {
-  return <div></div>;
+  return (
+    <div>
+      <RecurringBills />
+    </div>
+  );
 };
 
 export default recurringBills;
