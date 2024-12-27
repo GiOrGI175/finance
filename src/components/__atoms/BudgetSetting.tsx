@@ -9,10 +9,10 @@ type PotSettingsPropsType = {
   index: number;
 };
 
-const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
-  const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
+const BudgetSetting: React.FC<PotSettingsPropsType> = ({ index }) => {
+  const toggleshowEditBudget = useAppBtn((state) => state.toggleshowEditBudget);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
-  const toggleDeletePot = useAppBtn((state) => state.toggleDeletePot);
+  const toggleDeleteBudget = useAppBtn((state) => state.toggleDeleteBudget);
 
   const [openSettingsIndex, setOpenSettingsIndex] = useState<number | null>(
     null
@@ -30,27 +30,27 @@ const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
         <Image src={paramsIcon} width={16} height={16} alt='icon' />
       </button>
       {isSettingsVisible && (
-        <div className='absolute w-[114px]  bg-white right-[0px] shadow-lg flex flex-col items-center '>
+        <div className='absolute w-[134px]  bg-white right-[0px] shadow-lg flex flex-col items-center '>
           <button
-            className=' py-[12px]  border-b-[1px] border-[#F2F2F2] w-[74px] flex justify-self-start'
+            className=' py-[12px]  border-b-[1px] border-[#F2F2F2] w-[104px] flex justify-self-start'
             onClick={() => {
               toggleOverlay();
-              toggleEditPot();
+              toggleshowEditBudget();
             }}
           >
             <span className='font-publicSans font-normal text-[14px] leading-[24px] text-[#201F24] w-full text-start  '>
-              Edit Pot
+              Edit Budget
             </span>
           </button>
           <button
-            className=' py-[12px] w-[74px] flex justify-self-start'
+            className=' py-[12px] w-[104px] flex justify-self-start'
             onClick={() => {
               toggleOverlay();
-              toggleDeletePot();
+              toggleDeleteBudget();
             }}
           >
             <span className='font-publicSans font-normal text-[14px] leading-[24px] text-[#C94736] w-full text-start  '>
-              Delete Pot
+              Delete Budget
             </span>
           </button>
         </div>
@@ -59,4 +59,4 @@ const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
   );
 };
 
-export default PotSettings;
+export default BudgetSetting;
