@@ -7,9 +7,15 @@ import useAppBtn from '@/commons/hooks/setTrue';
 
 type PotSettingsPropsType = {
   index: number;
+  setPotID: (id: string) => void;
+  itemID: string;
 };
 
-const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
+const PotSettings: React.FC<PotSettingsPropsType> = ({
+  index,
+  setPotID,
+  itemID,
+}) => {
   const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
   const toggleDeletePot = useAppBtn((state) => state.toggleDeletePot);
@@ -36,6 +42,7 @@ const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
             onClick={() => {
               toggleOverlay();
               toggleEditPot();
+              setPotID(itemID);
             }}
           >
             <span className='font-publicSans font-normal text-[14px] leading-[24px] text-[#201F24] w-full text-start  '>
@@ -47,6 +54,7 @@ const PotSettings: React.FC<PotSettingsPropsType> = ({ index }) => {
             onClick={() => {
               toggleOverlay();
               toggleDeletePot();
+              setPotID(itemID);
             }}
           >
             <span className='font-publicSans font-normal text-[14px] leading-[24px] text-[#C94736] w-full text-start  '>

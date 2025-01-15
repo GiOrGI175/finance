@@ -3,11 +3,31 @@
 import useAppBtn from '@/commons/hooks/setTrue';
 import Image from 'next/image';
 import { CloseBtn } from '@/utility/images/ImgExport';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+type DeletePotProps = {
+  fetchData: () => void;
+  potID: string;
+  setError: (message: string) => void;
+};
 
-const DeletePot = () => {
+const DeletePot: React.FC<DeletePotProps> = ({
+  fetchData,
+  potID,
+  setError,
+}) => {
   const showDeletePot = useAppBtn((state) => state.showDeletePot);
   const toggleDeletePot = useAppBtn((state) => state.toggleDeletePot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const handleDeletePot = async () => {
+    try {
+      await axiosInstance.delete(`/pots/${potID}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      fetchData();
+    }
+  };
 
   return (
     <div
@@ -40,6 +60,7 @@ const DeletePot = () => {
         onClick={() => {
           toggleOverlay();
           toggleDeletePot();
+          handleDeletePot();
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

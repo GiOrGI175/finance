@@ -7,7 +7,13 @@ import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
 
-const EditPot = () => {
+type EditPotProps = {
+  fetchData: () => void;
+  potID: string;
+  setError: (message: string) => void;
+};
+
+const EditPot: React.FC<EditPotProps> = ({ fetchData, potID, setError }) => {
   const showEditPot = useAppBtn((state) => state.showEditPot);
   const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);

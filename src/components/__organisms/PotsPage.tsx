@@ -1,6 +1,6 @@
 'use client';
 
-import { Potss } from '@/commons/hooks/PotsData';
+import { colorOptions, Potss } from '@/commons/hooks/PotsData';
 import Image from 'next/image';
 import AddNewPot from '../__atoms/AddNewPot';
 import CreatePot from '../__molecules/CreatePot';
@@ -16,6 +16,7 @@ import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 type PotT = {
   _id: string;
   potName: string;
+  procent: number;
   Target: number;
   theme: string;
   __v: number;
@@ -26,12 +27,13 @@ const PotsPage = () => {
   const [potsData, setPostsData] = useState<PotT[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [potID, setPotID] = useState<string>('');
 
   const fetchData = async () => {
     try {
       const res = await axiosInstance.get('/pots');
       setPostsData(res.data);
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
     } finally {
       setLoading(false);
@@ -42,12 +44,31 @@ const PotsPage = () => {
     fetchData();
   }, []);
 
+  const getColorByTheme = (theme: string): string => {
+    const color = colorOptions.find(
+      (option) => option.value.toLowerCase() === theme.toLowerCase()
+    );
+    return color ? color.color : '#000';
+  };
+
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Loading...
+        </span>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Error: {error}
+        </span>
+      </div>
+    );
   }
 
   return (
@@ -67,14 +88,23 @@ const PotsPage = () => {
             className='basis-[518px]  grow w-full h-[303px] rounded-[12px] flex flex-col justify-between p-[24px] bg-white max-sm:p-[20px]'
           >
             <div className='flex justify-between mb-[32px]'>
-              <div className='flex'>
-                <Image src={item.icon} width={16} height={16} alt='icon' />
+              <div className='flex items-center'>
+                <div
+                  className='w-[16px] h-[16px] rounded-full'
+                  style={{
+                    backgroundColor: getColorByTheme(item.theme),
+                  }}
+                />
                 <span className='ml-[16px] font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
                   {item.potName}
                 </span>
               </div>
               <>
-                <PotSettings index={index} />
+                <PotSettings
+                  index={index}
+                  setPotID={setPotID}
+                  itemID={item._id}
+                />
               </>
             </div>
             <div className='flex flex-col justify-between mb-[32px]'>
@@ -95,7 +125,7 @@ const PotsPage = () => {
                   <div
                     style={{
                       width: `${item.procent}%`,
-                      backgroundColor: item.color,
+                      backgroundColor: getColorByTheme(item.theme),
                     }}
                     className='h-full rounded-[8px]'
                   />
@@ -123,9 +153,9 @@ const PotsPage = () => {
       <>
         <CreatePot />
 
-        <EditPot />
+        <EditPot fetchData={fetchData} potID={potID} setError={setError} />
 
-        <DeletePot />
+        <DeletePot fetchData={fetchData} potID={potID} setError={setError} />
 
         <WithdrawPot />
 

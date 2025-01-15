@@ -70,6 +70,23 @@ type optionsType = {
   value: string;
 };
 
+export const colorOptions: optionsType[] = [
+  { id: 1, color: '#277C78', value: 'Green' },
+  { id: 2, color: '#F2CDAC', value: 'Yellow' },
+  { id: 3, color: '#82C9D7', value: 'Cyan' },
+  { id: 4, color: '#626070', value: 'Navy' },
+  { id: 5, color: '#C94736', value: 'Red' },
+  { id: 5, color: '#826CB0', value: 'Purple' },
+  { id: 6, color: '#597C7C', value: 'Turquoise' },
+  { id: 7, color: '#93674F', value: 'Brown' },
+  { id: 8, color: '#934F6F', value: 'Magenta' },
+  { id: 9, color: '#3F82B2', value: 'Blue' },
+  { id: 10, color: '#97A0AC', value: 'Navy Grey' },
+  { id: 11, color: '#7F9161', value: 'Army Green' },
+  { id: 12, color: '#826CB0', value: 'Pink' },
+  { id: 13, color: '#BE6C49', value: 'Orange' },
+];
+
 export const options: optionsType[] = [
   { id: 1, color: '#277C78', value: 'Green' },
   { id: 2, color: '#F2CDAC', value: 'Yellow' },
