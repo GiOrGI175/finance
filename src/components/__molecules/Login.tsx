@@ -32,22 +32,15 @@ export default function Login() {
     router.push("/");
   };
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    try {
-      const res: ApiResponse = await axios.post(
-        "http://localhost:3001/auth/sign-in",
-        data
-      );
-      console.log(res);
-
-      if (res.status === 200) {
-        setCookie(null, 'auth_token', res.data.token, {
-          maxAge: 60 * 60,  // 1 hour
-          
-        });
+  const onSubmit = (data) => {
+    const userData = JSON.parse(localStorage.getItem(data.email));
+    if (userData) {
+      
+      if (userData.password === data.password) {
+        console.log(userData.name + " " + " You Are Successfully Logged In");
+        alert(userData.name + "You Are Successfully Logged In");
         
-
-        alert("You Are Successfully Logged In");
+        
         setIsLoading(true);
 
         setTimeout(() => {
