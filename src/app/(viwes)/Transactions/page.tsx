@@ -11,7 +11,7 @@ export default function Transactions() {
 
   const getCurrentUser = async (token: string) => {
     try {
-      const res = await axios.get("http://localhost:3001/auth/current-user", {
+      const res = await axios.get("http://localhost:10000/auth/current-user", {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
