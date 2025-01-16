@@ -8,7 +8,7 @@ import Spinner from "@/components/__molecules/Spinner";
 import axios from "axios";
 import { LoginFormData, loginSchema } from "@/commons/hooks/LoginValidation"; // Import the schema and type
 import { yupResolver } from "@hookform/resolvers/yup";
-import { setCookie } from "nookies";
+import { setCookie } from "cookies-next";
 
 // interface ApiResponse {
 //   status: number;
@@ -38,7 +38,7 @@ export default function Login() {
       const res = await axios.post("http://localhost:3001/auth/sign-in", data);
       console.log(res);
       if (res.status === 200) {
-        setCookie(null, "auth_token", res.data.token, {
+        setCookie("auth_token", res.data.token, {
           maxAge: 60 * 60, 
         });
         alert("You have Logged successfully!");
