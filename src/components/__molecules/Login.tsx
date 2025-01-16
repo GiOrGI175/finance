@@ -35,7 +35,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     setError(null);
     try {
-      const res = await axios.post("https://finance-wzzy.onrender.com/auth/sign-in", data);
+      const res = await axios.post("https://finance-back-heee.onrender.com/auth/sign-in", data);
       console.log(res);
       if (res.status === 200) {
         setCookie("auth_token", res.data.token, {

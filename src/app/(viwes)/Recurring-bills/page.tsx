@@ -10,7 +10,7 @@ const recurringBills = () => {
 
   const getCurrentUser = async (token: string) => {
     try {
-      const res = await axios.get("https://finance-wzzy.onrender.com/auth/current-user", {
+      const res = await axios.get("https://finance-back-heee.onrender.com/auth/current-user", {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
