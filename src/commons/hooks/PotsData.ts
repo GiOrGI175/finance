@@ -93,7 +93,7 @@ export const options: optionsType[] = [
   { id: 3, color: '#82C9D7', value: 'Cyan' },
   { id: 4, color: '#626070', value: 'Navy' },
   { id: 5, color: '#C94736', value: 'Red' },
-  { id: 5, color: '#826CB0', value: 'Purple' },
+  { id: 53, color: '#826CB0', value: 'Purple' },
   { id: 6, color: '#597C7C', value: 'Turquoise' },
   { id: 7, color: '#93674F', value: 'Brown' },
   { id: 8, color: '#934F6F', value: 'Magenta' },

@@ -5,13 +5,42 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+import { useState } from 'react';
+type AddMoneyPotPropsType = {
+  potID: string;
+  setError: (message: string) => void;
+  fetchData: () => void;
+};
 
-const AddMoneyPot = () => {
+const AddMoneyPot: React.FC<AddMoneyPotPropsType> = ({
+  potID,
+  fetchData,
+  setError,
+}) => {
   const showAddMoney = useAppBtn((state) => state.showAddMoney);
   const toggleshowAddMoneyPot = useAppBtn(
     (state) => state.toggleshowAddMoneyPot
   );
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [AddMoney, setAddMoney] = useState({ Add: 0 });
+
+  const handleAddMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddMoney({ Add: Number(e.target.value) });
+  };
+
+  const handleConfrim = async (potID: string) => {
+    try {
+      await axiosInstance.post(`/pots/${potID}/add`, AddMoney);
+
+      fetchData();
+
+      setAddMoney({ Add: Number(0) });
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   return (
     <div
@@ -82,9 +111,11 @@ const AddMoneyPot = () => {
           Amount to Add
         </label>
         <input
-          type='text'
+          type='number'
           placeholder='$'
           className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+          value={AddMoney.Add}
+          onChange={handleAddMoney}
         />
       </div>
 
@@ -93,6 +124,7 @@ const AddMoneyPot = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowAddMoneyPot();
+          handleConfrim(potID);
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

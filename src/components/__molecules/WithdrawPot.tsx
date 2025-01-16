@@ -5,13 +5,43 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
+import { useState } from 'react';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 
-const WithdrawPot = () => {
+type WithdrawPotPropsType = {
+  potID: string;
+  setError: (message: string) => void;
+  fetchData: () => void;
+};
+
+const WithdrawPot: React.FC<WithdrawPotPropsType> = ({
+  potID,
+  fetchData,
+  setError,
+}) => {
   const showWithdraw = useAppBtn((state) => state.showWithdraw);
   const toggleshowWithdrawPot = useAppBtn(
     (state) => state.toggleshowWithdrawPot
   );
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [WithdrawMoney, setWithdrawMoney] = useState({ Withdraw: 0 });
+
+  const handleWithdraw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWithdrawMoney({ Withdraw: Number(e.target.value) });
+  };
+
+  const handleConfrim = async (potID: string) => {
+    try {
+      await axiosInstance.post(`/pots/${potID}/withdraw`, WithdrawMoney);
+
+      fetchData();
+
+      setWithdrawMoney({ Withdraw: Number(0) });
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   return (
     <div
@@ -82,9 +112,11 @@ const WithdrawPot = () => {
           Amount to Withdraw
         </label>
         <input
-          type='text'
+          type='number'
           placeholder='$'
           className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+          value={WithdrawMoney.Withdraw}
+          onChange={handleWithdraw}
         />
       </div>
 
@@ -93,6 +125,7 @@ const WithdrawPot = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowWithdrawPot();
+          handleConfrim(potID);
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

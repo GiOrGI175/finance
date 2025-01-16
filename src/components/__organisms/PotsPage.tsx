@@ -23,11 +23,23 @@ type PotT = {
   Amount: number;
 };
 
+export type FormType = {
+  potName: string;
+  Target: number;
+  theme: string;
+};
+
 const PotsPage = () => {
   const [potsData, setPostsData] = useState<PotT[]>([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [potID, setPotID] = useState<string>('');
+  const [form, setForm] = useState<FormType>({
+    potName: '',
+    Target: 0,
+    theme: '',
+  });
+  const [showChoseInput, setChoseInput] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -71,6 +83,16 @@ const PotsPage = () => {
     );
   }
 
+  // if (potsData.length === 0) {
+  //   return (
+  //     <div className='w-full h-[100dvh] flex justify-center items-center'>
+  //       <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+  //         No pots available. Please add a new pot.
+  //       </span>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
       <div className='w-full mb-[32px] flex justify-between'>
@@ -104,6 +126,9 @@ const PotsPage = () => {
                   index={index}
                   setPotID={setPotID}
                   itemID={item._id}
+                  setError={setError}
+                  setForm={setForm}
+                  setChoseInput={setChoseInput}
                 />
               </>
             </div>
@@ -145,21 +170,28 @@ const PotsPage = () => {
               </div>
             </div>
             <>
-              <MoneyTransferBtn />
+              <MoneyTransferBtn setPotID={setPotID} itemID={item._id} />
             </>
           </div>
         ))}
       </div>
       <>
-        <CreatePot />
+        <CreatePot fetchData={fetchData} setError={setError} />
 
-        <EditPot fetchData={fetchData} potID={potID} setError={setError} />
+        <EditPot
+          fetchData={fetchData}
+          potID={potID}
+          setError={setError}
+          form={form}
+          setForm={setForm}
+          showChoseInput={showChoseInput}
+        />
 
         <DeletePot fetchData={fetchData} potID={potID} setError={setError} />
 
-        <WithdrawPot />
+        <WithdrawPot fetchData={fetchData} potID={potID} setError={setError} />
 
-        <AddMoneyPot />
+        <AddMoneyPot fetchData={fetchData} potID={potID} setError={setError} />
       </>
     </div>
   );

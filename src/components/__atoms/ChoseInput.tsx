@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { options } from '@/commons/hooks/PotsData';
+import { FormType } from '../__organisms/PotsPage';
 
 type DropdownInputState = {
   showDropdown: boolean;
@@ -7,12 +8,29 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const ChoseInput = () => {
+type ChoseInputProps = {
+  handleUpdateForm: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: keyof FormType
+  ) => void;
+  form: FormType;
+};
+
+const ChoseInput: React.FC<ChoseInputProps> = ({ handleUpdateForm, form }) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
-    selectedOption: '',
+    selectedOption: form?.theme ?? '',
     selectedColor: '',
   });
+
+  useEffect(() => {
+    if (form?.theme) {
+      setState((prevState) => ({
+        ...prevState,
+        selectedOption: form.theme,
+      }));
+    }
+  }, [form?.theme]);
 
   const toggleDropdown = () => {
     setState((prevState) => ({
@@ -38,7 +56,7 @@ const ChoseInput = () => {
         {state.selectedOption && (
           <>
             <div
-              className='inline-block  w-[16px] h-[16px] mr-[8px] rounded-full'
+              className='inline-block w-[16px] h-[16px] mr-[8px] rounded-full'
               style={{ background: state.selectedColor }}
             />
             <span>{state.selectedOption}</span>
@@ -47,8 +65,9 @@ const ChoseInput = () => {
       </div>
       <input
         type='text'
-        value={state.selectedOption}
+        value={form?.theme}
         onClick={toggleDropdown}
+        onChange={(e) => handleUpdateForm(e, 'theme')}
         className='w-full h-[45px] px-[20px] py-[14px] text-white border-[1px] border-[#98908B] rounded-[8px]'
         readOnly
       />

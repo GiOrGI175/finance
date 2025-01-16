@@ -6,7 +6,12 @@ import ChoseInput from '../__atoms/ChoseInput';
 import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
 
-const CreatePot = () => {
+type CreatePotPropsType = {
+  setError: (message: string) => void;
+  fetchData: () => void;
+};
+
+const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
   const showAddPot = useAppBtn((state) => state.showAddPot);
   const toggleAddPot = useAppBtn((state) => state.toggleAddPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
