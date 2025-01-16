@@ -29,7 +29,7 @@ export default function Register() {
   const onSubmit: SubmitHandler<signUpFormData> = async (data) => {
     setErrorMessage(null);
     try {
-      const res = await axios.post("http://localhost:10000/auth/sign-up", data);
+      const res = await axios.post("https://finance-wzzy.onrender.com/auth/sign-up", data);
       if (res.status === 201) {
         alert("You have registered successfully!");
         setIsLoading(true);
