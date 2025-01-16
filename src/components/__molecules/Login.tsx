@@ -35,7 +35,7 @@ export default function Login() {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     setError(null);
     try {
-      const res = await axios.post("http://localhost:3001/auth/sign-in", data);
+      const res = await axios.post("http://localhost:10000/auth/sign-in", data);
       console.log(res);
       if (res.status === 200) {
         setCookie("auth_token", res.data.token, {
