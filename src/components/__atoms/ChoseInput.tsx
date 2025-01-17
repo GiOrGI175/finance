@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { options } from '@/commons/hooks/PotsData';
+import { options } from '@/commons/hooks/PotsData'; // Assuming options is an array of theme options
 import { FormType } from '../__organisms/PotsPage';
 
 type ChoseInputProps = {
@@ -8,6 +8,7 @@ type ChoseInputProps = {
     fieldName: keyof FormType
   ) => void;
   form: FormType;
+  setForm: React.Dispatch<React.SetStateAction<FormType>>;
 };
 
 type DropdownInputState = {
@@ -16,7 +17,11 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const ChoseInput: React.FC<ChoseInputProps> = ({ handleUpdateForm, form }) => {
+const ChoseInput: React.FC<ChoseInputProps> = ({
+  handleUpdateForm,
+  form,
+  setForm,
+}) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
     selectedOption: form.theme || '',
@@ -47,14 +52,7 @@ const ChoseInput: React.FC<ChoseInputProps> = ({ handleUpdateForm, form }) => {
       selectedColor: color,
     });
 
-    const selectedOption = state.selectedOption;
-
-    handleUpdateForm(
-      {
-        target: { value: selectedOption },
-      } as React.ChangeEvent<HTMLInputElement>,
-      'theme'
-    );
+    setForm((prevForm) => ({ ...prevForm, theme: option }));
   };
 
   return (

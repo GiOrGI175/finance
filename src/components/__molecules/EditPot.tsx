@@ -30,17 +30,9 @@ const EditPot: React.FC<EditPotProps> = ({
   const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
-  const handleUpdateForm = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: string | number
-  ) => {
-    const value = e.target.value;
-    setForm((prevForm: any) => ({
-      ...prevForm,
-      [fieldName]: value,
-    }));
-
-    console.log(form);
+  const handleUpdateForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prevState) => ({ ...prevState, [name]: value }));
   };
   return (
     <div
@@ -76,8 +68,9 @@ const EditPot: React.FC<EditPotProps> = ({
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='potName'
               value={form.potName}
-              onChange={(e) => handleUpdateForm(e, 'potName')}
+              onChange={handleUpdateForm}
             />
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
@@ -88,16 +81,21 @@ const EditPot: React.FC<EditPotProps> = ({
               Target
             </label>
             <input
-              type='text'
+              type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
               value={form.Target}
-              onChange={(e) => handleUpdateForm(e, 'Target')}
+              onChange={handleUpdateForm}
             />
           </div>
           <>
             {showChoseInput && (
-              <ChoseInput handleUpdateForm={handleUpdateForm} form={form} />
+              <ChoseInput
+                handleUpdateForm={handleUpdateForm}
+                form={form}
+                setForm={setForm}
+              />
             )}
           </>
         </form>
