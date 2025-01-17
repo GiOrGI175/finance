@@ -65,6 +65,7 @@ const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='potName'
               value={formData.potName}
               onChange={handleChange}
             />
@@ -80,6 +81,7 @@ const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
               type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
               value={formData.Target}
               onChange={handleChange}
             />
