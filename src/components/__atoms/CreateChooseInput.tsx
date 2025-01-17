@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { options } from '@/commons/hooks/PotsData';
 import { FormType } from '../__organisms/PotsPage';
 
-type ChoseInputProps = {
-  handleUpdateForm: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof FormType
-  ) => void;
-  form: FormType;
+type CreateChoseInputProps = {
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  formData: FormType;
+  setFormData: React.Dispatch<
+    React.SetStateAction<{ potName: string; Target: number; theme: string }>
+  >;
 };
 
 type DropdownInputState = {
@@ -16,25 +16,16 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const CreateChoseInput: React.FC<ChoseInputProps> = ({
-  handleUpdateForm,
-  form,
+const CreateChoseInput: React.FC<CreateChoseInputProps> = ({
+  formData,
+  handleChange,
+  setFormData,
 }) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
-    selectedOption: form.theme || '',
+    selectedOption: '',
     selectedColor: '',
   });
-
-  useEffect(() => {
-    const selectedColor =
-      options.find((option) => option.value === form.theme)?.color || '';
-    setState((prevState) => ({
-      ...prevState,
-      selectedOption: form.theme,
-      selectedColor,
-    }));
-  }, [form.theme]);
 
   const toggleDropdown = () => {
     setState((prevState) => ({
@@ -50,14 +41,7 @@ const CreateChoseInput: React.FC<ChoseInputProps> = ({
       selectedColor: color,
     });
 
-    const selectedOption = state.selectedOption;
-
-    handleUpdateForm(
-      {
-        target: { value: selectedOption },
-      } as React.ChangeEvent<HTMLInputElement>,
-      'theme'
-    );
+    setFormData((prevState) => ({ ...prevState, theme: option }));
   };
 
   return (
@@ -80,6 +64,7 @@ const CreateChoseInput: React.FC<ChoseInputProps> = ({
         type='text'
         value={state.selectedOption}
         onClick={toggleDropdown}
+        name='theme'
         className='w-full h-[45px] px-[20px] py-[14px] text-white border-[1px] border-[#98908B] rounded-[8px]'
         readOnly
       />

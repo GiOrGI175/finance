@@ -19,7 +19,7 @@ const AddPot: React.FC<AddPotPropsType> = ({
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
   const postReq = async (formData: FormType) => {
-    await axiosInstance.post('/pots/,', formData);
+    await axiosInstance.post('/pots', formData);
 
     try {
     } catch (error: any) {
