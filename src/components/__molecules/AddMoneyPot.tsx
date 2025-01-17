@@ -6,7 +6,7 @@ import ChoseInput from '../__atoms/ChoseInput';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 type AddMoneyPotPropsType = {
   potID: string;
   setError: (message: string) => void;
@@ -23,6 +23,26 @@ const AddMoneyPot: React.FC<AddMoneyPotPropsType> = ({
     (state) => state.toggleshowAddMoneyPot
   );
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [data, setData] = useState({ procent: '', theme: '', Target: 0 });
+
+  useEffect(() => {
+    const getPotData = async () => {
+      try {
+        const res = await axiosInstance.get(`/pots/${potID}`);
+
+        const getdata = res.data;
+        setData({
+          procent: getdata.procent,
+          theme: getdata.theme,
+          Target: getdata.Target,
+        });
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+    getPotData();
+  }, [potID]);
 
   const [AddMoney, setAddMoney] = useState({ Add: 0 });
 
@@ -85,8 +105,8 @@ const AddMoneyPot: React.FC<AddMoneyPotPropsType> = ({
           <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
             <div
               style={{
-                width: `${8}%`,
-                backgroundColor: 'red',
+                width: `${data.procent}%`,
+                backgroundColor: `${data.theme}`,
               }}
               className='h-full rounded-[8px]'
             />
@@ -94,12 +114,12 @@ const AddMoneyPot: React.FC<AddMoneyPotPropsType> = ({
           <div className='flex justify-between mt-[13px]'>
             <div>
               <span className='font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-                {7}%
+                {data.procent}%
               </span>
             </div>
             <div>
               <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                Target pf $limit
+                Target of ${data.Target} limit
               </span>
             </div>
           </div>
