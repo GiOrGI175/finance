@@ -16,7 +16,10 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const ChoseInput: React.FC<ChoseInputProps> = ({ handleUpdateForm, form }) => {
+const CreateChoseInput: React.FC<ChoseInputProps> = ({
+  handleUpdateForm,
+  form,
+}) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
     selectedOption: form.theme || '',
@@ -103,4 +106,4 @@ const ChoseInput: React.FC<ChoseInputProps> = ({ handleUpdateForm, form }) => {
   );
 };
 
-export default ChoseInput;
+export default CreateChoseInput;

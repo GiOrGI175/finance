@@ -39,6 +39,8 @@ const EditPot: React.FC<EditPotProps> = ({
       ...prevForm,
       [fieldName]: value,
     }));
+
+    console.log(form);
   };
   return (
     <div
