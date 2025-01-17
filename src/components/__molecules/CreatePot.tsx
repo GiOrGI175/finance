@@ -8,17 +8,17 @@ import { CloseBtn } from '@/utility/images/ImgExport';
 import CreateChoseInput from '../__atoms/CreateChooseInput';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
-import { FormType } from '../__organisms/PotsPage';
 
 type CreatePotPropsType = {
-  setError: (message: string) => void;
   fetchData: () => void;
+  setError: (message: string) => void;
 };
 
 const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
   const showAddPot = useAppBtn((state) => state.showAddPot);
   const toggleAddPot = useAppBtn((state) => state.toggleAddPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
   const [formData, setFormData] = useState({
     potName: '',
     Target: 0,
@@ -29,20 +29,6 @@ const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
-
-  const PostData = async (formData:FormType) => {
-    try {
-      const res = await axiosInstance.post('/pots',formData);sss
-     
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      fetchData()
-  };
-
-  useEffect(() => {
-    // PostData();
-  }, []);
 
   return (
     <div
@@ -102,7 +88,7 @@ const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
         </form>
       </div>
       <>
-        <AddPot />
+        <AddPot fetchData={fetchData} setError={setError} formData={formData} />
       </>
     </div>
   );
