@@ -25,6 +25,7 @@ export default function OverViewBalances() {
         }
       );
       setUser(res.data);
+      console.log(user)
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -88,10 +89,11 @@ export default function OverViewBalances() {
           <div className="bg-[#201F24] p-[24px] rounded-xl flex-1">
             <div>
               <h5 className="text-[14px] font-normal text-[#FFFFFF]">
-                Current Balance
+                Balance
               </h5>
               <h3 className="text-[32px] font-bold leading-8 text-[#FFFFFF] mt-[12px]">
-                $4,836.00
+                
+                ${user.balance} 
               </h3>
             </div>
           </div>
@@ -99,7 +101,7 @@ export default function OverViewBalances() {
             <div>
               <h5 className="text-[14px] font-normal text-[#696868]">Income</h5>
               <h3 className="text-[32px] font-bold leading-8 text-[#201F24] mt-[12px]">
-                $3,814.25
+              ${user.income} 
               </h3>
             </div>
           </div>
@@ -107,20 +109,20 @@ export default function OverViewBalances() {
             <div>
               <h5 className="text-[14px] font-normal text-[#696868]">Expenses</h5>
               <h3 className="text-[32px] font-bold leading-8 text-[#201F24] mt-[12px]">
-                $1,700.50
+              ${user.expenses}
               </h3>
             </div>
           </div>
         </div>
       </div>
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-            <h3 className="text-xl font-semibold">Are you sure you want to log out?</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 min-w-[211px]">
+            <h3 className="  text-xl font-semibold ">Are you sure you want to log out?</h3>
             <div className="mt-4 flex justify-between">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-600 text-white rounded-md"
+                className="px-4 py-2 mr-2 bg-red-600 text-white rounded-md"
               >
                 Yes, Logout
               </button>
