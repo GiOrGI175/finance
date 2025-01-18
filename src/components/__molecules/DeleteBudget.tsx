@@ -3,11 +3,32 @@
 import useAppBtn from '@/commons/hooks/setTrue';
 import Image from 'next/image';
 import { CloseBtn } from '@/utility/images/ImgExport';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 
-const DeleteBudget = () => {
+type DeleteBudgetProps = {
+  fetchData: () => void;
+  potID: string;
+  setError: (message: string) => void;
+};
+
+const DeleteBudget: React.FC<DeleteBudgetProps> = ({
+  fetchData,
+  potID,
+  setError,
+}) => {
   const showDeleteBudget = useAppBtn((state) => state.showDeleteBudget);
   const toggleDeleteBudget = useAppBtn((state) => state.toggleDeleteBudget);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const handleDeleteBudget = async () => {
+    try {
+      await axiosInstance.delete(`/budgets/${potID}`);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      fetchData();
+    }
+  };
 
   return (
     <div
@@ -40,6 +61,7 @@ const DeleteBudget = () => {
         onClick={() => {
           toggleOverlay();
           toggleDeleteBudget();
+          handleDeleteBudget();
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { options } from '@/commons/hooks/PotsData';
-import { FormType } from '../__organisms/PotsPage';
 
-type ChoseInputProps = {
-  handleUpdateForm: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof FormType
-  ) => void;
-  form: FormType;
-  setForm: React.Dispatch<React.SetStateAction<FormType>>;
+type CreateChoseInputProps = {
+  setFormData: React.Dispatch<
+    React.SetStateAction<{ potName: string; Target: number; theme: string }>
+  >;
 };
 
 type DropdownInputState = {
@@ -17,26 +13,12 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const ChoseInput: React.FC<ChoseInputProps> = ({
-  handleUpdateForm,
-  form,
-  setForm,
-}) => {
+const CreateChoseInput: React.FC<CreateChoseInputProps> = ({ setFormData }) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
-    selectedOption: form.theme || '',
+    selectedOption: '',
     selectedColor: '',
   });
-
-  useEffect(() => {
-    const selectedColor =
-      options.find((option) => option.value === form.theme)?.color || '';
-    setState((prevState) => ({
-      ...prevState,
-      selectedOption: form.theme,
-      selectedColor,
-    }));
-  }, [form.theme]);
 
   const toggleDropdown = () => {
     setState((prevState) => ({
@@ -52,7 +34,7 @@ const ChoseInput: React.FC<ChoseInputProps> = ({
       selectedColor: color,
     });
 
-    setForm((prevForm) => ({ ...prevForm, theme: option }));
+    setFormData((prevState) => ({ ...prevState, theme: option }));
   };
 
   return (
@@ -75,6 +57,7 @@ const ChoseInput: React.FC<ChoseInputProps> = ({
         type='text'
         value={state.selectedOption}
         onClick={toggleDropdown}
+        name='theme'
         className='w-full h-[45px] px-[20px] py-[14px] text-white border-[1px] border-[#98908B] rounded-[8px]'
         readOnly
       />
@@ -101,4 +84,4 @@ const ChoseInput: React.FC<ChoseInputProps> = ({
   );
 };
 
-export default ChoseInput;
+export default CreateChoseInput;
