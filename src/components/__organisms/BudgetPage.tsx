@@ -1,3 +1,5 @@
+'use client';
+
 import AddNewBudget from '../__atoms/AddNewBudget';
 import { BudgetView } from '@/commons/hooks/BudgetData';
 import Image from 'next/image';
@@ -8,8 +10,91 @@ import CreateBudget from '../__molecules/CreateBudget';
 import EditBudget from '../__molecules/EditBudget';
 import DeleteBudget from '../__molecules/DeleteBudget';
 import { BudgetChart } from '../__molecules/BudgetChart';
+import { useEffect, useState } from 'react';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+import { colorOptions } from '@/commons/hooks/PotsData';
+
+type budgetsT = {
+  _id: string;
+  budgetName: string;
+  Target: number;
+  theme: string;
+  __v: number;
+  procent: number;
+  Spent: number;
+  Remaining: number;
+};
+
+export type FormType2 = {
+  budgetName: string;
+  Target: number;
+  theme: string;
+};
 
 const BudgetPage = () => {
+  const [budgetsData, setBudgetsData] = useState<budgetsT[]>([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [potID, setPotID] = useState<string>('');
+  const [form, setForm] = useState<FormType2>({
+    budgetName: '',
+    Target: 0,
+    theme: '',
+  });
+  // const [showChoseInput, setChoseInput] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get('/budgets');
+      setBudgetsData(res.data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getColorByTheme = (theme: string): string => {
+    const color = colorOptions.find(
+      (option) => option.value.toLowerCase() === theme.toLowerCase()
+    );
+    return color ? color.color : '#000';
+  };
+
+  if (loading) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Loading...
+        </span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Error: {error}
+        </span>
+      </div>
+    );
+  }
+
+  // if (potsData.length === 0) {
+  //   return (
+  //     <div className='w-full h-[100dvh] flex justify-center items-center'>
+  //       <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+  //         No pots available. Please add a new pot.
+  //       </span>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
       <div className='w-full mb-[32px] flex justify-between'>
@@ -65,9 +150,9 @@ const BudgetPage = () => {
           </div>
         </div>
         <div className='basis-[608px]  grow w-full  flex flex-col justify-between '>
-          {BudgetView.map((item, Index) => (
+          {budgetsData.map((item, Index) => (
             <div
-              key={item.id}
+              key={item._id}
               className='w-full h-fit bg-white p-[32px] rounded-[12px] mb-[24px]'
             >
               <div className='w-full flex justify-between '>
@@ -75,27 +160,33 @@ const BudgetPage = () => {
                   <div
                     className=' w-[16px] h-[16px] mr-[16px] rounded-full'
                     style={{
-                      backgroundColor: item.color,
+                      backgroundColor: getColorByTheme(item.theme),
                     }}
                   />
                   <span className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
-                    {item.BudgetCategory}
+                    {item.budgetName}
                   </span>
                 </div>
                 <>
-                  <BudgetSetting index={Index} />
+                  <BudgetSetting
+                    index={Index}
+                    setPotID={setPotID}
+                    itemID={item._id}
+                    setError={setError}
+                    setForm={setForm}
+                  />
                 </>
               </div>
               <div>
                 <div className='flex flex-col justify-between'>
                   <span className='mb-[16px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
-                    Maximum of ${item.limit}
+                    Maximum of ${item.Target}
                   </span>
                   <div className='w-full h-[32px] rounded-[8px] bg-[#F8F4F0] mb-[16px] flex items-center'>
                     <div
                       style={{
                         width: `${item.procent}%`,
-                        backgroundColor: item.color,
+                        backgroundColor: getColorByTheme(item.theme),
                       }}
                       className='h-[24px] rounded-[5px]'
                     />
@@ -105,7 +196,7 @@ const BudgetPage = () => {
                       <div
                         className='w-[4px] h-full rounded-[8px] mr-[16px] '
                         style={{
-                          backgroundColor: item.color,
+                          backgroundColor: getColorByTheme(item.theme),
                         }}
                       />
                       <div className=' flex flex-col justify-between'>
@@ -113,7 +204,7 @@ const BudgetPage = () => {
                           Spent
                         </span>
                         <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
-                          {item.enterMoney}$
+                          {item.Spent}$
                         </span>
                       </div>
                     </div>
@@ -124,7 +215,7 @@ const BudgetPage = () => {
                           Remaining
                         </span>
                         <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
-                          35$
+                          {item.Remaining}$
                         </span>
                       </div>
                     </div>
@@ -147,7 +238,7 @@ const BudgetPage = () => {
                     </Link>
                   </div>
                 </div>
-                {item.translations.map((translation, index) => (
+                {/* {item.translations.map((translation, index) => (
                   <div
                     key={index}
                     className={`flex justify-between items-center py-[12px] ${
@@ -178,18 +269,24 @@ const BudgetPage = () => {
                       </span>
                     </div>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           ))}
         </div>
       </div>
       <>
-        <CreateBudget />
+        <CreateBudget fetchData={fetchData} setError={setError} />
 
-        <EditBudget />
+        <EditBudget
+          fetchData={fetchData}
+          potID={potID}
+          setError={setError}
+          form={form}
+          setForm={setForm}
+        />
 
-        <DeleteBudget />
+        <DeleteBudget fetchData={fetchData} potID={potID} setError={setError} />
       </>
     </div>
   );

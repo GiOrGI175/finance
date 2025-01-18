@@ -7,11 +7,32 @@ import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
 import SaveChangeBudget from '../__atoms/SaveChangeBudget';
+import { FormType2 } from '../__organisms/BudgetPage';
+import ChoseInputButget from '../__atoms/ChoseInputButget';
 
-const EditBudget = () => {
+type EditBudgetProps = {
+  fetchData: () => void;
+  potID: string;
+  setError: (message: string) => void;
+  form: FormType2;
+  setForm: React.Dispatch<React.SetStateAction<FormType2>>;
+};
+
+const EditBudget: React.FC<EditBudgetProps> = ({
+  fetchData,
+  potID,
+  setError,
+  form,
+  setForm,
+}) => {
   const showEditBudget = useAppBtn((state) => state.showEditBudget);
   const toggleshowEditBudget = useAppBtn((state) => state.toggleshowEditBudget);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const handleUpdateForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   return (
     <div
@@ -42,11 +63,14 @@ const EditBudget = () => {
         <form className=''>
           <div className='flex flex-col mb-[16px]'>
             <label className='mb-[4px] font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-              Pot Name
+              Budget Name
             </label>
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='budgetName'
+              value={form.budgetName}
+              onChange={handleUpdateForm}
             />
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
@@ -57,18 +81,27 @@ const EditBudget = () => {
               Target
             </label>
             <input
-              type='text'
+              type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
+              value={form.Target}
+              onChange={handleUpdateForm}
             />
           </div>
           <>
-            <ChoseInput />
+            <ChoseInputButget form={form} setForm={setForm} />
           </>
         </form>
       </div>
       <>
-        <SaveChangeBudget />
+        <SaveChangeBudget
+          form={form}
+          potID={potID}
+          fetchData={fetchData}
+          setError={setError}
+          setForm={setForm}
+        />
       </>
     </div>
   );
