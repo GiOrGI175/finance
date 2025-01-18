@@ -1,6 +1,6 @@
 'use client';
 
-import { Potss } from '@/commons/hooks/PotsData';
+import { colorOptions, Potss } from '@/commons/hooks/PotsData';
 import Image from 'next/image';
 import AddNewPot from '../__atoms/AddNewPot';
 import CreatePot from '../__molecules/CreatePot';
@@ -10,8 +10,89 @@ import DeletePot from '../__molecules/DeletePot';
 import MoneyTransferBtn from '../__atoms/MoneyTransferBtn';
 import WithdrawPot from '../__molecules/WithdrawPot';
 import AddMoneyPot from '../__molecules/AddMoneyPot';
+import { useEffect, useState } from 'react';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+
+type PotT = {
+  _id: string;
+  potName: string;
+  procent: number;
+  Target: number;
+  theme: string;
+  __v: number;
+  Amount: number;
+};
+
+export type FormType = {
+  potName: string;
+  Target: number;
+  theme: string;
+};
 
 const PotsPage = () => {
+  const [potsData, setPostsData] = useState<PotT[]>([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [potID, setPotID] = useState<string>('');
+  const [form, setForm] = useState<FormType>({
+    potName: '',
+    Target: 0,
+    theme: '',
+  });
+  const [showChoseInput, setChoseInput] = useState(false);
+
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get('/pots');
+      setPostsData(res.data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getColorByTheme = (theme: string): string => {
+    const color = colorOptions.find(
+      (option) => option.value.toLowerCase() === theme.toLowerCase()
+    );
+    return color ? color.color : '#000';
+  };
+
+  if (loading) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Loading...
+        </span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Error: {error}
+        </span>
+      </div>
+    );
+  }
+
+  // if (potsData.length === 0) {
+  //   return (
+  //     <div className='w-full h-[100dvh] flex justify-center items-center'>
+  //       <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+  //         No pots available. Please add a new pot.
+  //       </span>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
       <div className='w-full mb-[32px] flex justify-between'>
@@ -23,20 +104,32 @@ const PotsPage = () => {
         </>
       </div>
       <div className='w-full flex flex-wrap justify-center gap-[24px]'>
-        {Potss.map((item, index) => (
+        {potsData.map((item, index) => (
           <div
-            key={item.id}
+            key={item._id}
             className='basis-[518px]  grow w-full h-[303px] rounded-[12px] flex flex-col justify-between p-[24px] bg-white max-sm:p-[20px]'
           >
             <div className='flex justify-between mb-[32px]'>
-              <div className='flex'>
-                <Image src={item.icon} width={16} height={16} alt='icon' />
+              <div className='flex items-center'>
+                <div
+                  className='w-[16px] h-[16px] rounded-full'
+                  style={{
+                    backgroundColor: getColorByTheme(item.theme),
+                  }}
+                />
                 <span className='ml-[16px] font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
-                  {item.method}
+                  {item.potName}
                 </span>
               </div>
               <>
-                <PotSettings index={index} />
+                <PotSettings
+                  index={index}
+                  setPotID={setPotID}
+                  itemID={item._id}
+                  setError={setError}
+                  setForm={setForm}
+                  setChoseInput={setChoseInput}
+                />
               </>
             </div>
             <div className='flex flex-col justify-between mb-[32px]'>
@@ -48,7 +141,7 @@ const PotsPage = () => {
                 </div>
                 <div>
                   <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
-                    ${item.sum}
+                    ${item.Amount}
                   </span>
                 </div>
               </div>
@@ -57,7 +150,7 @@ const PotsPage = () => {
                   <div
                     style={{
                       width: `${item.procent}%`,
-                      backgroundColor: item.color,
+                      backgroundColor: getColorByTheme(item.theme),
                     }}
                     className='h-full rounded-[8px]'
                   />
@@ -70,28 +163,35 @@ const PotsPage = () => {
                   </div>
                   <div>
                     <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                      Target pf ${item.limit}
+                      Target pf ${item.Target}
                     </span>
                   </div>
                 </div>
               </div>
             </div>
             <>
-              <MoneyTransferBtn />
+              <MoneyTransferBtn setPotID={setPotID} itemID={item._id} />
             </>
           </div>
         ))}
       </div>
       <>
-        <CreatePot />
+        <CreatePot fetchData={fetchData} setError={setError} />
 
-        <EditPot />
+        <EditPot
+          fetchData={fetchData}
+          potID={potID}
+          setError={setError}
+          form={form}
+          setForm={setForm}
+          showChoseInput={showChoseInput}
+        />
 
-        <DeletePot />
+        <DeletePot fetchData={fetchData} potID={potID} setError={setError} />
 
-        <WithdrawPot />
+        <WithdrawPot fetchData={fetchData} potID={potID} setError={setError} />
 
-        <AddMoneyPot />
+        <AddMoneyPot fetchData={fetchData} potID={potID} setError={setError} />
       </>
     </div>
   );
