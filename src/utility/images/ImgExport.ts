@@ -36,6 +36,7 @@ import NoteRe from "./total.svg"
 import Search from "./search.svg"
 import Active from "./Active.svg"
 import Overdue from "./overdue.svg"
+import userIcon from "./user.png"
 
 
 export {
@@ -77,4 +78,5 @@ export {
   Search,
   Active,
   Overdue,
+  userIcon,
 };
