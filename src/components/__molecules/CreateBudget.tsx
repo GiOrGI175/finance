@@ -62,9 +62,7 @@ const CreateBudget = () => {
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
             />
           </div>
-          <>
-            <ChoseInput />
-          </>
+          <>{/* <ChoseInput /> */}</>
         </form>
       </div>
       <>
