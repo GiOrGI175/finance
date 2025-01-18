@@ -3,6 +3,15 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+// Define the type for each transaction
+interface Transaction {
+  id: string; // Assuming id is a string
+  RecipientOrSender: string;
+  category: string;
+  Amount: string;
+  TransactionDate: string;
+}
+
 type PaginationProps = {
   search: string;
   category?: string;
@@ -16,34 +25,33 @@ export default function Pagination({
 }: PaginationProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
-  const [transactions, setTransactions] = useState<any[]>([]); 
-  const [filteredTransactions, setFilteredTransactions] = useState<any[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]); // Use the Transaction type
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]); // Use the Transaction type
 
   const indexOfLastTransaction = currentPage * usersPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - usersPerPage;
 
-  
   useEffect(() => {
     axios
-      .get("http://localhost:3001/transactions/getTransaction")
+      .get("https://finance-back-heee.onrender.com/transactions/getTransaction")
       .then((response) => {
-        let transactions = response.data;
+        let transactions: Transaction[] = response.data; // Ensure the data is treated as an array of Transaction objects
 
-        
+        // Filter by search term if available
         if (search) {
           transactions = transactions.filter((transaction) =>
-            transaction.RecipientOrSender.toLowerCase().includes(
-              search.toLowerCase()
-            )
+            transaction.RecipientOrSender.toLowerCase().includes(search.toLowerCase())
           );
         }
+        
+        // Filter by category if available
         if (category) {
           transactions = transactions.filter(
             (transaction) => transaction.category === category
           );
         }
 
-      
+        // Sorting based on the "sort" parameter
         if (sort === "A") {
           transactions.sort((a, b) =>
             a.RecipientOrSender.localeCompare(b.RecipientOrSender)
@@ -65,10 +73,11 @@ export default function Pagination({
           );
         }
 
-        setTransactions(transactions); 
+        // Set transactions and filtered transactions for pagination
+        setTransactions(transactions);
         setFilteredTransactions(
           transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
-        ); 
+        );
       })
       .catch((err) => console.log(err));
   }, [search, category, sort, currentPage]);
