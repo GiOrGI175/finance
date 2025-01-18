@@ -41,6 +41,9 @@ export default function Login() {
         setCookie("auth_token", res.data.token, {
           maxAge: 60 * 60, 
         });
+        setCookie("auth_name", res.data.fullName, {
+          maxAge: 60 * 60, 
+        });
         alert("You have Logged successfully!");
 
         setIsLoading(true);
