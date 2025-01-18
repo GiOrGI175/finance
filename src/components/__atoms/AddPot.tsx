@@ -8,18 +8,26 @@ type AddPotPropsType = {
   fetchData: () => void;
   setError: (message: string) => void;
   formData: FormType;
+  setFormData: React.Dispatch<React.SetStateAction<FormType>>;
 };
 
 const AddPot: React.FC<AddPotPropsType> = ({
   setError,
   fetchData,
   formData,
+  setFormData,
 }) => {
   const toggleAddPot = useAppBtn((state) => state.toggleAddPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
   const postReq = async (formData: FormType) => {
     await axiosInstance.post('/pots', formData);
+
+    setFormData({
+      potName: '',
+      Target: 0,
+      theme: '',
+    });
 
     try {
     } catch (error: any) {

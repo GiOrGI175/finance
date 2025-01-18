@@ -87,16 +87,17 @@ const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
             />
           </div>
           <>
-            <CreateChoseInput
-              formData={formData}
-              handleChange={handleChange}
-              setFormData={setFormData}
-            />
+            <CreateChoseInput setFormData={setFormData} />
           </>
         </form>
       </div>
       <>
-        <AddPot fetchData={fetchData} setError={setError} formData={formData} />
+        <AddPot
+          fetchData={fetchData}
+          setError={setError}
+          formData={formData}
+          setFormData={setFormData}
+        />
       </>
     </div>
   );

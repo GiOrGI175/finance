@@ -74,6 +74,7 @@ const BudgetSetting: React.FC<PotSettingsPropsType> = ({
             onClick={() => {
               toggleOverlay();
               toggleDeleteBudget();
+              setPotID(itemID);
             }}
           >
             <span className='font-publicSans font-normal text-[14px] leading-[24px] text-[#C94736] w-full text-start  '>

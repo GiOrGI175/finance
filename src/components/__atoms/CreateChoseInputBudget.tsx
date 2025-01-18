@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { options } from '@/commons/hooks/PotsData';
 
-type CreateChoseInputProps = {
+type CreateChoseInputBudgetProps = {
   setFormData: React.Dispatch<
-    React.SetStateAction<{ potName: string; Target: number; theme: string }>
+    React.SetStateAction<{ budgetName: string; Target: number; theme: string }>
   >;
 };
 
@@ -13,7 +13,9 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const CreateChoseInput: React.FC<CreateChoseInputProps> = ({ setFormData }) => {
+const CreateChoseInputBudget: React.FC<CreateChoseInputBudgetProps> = ({
+  setFormData,
+}) => {
   const [state, setState] = useState<DropdownInputState>({
     showDropdown: false,
     selectedOption: '',
@@ -84,4 +86,4 @@ const CreateChoseInput: React.FC<CreateChoseInputProps> = ({ setFormData }) => {
   );
 };
 
-export default CreateChoseInput;
+export default CreateChoseInputBudget;

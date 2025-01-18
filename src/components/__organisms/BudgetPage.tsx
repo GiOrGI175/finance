@@ -65,6 +65,36 @@ const BudgetPage = () => {
     return color ? color.color : '#000';
   };
 
+  if (loading) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Loading...
+        </span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='w-full h-[100dvh] flex justify-center items-center'>
+        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+          Error: {error}
+        </span>
+      </div>
+    );
+  }
+
+  // if (potsData.length === 0) {
+  //   return (
+  //     <div className='w-full h-[100dvh] flex justify-center items-center'>
+  //       <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+  //         No pots available. Please add a new pot.
+  //       </span>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
       <div className='w-full mb-[32px] flex justify-between'>
@@ -246,7 +276,7 @@ const BudgetPage = () => {
         </div>
       </div>
       <>
-        <CreateBudget />
+        <CreateBudget fetchData={fetchData} setError={setError} />
 
         <EditBudget
           fetchData={fetchData}
@@ -256,7 +286,7 @@ const BudgetPage = () => {
           setForm={setForm}
         />
 
-        <DeleteBudget />
+        <DeleteBudget fetchData={fetchData} potID={potID} setError={setError} />
       </>
     </div>
   );
