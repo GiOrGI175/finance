@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'https://finance-back-heee.onrender.com',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
