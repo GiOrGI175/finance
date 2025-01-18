@@ -6,12 +6,34 @@ import ChoseInput from '../__atoms/ChoseInput';
 import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
+import { useEffect, useState } from 'react';
+import { FormType } from '../__organisms/PotsPage';
 
-const EditPot = () => {
+type EditPotProps = {
+  fetchData: () => void;
+  potID: string;
+  setError: (message: string) => void;
+  form: FormType;
+  setForm: React.Dispatch<React.SetStateAction<FormType>>;
+  showChoseInput: boolean;
+};
+
+const EditPot: React.FC<EditPotProps> = ({
+  fetchData,
+  potID,
+  setError,
+  form,
+  setForm,
+  showChoseInput,
+}) => {
   const showEditPot = useAppBtn((state) => state.showEditPot);
   const toggleEditPot = useAppBtn((state) => state.toggleEditPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
+  const handleUpdateForm = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prevState) => ({ ...prevState, [name]: value }));
+  };
   return (
     <div
       className={`absolute  max-w-[560px] w-full h-[512px] rounded-[12px] p-[32px] bg-white  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 duration-500
@@ -46,6 +68,9 @@ const EditPot = () => {
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='potName'
+              value={form.potName}
+              onChange={handleUpdateForm}
             />
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
@@ -56,18 +81,33 @@ const EditPot = () => {
               Target
             </label>
             <input
-              type='text'
+              type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
+              value={form.Target}
+              onChange={handleUpdateForm}
             />
           </div>
           <>
-            <ChoseInput />
+            {showChoseInput && (
+              <ChoseInput
+                handleUpdateForm={handleUpdateForm}
+                form={form}
+                setForm={setForm}
+              />
+            )}
           </>
         </form>
       </div>
       <>
-        <SaveChange />
+        <SaveChange
+          form={form}
+          potID={potID}
+          fetchData={fetchData}
+          setError={setError}
+          setForm={setForm}
+        />
       </>
     </div>
   );

@@ -6,11 +6,32 @@ import ChoseInput from '../__atoms/ChoseInput';
 import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import AddBudget from '../__atoms/AddBudget';
+import { useState } from 'react';
+import CreateChoseInputBudget from '../__atoms/CreateChoseInputBudget';
 
-const CreateBudget = () => {
+type CreateBudgetPropsType = {
+  fetchData: () => void;
+  setError: (message: string) => void;
+};
+
+const CreateBudget: React.FC<CreateBudgetPropsType> = ({
+  setError,
+  fetchData,
+}) => {
   const showAddBudget = useAppBtn((state) => state.showAddBudget);
   const toggleshowAddBudget = useAppBtn((state) => state.toggleshowAddBudget);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [formData, setFormData] = useState({
+    budgetName: '',
+    Target: 0,
+    theme: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   return (
     <div
@@ -42,11 +63,14 @@ const CreateBudget = () => {
         <form className=''>
           <div className='flex flex-col mb-[16px]'>
             <label className='mb-[4px] font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-              Pot Name
+              Budget Name
             </label>
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='budgetName'
+              value={formData.budgetName}
+              onChange={handleChange}
             />
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
@@ -57,18 +81,26 @@ const CreateBudget = () => {
               Target
             </label>
             <input
-              type='text'
+              type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
+              value={formData.Target}
+              onChange={handleChange}
             />
           </div>
           <>
-            <ChoseInput />
+            <CreateChoseInputBudget setFormData={setFormData} />
           </>
         </form>
       </div>
       <>
-        <AddBudget />
+        <AddBudget
+          fetchData={fetchData}
+          setError={setError}
+          formData={formData}
+          setFormData={setFormData}
+        />
       </>
     </div>
   );

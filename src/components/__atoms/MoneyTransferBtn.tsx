@@ -2,7 +2,15 @@
 
 import useAppBtn from '@/commons/hooks/setTrue';
 
-const MoneyTransferBtn = () => {
+type MoneyTransferBtnPropsType = {
+  setPotID: (id: string) => void;
+  itemID: string;
+};
+
+const MoneyTransferBtn: React.FC<MoneyTransferBtnPropsType> = ({
+  setPotID,
+  itemID,
+}) => {
   const toggleshowWithdrawPot = useAppBtn(
     (state) => state.toggleshowWithdrawPot
   );
@@ -19,6 +27,7 @@ const MoneyTransferBtn = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowAddMoneyPot();
+          setPotID(itemID);
         }}
       >
         + Add Money
@@ -28,6 +37,7 @@ const MoneyTransferBtn = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowWithdrawPot();
+          setPotID(itemID);
         }}
       >
         Withdraw
