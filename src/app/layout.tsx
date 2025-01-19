@@ -6,6 +6,7 @@ import NavBar from '@/components/__molecules/NavBar';
 import { usePathname } from 'next/navigation';
 import { disableNavWithFooter } from '../components/__atoms/DisableNavWithFooter';
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
