@@ -1,5 +1,5 @@
 "use client";
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { BudgetChart } from "./BudgetChart";
@@ -12,6 +12,37 @@ export default function BudgetAndBills() {
   const handleClickBills = () => {
     router.push("/Recurring-bills");
   };
+  const [bills, setBills] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/bills");
+        const data = await response.json();
+        setBills(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  let totalBills = 0;
+  let amountSpent = 0;
+  let totalUpcoming = 0;
+  let dueSoon = 0;
+  bills.forEach((el: any) => {
+    totalBills += el.amount;
+    if (el.status == "paid") {
+      amountSpent += el.amount;
+    }
+    if (el.status == "none") {
+      totalUpcoming += el.amount;
+    }
+    if ((el.status = "unpaid")) {
+      dueSoon += el.amount;
+    }
+  });
+
   return (
     <motion.div className="grow basis-[428px]">
       <motion.div className="mt-8 flex flex-col w-full space-y-6 ">
@@ -69,13 +100,15 @@ export default function BudgetAndBills() {
             </div>
           </div>
         </motion.div>
-        <motion.div className="bg-[#FFFFFF] p-[32px] rounded-xl flex-1 flex flex-col justify-around"
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay:1.5  }}
-        viewport={{
-          once: true,
-        }}>
+        <motion.div
+          className="bg-[#FFFFFF] p-[32px] rounded-xl flex-1 flex flex-col justify-around"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.5 }}
+          viewport={{
+            once: true,
+          }}
+        >
           <div className="flex justify-between">
             <h5 className="text-[#201F24] text-[20px] font-bold leading-6">
               Recurring Bills
@@ -92,19 +125,19 @@ export default function BudgetAndBills() {
               <h5 className="text-[#696868] text-[20px] font-normal leading-6">
                 Paid Bills
               </h5>
-              <h5 className="font-bold text-[#201F24]">$190.00</h5>
+              <h5 className="font-bold text-[#201F24]">${amountSpent}</h5>
             </div>
             <div className="flex justify-between items-center bg-[#F8F4F0] border-l-4 border-[#F2CDAC] rounded-lg h-[61px] pl-[16px] pr-[16px]">
               <h5 className="text-[#696868] text-[20px] font-normal leading-6">
                 Total Upcoming
               </h5>
-              <h5 className="font-bold text-[#201F24]">$194.98</h5>
+              <h5 className="font-bold text-[#201F24]">${totalUpcoming}</h5>
             </div>
             <div className="flex justify-between items-center bg-[#F8F4F0] border-l-4 border-[#82C9D7] rounded-lg h-[61px] pl-[16px] pr-[16px]">
               <h5 className="text-[#696868] text-[20px] font-normal leading-6">
                 Due Soon
               </h5>
-              <h5 className="font-bold text-[#201F24]">$59.98</h5>
+              <h5 className="font-bold text-[#201F24]">${dueSoon}</h5>
             </div>
           </div>
         </motion.div>
