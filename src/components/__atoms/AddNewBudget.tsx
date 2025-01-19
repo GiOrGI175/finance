@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import useAppBtn from '@/commons/hooks/setTrue';
+import useAppBtn from "@/commons/hooks/setTrue";
 
 useAppBtn;
 
@@ -11,13 +11,13 @@ const AddNewBudget = () => {
   return (
     <div>
       <button
-        className=' w-[156px] h-[53px] rounded-[8px] padding-[16px] bg-[#201F24] max-sm:w-[154px]'
+        className=" w-[156px] h-[53px] rounded-[8px] padding-[16px] bg-[#201F24] max-sm:w-[154px]"
         onClick={() => {
           toggleOverlay();
           toggleshowAddBudget();
         }}
       >
-        <span className='font-publicSans font-bold text-[14px] leading-[21px] text-white'>
+        <span className="font-publicSans font-bold text-[14px] leading-[21px] text-white">
           + Add New Budget
         </span>
       </button>
