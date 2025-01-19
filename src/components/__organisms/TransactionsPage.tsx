@@ -4,6 +4,9 @@ import Pagination from "@/components/__molecules/Pagination";
 import Image from "next/image";
 import { Category, Sort } from "@/utility/images/ImgExport";
 import axios from "axios";
+import Spinner from "../__molecules/Spinner";
+import {motion} from "framer-motion"
+
 type SortType = "A" | "Z" | "High" | "Low" | "Latest";
 export default function TransactionsPage() {
   const [search, setSearch] = useState("");
@@ -12,6 +15,7 @@ export default function TransactionsPage() {
   const [isSortVisible, setIsSortVisible] = useState(false);
   const [isCategoryVisible, setIsCategoryVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [loading, setIsLoading] = useState<boolean>(false);
   const [newTransaction, setNewTransaction] = useState({
     RecipientOrSender: "",
     category: "",
@@ -32,6 +36,7 @@ export default function TransactionsPage() {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true)
     try {
       const response = await axios.post(
         "https://finance-back-heee.onrender.com/transactions/transaction",
@@ -41,26 +46,45 @@ export default function TransactionsPage() {
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating transaction:", error);
+    } finally {
+      setIsLoading(false); 
     }
   };
+  if (loading) {
+    return <Spinner />; 
+  }
+ 
   return (
     <div className="p-8 w-full overflow-x-hidden overflow-scroll h-screen  ">
       <div className="mx-auto sm:mb-10 lg:mb-[0px]">
         <div className="flex  justify-between">
-          <h2 className="font-publicSans font-bold text-4xl text-[#201F24] mb-6">
+          <motion.h2 className="font-publicSans font-bold text-4xl text-[#201F24] mb-6"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          viewport={{
+            once: true,
+          }}>
             Transactions
-          </h2>
-          <button
+          </motion.h2>
+          <motion.button
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          viewport={{
+            once: true,
+          }}
             onClick={() => setIsModalOpen(true)}
             className="bg-black h-[53px] text-white px-6 py-3 rounded-lg"
           >
             + Add Transaction
-          </button>
+          </motion.button>
         </div>
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-[560px] ml-6 mr-6">
+            <motion.div className="bg-white p-8 rounded-lg shadow-lg max-w-[560px] ml-6 mr-6"
+            >
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]  max-ss:text-[20px] ">
                   Add New Transaction
@@ -136,10 +160,17 @@ export default function TransactionsPage() {
                   Add Transaction
                 </button>
               </form>
-            </div>
+            </motion.div>
           </div>
+          
         )}
-        <div className="bg-white p-8 rounded-lg shadow-lg mt-6">
+        <motion.div className="bg-white p-8 rounded-lg shadow-lg mt-6"
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.1 }}
+        viewport={{
+          once: true,
+        }}>
           <div className="flex justify-between mb-6 items-center">
             <div className="flex-1 md:max-w-[320px]">
               <input
@@ -291,7 +322,7 @@ export default function TransactionsPage() {
             <h3>Amount</h3>
           </div>
           <Pagination search={search} sort={sort} category={category} />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

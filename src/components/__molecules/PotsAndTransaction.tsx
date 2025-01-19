@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Money, transactions } from '@/utility/images/ImgExport';
 import usersData from '@/commons/hooks/UsersData';
 import { useRouter } from 'next/navigation';
+import {motion} from "framer-motion"
 
 export default function PotsAndTransaction() {
   const filteredData = usersData.slice(0, 5);
@@ -19,7 +20,13 @@ export default function PotsAndTransaction() {
 
   return (
     <div className='grow basis-[608px] mt-8'>
-      <div className='bg-[#FFFFFF] p-[32px] rounded-xl flex-1'>
+      <motion.div className='bg-[#FFFFFF] p-[32px] rounded-xl flex-1'
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, delay:1.5  }}
+      viewport={{
+        once: true,
+      }}>
         <div className='flex justify-between'>
           <h5 className='text-[#201F24] text-[20px] font-bold leading-6'>
             Pots
@@ -80,8 +87,15 @@ export default function PotsAndTransaction() {
             </div>
           </div>
         </div>
-      </div>
-      <div className='bg-[#FFFFFF] p-[32px] rounded-xl flex-1 mt-[24px]'>
+      </motion.div>
+      <motion.div className='bg-[#FFFFFF] p-[32px] rounded-xl flex-1 mt-[24px]'
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, delay:1.8  }}
+      viewport={{
+        once: true,
+      }}
+      >
         <div className='flex justify-between '>
           <h5 className='text-[#201F24] text-[20px] font-bold leading-6'>
             Transactions
@@ -116,7 +130,7 @@ export default function PotsAndTransaction() {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

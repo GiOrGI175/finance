@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import AddNewBudget from '../__atoms/AddNewBudget';
-import { BudgetView } from '@/commons/hooks/BudgetData';
-import Image from 'next/image';
-import { arrowR } from '@/utility/images/ImgExport';
-import Link from 'next/link';
-import BudgetSetting from '../__atoms/BudgetSetting';
-import CreateBudget from '../__molecules/CreateBudget';
-import EditBudget from '../__molecules/EditBudget';
-import DeleteBudget from '../__molecules/DeleteBudget';
-import { BudgetChart } from '../__molecules/BudgetChart';
-import { useEffect, useState } from 'react';
-import axiosInstance from '@/commons/hooks/lib/axiosInstance';
-import { colorOptions } from '@/commons/hooks/PotsData';
+import AddNewBudget from "../__atoms/AddNewBudget";
+import { BudgetView } from "@/commons/hooks/BudgetData";
+import Image from "next/image";
+import { arrowR } from "@/utility/images/ImgExport";
+import Link from "next/link";
+import BudgetSetting from "../__atoms/BudgetSetting";
+import CreateBudget from "../__molecules/CreateBudget";
+import EditBudget from "../__molecules/EditBudget";
+import DeleteBudget from "../__molecules/DeleteBudget";
+import { BudgetChart } from "../__molecules/BudgetChart";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/commons/hooks/lib/axiosInstance";
+import { colorOptions } from "@/commons/hooks/PotsData";
+import { motion } from "framer-motion";
 
 type budgetsT = {
   _id: string;
@@ -33,19 +34,19 @@ export type FormType2 = {
 
 const BudgetPage = () => {
   const [budgetsData, setBudgetsData] = useState<budgetsT[]>([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [potID, setPotID] = useState<string>('');
+  const [potID, setPotID] = useState<string>("");
   const [form, setForm] = useState<FormType2>({
-    budgetName: '',
+    budgetName: "",
     Target: 0,
-    theme: '',
+    theme: "",
   });
   // const [showChoseInput, setChoseInput] = useState(false);
 
   const fetchData = async () => {
     try {
-      const res = await axiosInstance.get('/budgets');
+      const res = await axiosInstance.get("/budgets");
       setBudgetsData(res.data);
     } catch (error: any) {
       setError(error.message);
@@ -62,13 +63,13 @@ const BudgetPage = () => {
     const color = colorOptions.find(
       (option) => option.value.toLowerCase() === theme.toLowerCase()
     );
-    return color ? color.color : '#000';
+    return color ? color.color : "#000";
   };
 
   if (loading) {
     return (
-      <div className='w-full h-[100dvh] flex justify-center items-center'>
-        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+      <div className="w-full h-[100dvh] flex justify-center items-center">
+        <span className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]">
           Loading...
         </span>
       </div>
@@ -77,8 +78,8 @@ const BudgetPage = () => {
 
   if (error) {
     return (
-      <div className='w-full h-[100dvh] flex justify-center items-center'>
-        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+      <div className="w-full h-[100dvh] flex justify-center items-center">
+        <span className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]">
           Error: {error}
         </span>
       </div>
@@ -96,74 +97,104 @@ const BudgetPage = () => {
   // }
 
   return (
-    <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
-      <div className='w-full mb-[32px] flex justify-between'>
-        <h2 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+    <div className="w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]">
+      <div className="w-full mb-[32px] flex justify-between">
+        <motion.h2
+          className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          viewport={{
+            once: true,
+          }}
+        >
           Budgets
-        </h2>
+        </motion.h2>
         <>
           <AddNewBudget />
         </>
       </div>
-      <div className='w-full flex  justify-center gap-[24px] max-md:flex-col'>
-        <div className='basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex'>
-          <div className='max-sm:flex max-sm:justify-center '>
-            <div className='relative w-full max-md:w-[400px]  justify-center flex   '>
+      <div className="w-full flex  justify-center gap-[24px] max-md:flex-col">
+        <motion.div
+          className="basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{
+            once: true,
+          }}
+        >
+          <div className="max-sm:flex max-sm:justify-center ">
+            <div className="relative w-full max-md:w-[400px]  justify-center flex   ">
               <BudgetChart />
-              <div className='absolute top-[45px] left-1/2 transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10' />
+              <div className="absolute top-[45px] left-1/2 transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10" />
             </div>
           </div>
-          <div className=' w-full  flex flex-col items-center'>
-            <div className='mb-[24px]  w-full max-w-[374px]'>
-              <h5 className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24] text-start'>
+          <div className=" w-full  flex flex-col items-center">
+            <div className="mb-[24px]  w-full max-w-[374px]">
+              <h5 className="font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24] text-start">
                 Spending Summary
               </h5>
             </div>
-            <div className=' w-full max-w-[374px]  '>
+            <div className=" w-full max-w-[374px]  ">
               {BudgetView.map((item) => (
-                <div
+                <motion.div
                   key={item.id}
-                  className='mb-[33px] w-full  flex justify-between \ '
+                  className="mb-[33px] w-full  flex justify-between \ "
+                  initial={{ opacity: 0, x: 100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                  viewport={{
+                    once: true,
+                  }}
                 >
-                  <div className='flex items-center'>
+                  <div className="flex items-center">
                     <div
-                      className='w-[4px] h-[21px] rounded-[8px] mr-[16px] '
+                      className="w-[4px] h-[21px] rounded-[8px] mr-[16px] "
                       style={{
                         backgroundColor: item.color,
                       }}
                     />
-                    <p className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                    <p className="font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]">
                       {item.BudgetCategory}
                     </p>
                   </div>
-                  <div className='flex items-center'>
-                    <span className='font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
+                  <div className="flex items-center">
+                    <span className="font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]">
                       ${item.enterMoney}
                     </span>
-                    <span className='ml-[8px] font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
+                    <span className="ml-[8px] font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]">
                       of ${item.limit}
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
-        <div className='basis-[608px]  grow w-full  flex flex-col justify-between '>
+        </motion.div>
+        <motion.div className="basis-[608px]  grow w-full  flex flex-col justify-between "
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.9 }}
+        viewport={{
+          once: true,
+        }}>
           {budgetsData.map((item, Index) => (
             <div
               key={item._id}
-              className='w-full h-fit bg-white p-[32px] rounded-[12px] mb-[24px]'
+              className="w-full h-fit bg-white p-[32px] rounded-[12px] mb-[24px]"
+              
             >
-              <div className='w-full flex justify-between '>
-                <div className='flex items-center mb-[20px]'>
+              <div className="w-full flex justify-between "
+              >
+                <div className="flex items-center mb-[20px]">
                   <div
-                    className=' w-[16px] h-[16px] mr-[16px] rounded-full'
+                    className=" w-[16px] h-[16px] mr-[16px] rounded-full"
                     style={{
                       backgroundColor: getColorByTheme(item.theme),
                     }}
                   />
-                  <span className='font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]'>
+                  <span className="font-publicSans font-bold text-[20px] leading-[24px] text-[#201F24]">
                     {item.budgetName}
                   </span>
                 </div>
@@ -178,43 +209,43 @@ const BudgetPage = () => {
                 </>
               </div>
               <div>
-                <div className='flex flex-col justify-between'>
-                  <span className='mb-[16px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                <div className="flex flex-col justify-between">
+                  <span className="mb-[16px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]">
                     Maximum of ${item.Target}
                   </span>
-                  <div className='w-full h-[32px] rounded-[8px] bg-[#F8F4F0] mb-[16px] flex items-center'>
+                  <div className="w-full h-[32px] rounded-[8px] bg-[#F8F4F0] mb-[16px] flex items-center">
                     <div
                       style={{
                         width: `${item.procent}%`,
                         backgroundColor: getColorByTheme(item.theme),
                       }}
-                      className='h-[24px] rounded-[5px]'
+                      className="h-[24px] rounded-[5px]"
                     />
                   </div>
-                  <div className='flex justify-between'>
-                    <div className='flex  justify-start max-w-[264px] w-full '>
+                  <div className="flex justify-between">
+                    <div className="flex  justify-start max-w-[264px] w-full ">
                       <div
-                        className='w-[4px] h-full rounded-[8px] mr-[16px] '
+                        className="w-[4px] h-full rounded-[8px] mr-[16px] "
                         style={{
                           backgroundColor: getColorByTheme(item.theme),
                         }}
                       />
-                      <div className=' flex flex-col justify-between'>
-                        <span className=' font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                      <div className=" flex flex-col justify-between">
+                        <span className=" font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]">
                           Spent
                         </span>
-                        <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
+                        <span className=" font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]">
                           {item.Spent}$
                         </span>
                       </div>
                     </div>
-                    <div className='flex justify-start  max-w-[280px] w-full '>
-                      <div className='w-[4px] h-full rounded-[8px] mr-[16px] bg-[#F8F4F0]' />
-                      <div className='flex flex-col justify-between'>
-                        <span className=' font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
+                    <div className="flex justify-start  max-w-[280px] w-full ">
+                      <div className="w-[4px] h-full rounded-[8px] mr-[16px] bg-[#F8F4F0]" />
+                      <div className="flex flex-col justify-between">
+                        <span className=" font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]">
                           Remaining
                         </span>
-                        <span className=' font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]'>
+                        <span className=" font-publicSans font-bold text-[14px] leading-[21px] text-[#201F24]">
                           {item.Remaining}$
                         </span>
                       </div>
@@ -222,19 +253,19 @@ const BudgetPage = () => {
                   </div>
                 </div>
               </div>
-              <div className='rounded-[12px] mt-[20px] p-[20px] bg-[#F8F4F0]'>
-                <div className='mb-[20px] flex justify-between'>
+              <div className="rounded-[12px] mt-[20px] p-[20px] bg-[#F8F4F0]">
+                <div className="mb-[20px] flex justify-between">
                   <div>
-                    <p className=' font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
+                    <p className=" font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]">
                       Latest Spending
                     </p>
                   </div>
                   <div>
-                    <Link href='/Transactions' className='flex items-center'>
-                      <span className='mr-[12px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868] '>
+                    <Link href="/Transactions" className="flex items-center">
+                      <span className="mr-[12px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868] ">
                         see all
                       </span>
-                      <Image src={arrowR} width={12} height={12} alt='arrow' />
+                      <Image src={arrowR} width={12} height={12} alt="arrow" />
                     </Link>
                   </div>
                 </div>
@@ -273,7 +304,7 @@ const BudgetPage = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
       <>
         <CreateBudget fetchData={fetchData} setError={setError} />
