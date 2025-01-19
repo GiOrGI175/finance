@@ -5,13 +5,62 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+import { useEffect, useState } from 'react';
+type AddMoneyPotPropsType = {
+  potID: string;
+  setError: (message: string) => void;
+  fetchData: () => void;
+};
 
-const AddMoneyPot = () => {
+const AddMoneyPot: React.FC<AddMoneyPotPropsType> = ({
+  potID,
+  fetchData,
+  setError,
+}) => {
   const showAddMoney = useAppBtn((state) => state.showAddMoney);
   const toggleshowAddMoneyPot = useAppBtn(
     (state) => state.toggleshowAddMoneyPot
   );
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [data, setData] = useState({ procent: '', theme: '', Target: 0 });
+
+  useEffect(() => {
+    const getPotData = async () => {
+      try {
+        const res = await axiosInstance.get(`/pots/${potID}`);
+
+        const getdata = res.data;
+        setData({
+          procent: getdata.procent,
+          theme: getdata.theme,
+          Target: getdata.Target,
+        });
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+    getPotData();
+  }, [potID]);
+
+  const [AddMoney, setAddMoney] = useState({ Add: 0 });
+
+  const handleAddMoney = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAddMoney({ Add: Number(e.target.value) });
+  };
+
+  const handleConfrim = async (potID: string) => {
+    try {
+      await axiosInstance.post(`/pots/${potID}/add`, AddMoney);
+
+      fetchData();
+
+      setAddMoney({ Add: Number(0) });
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   return (
     <div
@@ -56,8 +105,8 @@ const AddMoneyPot = () => {
           <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
             <div
               style={{
-                width: `${8}%`,
-                backgroundColor: 'red',
+                width: `${data.procent}%`,
+                backgroundColor: `${data.theme}`,
               }}
               className='h-full rounded-[8px]'
             />
@@ -65,12 +114,12 @@ const AddMoneyPot = () => {
           <div className='flex justify-between mt-[13px]'>
             <div>
               <span className='font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-                {7}%
+                {data.procent}%
               </span>
             </div>
             <div>
               <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                Target pf $limit
+                Target of ${data.Target} limit
               </span>
             </div>
           </div>
@@ -82,9 +131,11 @@ const AddMoneyPot = () => {
           Amount to Add
         </label>
         <input
-          type='text'
+          type='number'
           placeholder='$'
           className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+          value={AddMoney.Add}
+          onChange={handleAddMoney}
         />
       </div>
 
@@ -93,6 +144,7 @@ const AddMoneyPot = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowAddMoneyPot();
+          handleConfrim(potID);
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

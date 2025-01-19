@@ -2,47 +2,56 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Logo } from "@/utility/images/ImgExport";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/__molecules/Spinner";
+import axios from "axios";
+import { signUpFormData, signUpSchema } from "@/commons/hooks/SignUpValidation";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Register() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleClick = () => {
     router.push("/AuthLogin");
   };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<signUpFormData>({
+    resolver: yupResolver(signUpSchema),
+  });
 
-  const onSubmit = (data:any) => {
-    const existingUser = localStorage.getItem(data.email);
-
-    if (existingUser) {
-      alert("User with this email already exists!");
-      return;
+  const onSubmit: SubmitHandler<signUpFormData> = async (data) => {
+    setErrorMessage(null);
+    try {
+      const res = await axios.post("https://finance-back-heee.onrender.com/auth/sign-up", data);
+      if (res.status === 201) {
+        alert("You have registered successfully!");
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          router.push("/AuthLogin");
+        }, 3000);
+      }
+    } catch (error: any) {
+      console.log(error);
+      if (error.response && error.response.status === 400) {
+        setErrorMessage("User Already Exists");
+      } else {
+        setErrorMessage(
+          "An unexpected error occurred. Please try again later."
+        );
+      }
     }
-    localStorage.setItem(
-      data.email,
-      JSON.stringify({
-        name: data.name,
-        password: data.password,
-      })
-    );
-
-    alert("You have registered successfully!");
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/OverView");
-    }, 3000);
   };
+
   if (isLoading) {
-    return <Spinner />; 
+    return <Spinner />;
   }
 
   return (
@@ -82,8 +91,13 @@ export default function Register() {
                   className="bg-gray-50 border border-[#98908B] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                   placeholder="Enter Your Name ..."
-                  {...register("name")}
+                  {...register("fullName")}
                 />
+                {errors.fullName && (
+                  <span style={{ color: "red" }}>
+                    {errors.fullName.message}
+                  </span>
+                )}
               </div>
               <div>
                 <label
@@ -98,10 +112,10 @@ export default function Register() {
                   className="bg-gray-50 border border-[#98908B] text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Enter Your Email ..."
                   required
-                  {...register("email", { required: true })}
+                  {...register("email")}
                 />
                 {errors.email && (
-                  <span style={{ color: "red" }}>*Email* is mandatory </span>
+                  <span style={{ color: "red" }}>{errors.email.message}</span>
                 )}
               </div>
               <div>
@@ -119,16 +133,22 @@ export default function Register() {
                   required
                   {...register("password")}
                 />
+                {errors.password && (
+                  <span style={{ color: "red" }}>
+                    {errors.password.message}
+                  </span>
+                )}
               </div>
+              {errorMessage && <p className="text-red-600">{errorMessage}</p>}
 
               <button
-                type={"submit"}
+                type="submit"
                 className="w-full text-white bg-[#201F24] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Create Account
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                Already have an account ?{" "}
+                Already have an account?{" "}
                 <a
                   onClick={handleClick}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500 cursor-pointer"

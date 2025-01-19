@@ -5,13 +5,63 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import { CloseBtn } from '@/utility/images/ImgExport';
 import SaveChange from '../__atoms/SaveChange';
+import { useEffect, useState } from 'react';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 
-const WithdrawPot = () => {
+type WithdrawPotPropsType = {
+  potID: string;
+  setError: (message: string) => void;
+  fetchData: () => void;
+};
+
+const WithdrawPot: React.FC<WithdrawPotPropsType> = ({
+  potID,
+  fetchData,
+  setError,
+}) => {
   const showWithdraw = useAppBtn((state) => state.showWithdraw);
   const toggleshowWithdrawPot = useAppBtn(
     (state) => state.toggleshowWithdrawPot
   );
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [WithdrawMoney, setWithdrawMoney] = useState({ Withdraw: 0 });
+
+  const handleWithdraw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setWithdrawMoney({ Withdraw: Number(e.target.value) });
+  };
+
+  const [data, setData] = useState({ procent: '', theme: '', Target: 0 });
+
+  useEffect(() => {
+    const getPotData = async () => {
+      try {
+        const res = await axiosInstance.get(`/pots/${potID}`);
+
+        const getdata = res.data;
+        setData({
+          procent: getdata.procent,
+          theme: getdata.theme,
+          Target: getdata.Target,
+        });
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+    getPotData();
+  }, [potID]);
+
+  const handleConfrim = async (potID: string) => {
+    try {
+      await axiosInstance.post(`/pots/${potID}/withdraw`, WithdrawMoney);
+
+      fetchData();
+
+      setWithdrawMoney({ Withdraw: Number(0) });
+    } catch (error: any) {
+      setError(error.message);
+    }
+  };
 
   return (
     <div
@@ -53,24 +103,26 @@ const WithdrawPot = () => {
           </div>
         </div>
         <div className='flex flex-col justify-between'>
+          {/*  */}
           <div className='w-full h-[8px] rounded-[8px] bg-[#F8F4F0] '>
             <div
               style={{
-                width: `${8}%`,
-                backgroundColor: 'red',
+                width: `${data.procent}%`,
+                backgroundColor: `${data.theme}`,
               }}
               className='h-full rounded-[8px]'
             />
           </div>
+          {/*  */}
           <div className='flex justify-between mt-[13px]'>
             <div>
               <span className='font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-                {7}%
+                {data.procent}%
               </span>
             </div>
             <div>
               <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                Target pf $limit
+                Target of ${data.Target} limit
               </span>
             </div>
           </div>
@@ -82,9 +134,11 @@ const WithdrawPot = () => {
           Amount to Withdraw
         </label>
         <input
-          type='text'
+          type='number'
           placeholder='$'
           className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+          value={WithdrawMoney.Withdraw}
+          onChange={handleWithdraw}
         />
       </div>
 
@@ -93,6 +147,7 @@ const WithdrawPot = () => {
         onClick={() => {
           toggleOverlay();
           toggleshowWithdrawPot();
+          handleConfrim(potID);
         }}
       >
         <span className='font-publicSans font-bold text-[14px] leading-[21px] text-[#FFFFFF]'>

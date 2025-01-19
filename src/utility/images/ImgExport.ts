@@ -37,6 +37,7 @@ import Search from "./search.svg";
 import Active from "./Active.svg";
 import Overdue from "./overdue.svg";
 import billIcon from "./BillIcon.png";
+import userIcon from "./user.png";
 
 export {
   Logo,
@@ -78,4 +79,5 @@ export {
   Active,
   Overdue,
   billIcon,
+  userIcon,
 };

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { options } from '@/commons/hooks/PotsData';
-import { FormType } from '../__organisms/PotsPage';
+import { FormType2 } from '../__organisms/BudgetPage';
 
-type ChoseInputProps = {
-  handleUpdateForm: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    fieldName: keyof FormType
-  ) => void;
-  form: FormType;
-  setForm: React.Dispatch<React.SetStateAction<FormType>>;
+type ChoseInputButgetProps = {
+  form: FormType2;
+  setForm: React.Dispatch<React.SetStateAction<FormType2>>;
 };
 
 type DropdownInputState = {
@@ -17,8 +13,7 @@ type DropdownInputState = {
   selectedColor: string;
 };
 
-const ChoseInput: React.FC<ChoseInputProps> = ({
-  handleUpdateForm,
+const ChoseInputButget: React.FC<ChoseInputButgetProps> = ({
   form,
   setForm,
 }) => {
@@ -101,4 +96,4 @@ const ChoseInput: React.FC<ChoseInputProps> = ({
   );
 };
 
-export default ChoseInput;
+export default ChoseInputButget;

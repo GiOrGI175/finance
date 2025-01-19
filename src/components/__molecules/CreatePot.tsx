@@ -5,11 +5,30 @@ import Image from 'next/image';
 import ChoseInput from '../__atoms/ChoseInput';
 import AddPot from '../__atoms/AddPot';
 import { CloseBtn } from '@/utility/images/ImgExport';
+import CreateChoseInput from '../__atoms/CreateChooseInput';
+import { useEffect, useState } from 'react';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 
-const CreatePot = () => {
+type CreatePotPropsType = {
+  fetchData: () => void;
+  setError: (message: string) => void;
+};
+
+const CreatePot: React.FC<CreatePotPropsType> = ({ setError, fetchData }) => {
   const showAddPot = useAppBtn((state) => state.showAddPot);
   const toggleAddPot = useAppBtn((state) => state.toggleAddPot);
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
+
+  const [formData, setFormData] = useState({
+    potName: '',
+    Target: 0,
+    theme: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   return (
     <div
@@ -46,6 +65,9 @@ const CreatePot = () => {
             <input
               type='text'
               className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='potName'
+              value={formData.potName}
+              onChange={handleChange}
             />
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
@@ -56,18 +78,26 @@ const CreatePot = () => {
               Target
             </label>
             <input
-              type='text'
+              type='number'
               placeholder='$'
               className='w-full h-[45px] px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
+              name='Target'
+              value={formData.Target}
+              onChange={handleChange}
             />
           </div>
           <>
-            <ChoseInput />
+            <CreateChoseInput setFormData={setFormData} />
           </>
         </form>
       </div>
       <>
-        <AddPot />
+        <AddPot
+          fetchData={fetchData}
+          setError={setError}
+          formData={formData}
+          setFormData={setFormData}
+        />
       </>
     </div>
   );
