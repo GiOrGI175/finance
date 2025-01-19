@@ -9,6 +9,7 @@ import SaveChange from '../__atoms/SaveChange';
 import SaveChangeBudget from '../__atoms/SaveChangeBudget';
 import { FormType2 } from '../__organisms/BudgetPage';
 import ChoseInputButget from '../__atoms/ChoseInputButget';
+import UpdateInputCategoty from '../__atoms/UpdateInputCategoty';
 
 type EditBudgetProps = {
   fetchData: () => void;
@@ -62,16 +63,9 @@ const EditBudget: React.FC<EditBudgetProps> = ({
       <div>
         <form className=''>
           <div className='flex flex-col mb-[16px]'>
-            <label className='mb-[4px] font-publicSans font-bold text-[12px] leading-[18px] text-[#696868]'>
-              Budget Name
-            </label>
-            <input
-              type='text'
-              className='w-full h-[45px]  px-[20px] py-[14px] border-[1px] border-[#98908B] rounded-[8px]'
-              name='budgetName'
-              value={form.budgetName}
-              onChange={handleUpdateForm}
-            />
+            <>
+              <UpdateInputCategoty form={form} setForm={setForm} />
+            </>
             <span className='mt-[4px] text-end font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
               30 characters left
             </span>

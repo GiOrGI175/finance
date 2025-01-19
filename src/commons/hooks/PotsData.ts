@@ -103,3 +103,13 @@ export const options: optionsType[] = [
   { id: 12, color: '#826CB0', value: 'Pink' },
   { id: 13, color: '#BE6C49', value: 'Orange' },
 ];
+
+export const CategoryOptions = [
+  { id: 1, value: 'Entertainment' },
+  { id: 2, value: 'Bills' },
+  { id: 3, value: 'Groceries' },
+  { id: 4, value: 'Dining Out' },
+  { id: 5, value: 'Transportation' },
+  { id: 6, value: 'Personal Care' },
+  { id: 7, value: 'Education' },
+];

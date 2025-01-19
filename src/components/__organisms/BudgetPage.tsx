@@ -14,6 +14,15 @@ import { useEffect, useState } from 'react';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 import { colorOptions } from '@/commons/hooks/PotsData';
 
+type TransactionT = {
+  _id: string;
+  RecipientOrSender: string;
+  category: string;
+  TransactionDate: string;
+  Amount: number;
+  __v: number;
+};
+
 type budgetsT = {
   _id: string;
   budgetName: string;
@@ -23,6 +32,7 @@ type budgetsT = {
   procent: number;
   Spent: number;
   Remaining: number;
+  transactions: TransactionT[];
 };
 
 export type FormType2 = {
@@ -41,7 +51,6 @@ const BudgetPage = () => {
     Target: 0,
     theme: '',
   });
-  // const [showChoseInput, setChoseInput] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -238,38 +247,38 @@ const BudgetPage = () => {
                     </Link>
                   </div>
                 </div>
-                {/* {item.translations.map((translation, index) => (
+                {item.transactions.slice(-3).map((translation, index) => (
                   <div
                     key={index}
                     className={`flex justify-between items-center py-[12px] ${
-                      index === item.translations.length - 1
+                      index === item.transactions.length - 1
                         ? ' items-end'
                         : 'border-b-[1px] border-opacity-[15%] border-[#696868]  '
                     }`}
                   >
                     <div className='flex items-center'>
                       <div>
-                        <Image
+                        {/* <Image
                           src={translation.userImg}
                           width={32}
                           height={32}
                           alt='userImg'
-                        />
+                        /> */}
                       </div>
                       <span className='ml-[16px] font-publicSans font-bold text-[12px] leading-[18px] text-[#201F24]'>
-                        {translation.userName}
+                        {translation.RecipientOrSender}
                       </span>
                     </div>
                     <div className='flex flex-col items-end'>
                       <span className='mb-[4px] font-publicSans font-bold text-[12px] leading-[18px] text-[#201F24]'>
-                        -${translation.translation}
+                        -${translation.Amount}
                       </span>
                       <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                        {translation.data}
+                        {translation.TransactionDate}
                       </span>
                     </div>
                   </div>
-                ))} */}
+                ))}
               </div>
             </div>
           ))}
