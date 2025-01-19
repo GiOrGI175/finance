@@ -32,7 +32,7 @@ export default function RecurringBills() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/bills");
+        const response = await fetch("https://finance-back-heee.onrender.com/bills");
         const data = await response.json();
         setBills(data);
       } catch (error) {
