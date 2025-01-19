@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/commons/hooks/lib/axiosInstance";
 import { colorOptions } from "@/commons/hooks/PotsData";
 import { motion } from "framer-motion";
+import Spinner from "../__molecules/Spinner";
 
 type budgetsT = {
   _id: string;
@@ -67,13 +68,7 @@ const BudgetPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="w-full h-[100dvh] flex justify-center items-center">
-        <span className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]">
-          Loading...
-        </span>
-      </div>
-    );
+    return <Spinner/>
   }
 
   if (error) {

@@ -17,7 +17,7 @@ export default function OverViewBalances() {
 
   const getCurrentUser = async (token: string) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true); 
       const res = await axios.get(
         "https://finance-back-heee.onrender.com/auth/current-user",
         {
@@ -28,9 +28,9 @@ export default function OverViewBalances() {
       );
       setUser(res.data);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching user data:", error);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); 
     }
   };
 
@@ -39,7 +39,7 @@ export default function OverViewBalances() {
     if (token) {
       getCurrentUser(token as string);
     } else {
-      setIsLoading(false);
+      setIsLoading(false); 
     }
   }, []);
 
@@ -58,13 +58,12 @@ export default function OverViewBalances() {
   };
 
   if (loading) {
-    return <Spinner />;
+    return <Spinner />; 
   }
 
   if (!user) {
     return <div>User not found. Please log in.</div>;
   }
-
   return (
     <>
       <motion.div className="m-auto">
