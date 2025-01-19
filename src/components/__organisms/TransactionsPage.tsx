@@ -5,44 +5,47 @@ import Image from "next/image";
 import { Category, Sort } from "@/utility/images/ImgExport";
 import axios from "axios";
 import Spinner from "../__molecules/Spinner";
-import {motion} from "framer-motion"
+import { motion } from "framer-motion";
 
 type SortType = "A" | "Z" | "High" | "Low" | "Latest";
+
 export default function TransactionsPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState<SortType>("Latest");
   const [isSortVisible, setIsSortVisible] = useState(false);
   const [isCategoryVisible, setIsCategoryVisible] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const [loading, setIsLoading] = useState<boolean>(false);
   const [newTransaction, setNewTransaction] = useState({
     RecipientOrSender: "",
     category: "",
-    TransactionDate: "",
-    Amount: "",
+    Amount: ""
   });
+
   const toggleSortVisibility = () => {
     setIsSortVisible((prev) => !prev);
   };
+
   const toggleCategoryVisibility = () => {
     setIsCategoryVisible((prev) => !prev);
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewTransaction({
       ...newTransaction,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://finance-back-heee.onrender.com/transactions/transaction",
+        "http://localhost:3001/transactions/transaction",
         newTransaction
       );
-      alert(response.data.message);
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error creating transaction:", error);
@@ -50,6 +53,13 @@ export default function TransactionsPage() {
       setIsLoading(false); 
     }
   };
+
+  useEffect(() => {
+    if (loading) {
+      
+    }
+  }, [loading]);
+
   if (loading) {
     return <Spinner />; 
   }
@@ -123,10 +133,12 @@ export default function TransactionsPage() {
                   id="category"
                   className="sm:hidden md:flex w-full p-2 mb-4 border border-gray-300 rounded-md"
                   value={newTransaction.category}
+                  required
                   
 
                   
                 >
+                  <option value="">Choose Category</option>
                   <option value="Entertainment">Entertainment</option>
                   <option value="Bills">Bills</option>
                   <option value="Groceries">Groceries</option>
@@ -140,15 +152,6 @@ export default function TransactionsPage() {
                   name="Amount"
                   placeholder="Amount"
                   value={newTransaction.Amount}
-                  onChange={handleInputChange}
-                  className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                  required
-                />
-                <input
-                  type="date"
-                  name="TransactionDate"
-                  placeholder="Date"
-                  value={newTransaction.TransactionDate}
                   onChange={handleInputChange}
                   className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                   required
