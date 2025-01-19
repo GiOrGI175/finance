@@ -1,6 +1,6 @@
 "use client";
 
-import { colorOptions, Potss } from "@/commons/hooks/PotsData";
+import { colorOptions } from "@/commons/hooks/PotsData";
 import Image from "next/image";
 import AddNewPot from "../__atoms/AddNewPot";
 import CreatePot from "../__molecules/CreatePot";
@@ -13,6 +13,7 @@ import AddMoneyPot from "../__molecules/AddMoneyPot";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/commons/hooks/lib/axiosInstance";
 import { motion } from "framer-motion";
+import Spinner from "../__molecules/Spinner";
 
 type PotT = {
   _id: string;
@@ -33,7 +34,7 @@ export type FormType = {
 const PotsPage = () => {
   const [potsData, setPostsData] = useState<PotT[]>([]);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [potID, setPotID] = useState<string>("");
   const [form, setForm] = useState<FormType>({
     potName: "",
@@ -44,12 +45,16 @@ const PotsPage = () => {
 
   const fetchData = async () => {
     try {
+      console.log("Fetching pots data..."); 
       const res = await axiosInstance.get("/pots");
       setPostsData(res.data);
+      console.log("Data fetched successfully:", res.data); 
     } catch (error: any) {
       setError(error.message);
+      console.error("Error fetching pots data:", error); 
     } finally {
-      setLoading(false);
+      console.log("Setting loading to false...");
+      setLoading(false); 
     }
   };
 
@@ -64,12 +69,11 @@ const PotsPage = () => {
     return color ? color.color : "#000";
   };
 
+  
   if (loading) {
     return (
-      <div className="w-full h-[100dvh] flex justify-center items-center">
-        <span className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]">
-          Loading...
-        </span>
+      <div className="flex justify-center items-center w-full h-screen">
+        <Spinner /> 
       </div>
     );
   }

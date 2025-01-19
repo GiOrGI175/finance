@@ -20,11 +20,11 @@ type PaginationProps = {
 const itemVariants = {
   hidden: (custom: number) => ({
     opacity: 0,
-    y: custom % 2 === 0 ? -100 : 100,  
+    y: custom % 2 === 0 ? -100 : 100,
   }),
   visible: (custom: number) => ({
     opacity: 1,
-    y: 0,  
+    y: 0,
     transition: { duration: 1, delay: custom * 0.2 },
   }),
 };
@@ -37,9 +37,9 @@ export default function Pagination({
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [filteredTransactions, setFilteredTransactions] = useState<
-    Transaction[]
-  >([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>(
+    []
+  );
 
   const indexOfLastTransaction = currentPage * usersPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - usersPerPage;
@@ -48,6 +48,7 @@ export default function Pagination({
     axios
       .get("https://finance-back-heee.onrender.com/transactions/transaction")
       .then((response) => {
+        console.log(response.data);
         let transactions: Transaction[] = response.data;
 
         if (search) {
@@ -64,6 +65,7 @@ export default function Pagination({
           );
         }
 
+        // Apply sorting
         if (sort === "A") {
           transactions.sort((a, b) =>
             a.RecipientOrSender.localeCompare(b.RecipientOrSender)
@@ -85,6 +87,7 @@ export default function Pagination({
           );
         }
 
+        
         setTransactions(transactions);
         setFilteredTransactions(
           transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
@@ -94,7 +97,7 @@ export default function Pagination({
   }, [search, category, sort, currentPage]);
 
   const pageNumbers = [];
-  const totalPosts = filteredTransactions.length;
+  const totalPosts = transactions.length; 
 
   for (let i = 1; i <= Math.ceil(totalPosts / usersPerPage); i++) {
     pageNumbers.push(i);
@@ -125,7 +128,7 @@ export default function Pagination({
             <motion.div
               key={transaction.id}
               variants={itemVariants}
-              custom={index} // Pass index as custom prop for delay
+              custom={index} 
               initial="hidden"
               animate="visible"
               className="flex justify-between items-center py-4 md:px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
@@ -144,14 +147,18 @@ export default function Pagination({
                 {transaction.category}
               </h3>
               <h3 className="text-gray-600 sm:hidden md:flex">
-                {transaction.TransactionDate}
+                {new Date(transaction.TransactionDate)
+                  .toISOString()
+                  .split("T")[0]}
               </h3>
               <div>
                 <h3 className="font-semibold text-gray-800">
                   {transaction.Amount}$
                 </h3>
                 <h3 className="text-gray-600 md:hidden">
-                  {transaction.TransactionDate}
+                  {new Date(transaction.TransactionDate)
+                    .toISOString()
+                    .split("T")[0]}
                 </h3>
               </div>
             </motion.div>
