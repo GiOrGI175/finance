@@ -1,11 +1,18 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Money, transactions } from '@/utility/images/ImgExport';
 import usersData from '@/commons/hooks/UsersData';
 import { useRouter } from 'next/navigation';
+import { PotT } from '../__organisms/PotsPage';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+import { colorOptions } from '@/commons/hooks/PotsData';
 
 export default function PotsAndTransaction() {
+  const [potsData, setPostsData] = useState<PotT[]>([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const filteredData = usersData.slice(0, 5);
 
   const router = useRouter();
@@ -15,6 +22,28 @@ export default function PotsAndTransaction() {
   };
   const handleClickTransaction = () => {
     router.push('/Transactions');
+  };
+
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get('/pots');
+      setPostsData(res.data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getColorByTheme = (theme: string): string => {
+    const color = colorOptions.find(
+      (option) => option.value.toLowerCase() === theme.toLowerCase()
+    );
+    return color ? color.color : '#000';
   };
 
   return (
@@ -50,37 +79,30 @@ export default function PotsAndTransaction() {
             </div>
           </div>
           <div className='flex-1 flex flex-col justify-between h-[110px] rounded-xl sm:mt-5 md:mt-0'>
-            <div className='flex'>
-              <div className='border-l-[8px] border-[#277C78] h-[43px] flex-1 rounded-l-lg'>
-                <h5 className='text-[14px] font-normal text-[#696868] ml-[20px]'>
-                  Savings
-                </h5>
-                <h5 className='ml-[20px]'>$159</h5>
-              </div>
-              <div className='border-l-[8px] border-[#82C9D7] h-[43px] flex-1 ml-[20px] rounded-l-lg'>
-                <h5 className='text-[14px] font-normal text-[#696868] ml-[20px]'>
-                  Gift
-                </h5>
-                <h5 className='ml-[20px]'>$40</h5>
-              </div>
-            </div>
-            <div className='flex sm:mt-4 md:mt-0'>
-              <div className='border-l-[8px] border-[#626070] h-[43px] flex-1 rounded-l-lg'>
-                <h5 className='text-[14px] font-normal text-[#696868] ml-[20px]'>
-                  Concert Ticket
-                </h5>
-                <h5 className='ml-[20px]'>$110</h5>
-              </div>
-              <div className='border-l-[8px] border-[#F2CDAC] h-[43px] flex-1 ml-[20px] rounded-l-lg'>
-                <h5 className='text-[14px] font-normal text-[#696868] ml-[20px]'>
-                  New Laptop
-                </h5>
-                <h5 className='ml-[20px]'>$10</h5>
-              </div>
+            <div className='flex flex-wrap  gap-[16px]'>
+              {potsData.slice(-4).map((item) => (
+                <div className='basis-[130px] h-[43px] flex flex-1  rounded-l-lg'>
+                  <div
+                    className='w-[4px] h-[43px] rounded-[8px] '
+                    style={{
+                      backgroundColor: getColorByTheme(item.theme),
+                    }}
+                  />
+                  <div>
+                    <h5 className='  text-[#696868] ml-[20px] font-publicSans font-normal text-[14px] leading-[21px] '>
+                      {item.potName}
+                    </h5>
+                    <h5 className='ml-[20px] font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
+                      ${item.Amount}
+                    </h5>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
       <div className='bg-[#FFFFFF] p-[32px] rounded-xl flex-1 mt-[24px]'>
         <div className='flex justify-between '>
           <h5 className='text-[#201F24] text-[20px] font-bold leading-6'>

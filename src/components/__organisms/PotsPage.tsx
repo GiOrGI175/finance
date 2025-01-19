@@ -13,7 +13,7 @@ import AddMoneyPot from '../__molecules/AddMoneyPot';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 
-type PotT = {
+export type PotT = {
   _id: string;
   potName: string;
   procent: number;

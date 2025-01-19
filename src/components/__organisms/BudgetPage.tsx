@@ -23,7 +23,7 @@ type TransactionT = {
   __v: number;
 };
 
-type budgetsT = {
+export type budgetsT = {
   _id: string;
   budgetName: string;
   Target: number;
@@ -118,7 +118,7 @@ const BudgetPage = () => {
         <div className='basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex'>
           <div className='max-sm:flex max-sm:justify-center '>
             <div className='relative w-full max-md:w-[400px]  justify-center flex   '>
-              <BudgetChart />
+              <BudgetChart budgetsData={budgetsData} />
               <div className='absolute top-[45px] left-1/2 transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10' />
             </div>
           </div>
@@ -129,28 +129,28 @@ const BudgetPage = () => {
               </h5>
             </div>
             <div className=' w-full max-w-[374px]  '>
-              {BudgetView.map((item) => (
+              {budgetsData.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className='mb-[33px] w-full  flex justify-between \ '
                 >
                   <div className='flex items-center'>
                     <div
                       className='w-[4px] h-[21px] rounded-[8px] mr-[16px] '
                       style={{
-                        backgroundColor: item.color,
+                        backgroundColor: getColorByTheme(item.theme),
                       }}
                     />
                     <p className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
-                      {item.BudgetCategory}
+                      {item.budgetName}
                     </p>
                   </div>
                   <div className='flex items-center'>
                     <span className='font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
-                      ${item.enterMoney}
+                      ${item.Spent}
                     </span>
                     <span className='ml-[8px] font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                      of ${item.limit}
+                      of ${item.Target}
                     </span>
                   </div>
                 </div>

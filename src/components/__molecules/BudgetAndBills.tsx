@@ -5,12 +5,42 @@ import { useRouter } from 'next/navigation';
 import { BudgetChart } from './BudgetChart';
 import { BudgetView } from '@/commons/hooks/BudgetData';
 import { BudgetChart2 } from './BudgetCart2';
+import axiosInstance from '@/commons/hooks/lib/axiosInstance';
+import { budgetsT } from '../__organisms/BudgetPage';
+import { colorOptions } from '@/commons/hooks/PotsData';
 
 export default function BudgetAndBills() {
+  const [budgetsData, setBudgetsData] = React.useState<budgetsT[]>([]);
+  const [error, setError] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
+
   const router = useRouter();
   const handleClickBills = () => {
     router.push('/Recurring-bills');
   };
+
+  const fetchData = async () => {
+    try {
+      const res = await axiosInstance.get('/budgets');
+      setBudgetsData(res.data);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getColorByTheme = (theme: string): string => {
+    const color = colorOptions.find(
+      (option) => option.value.toLowerCase() === theme.toLowerCase()
+    );
+    return color ? color.color : '#000';
+  };
+
   return (
     <div className='grow basis-[428px]'>
       <div className='mt-8 flex flex-col w-full space-y-6 '>
@@ -29,30 +59,30 @@ export default function BudgetAndBills() {
           <div className='flex flex-col w-full h-full justify-start items-center md:flex-row'>
             <div className='flex-[0.7] flex justify-center mb-[16px]'>
               <div className='relative w-[357px] flex justify-center '>
-                <BudgetChart2 />
+                <BudgetChart2 budgetsData={budgetsData} />
                 {/* <div className='absolute  md:left-[135px] top-[45px] left-[135px] transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10' /> */}
               </div>
             </div>
             <div className='ml-[16px] flex-[0.3]  flex justify-center items-center flex-wrap max-w-[303px] w-full '>
-              {BudgetView.map((item) => (
+              {budgetsData.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className='mb-[33px] w-full  flex  max-w-[143px]  '
                 >
                   <div className=' flex items-center'>
                     <div
                       className='w-[4px] h-[43px] rounded-[8px] mr-[16px] '
                       style={{
-                        backgroundColor: item.color,
+                        backgroundColor: getColorByTheme(item.theme),
                       }}
                     />
                   </div>
                   <div className='flex flex-col justify-center'>
                     <p className='font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]'>
-                      {item.BudgetCategory}
+                      {item.budgetName}
                     </p>
                     <span className='font-publicSans font-bold text-[16px] leading-[24px] text-[#201F24]'>
-                      ${item.enterMoney}
+                      ${item.Spent}
                     </span>
                   </div>
                 </div>

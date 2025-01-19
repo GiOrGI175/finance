@@ -12,24 +12,51 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
+import { colorMap } from '@/commons/hooks/PotsData';
 
-export function BudgetChart() {
+type TransactionT = {
+  _id: string;
+  RecipientOrSender: string;
+  category: string;
+  TransactionDate: string;
+  Amount: number;
+  __v: number;
+};
+
+type BudgetData = {
+  _id: string;
+  budgetName: string;
+  Target: number;
+  theme: string;
+  __v: number;
+  procent: number;
+  Spent: number;
+  Remaining: number;
+  transactions: TransactionT[];
+};
+
+export function BudgetChart({ budgetsData }: { budgetsData: BudgetData[] }) {
   const chartConfig: ChartConfig = {};
 
-  BudgetView.forEach((category) => {
-    chartConfig[category.BudgetCategory] = {
-      label: category.BudgetCategory,
-      color: category.color,
+  budgetsData.forEach((category) => {
+    chartConfig[category.budgetName] = {
+      label: category.budgetName,
+      color:
+        colorMap[
+          category.theme.charAt(0).toUpperCase() + category.theme.slice(1)
+        ] || '#000000',
     };
   });
 
-  const chartData = BudgetView.map((category) => ({
-    Category: category.BudgetCategory,
-    enterMoney: category.enterMoney,
-    fill: category.color,
-    limit: category.limit,
+  const chartData = budgetsData.map((category) => ({
+    Category: category.budgetName,
+    enterMoney: category.Spent,
+    fill:
+      colorMap[
+        category.theme.charAt(0).toUpperCase() + category.theme.slice(1)
+      ] || '#000000',
+    limit: category.Target,
   }));
-
   const totalVEnteryMoney = chartData.reduce(
     (acc, curr) => acc + curr.enterMoney,
     0
