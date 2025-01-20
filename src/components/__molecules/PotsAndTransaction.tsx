@@ -8,14 +8,20 @@ import { motion } from "framer-motion";
 import axios from "axios";
 
 export default function PotsAndTransaction() {
-  const [transactions, setTransactions] = useState([]);
+  type Transaction = {
+    id: string; 
+    RecipientOrSender: string;
+    Amount: number;
+    TransactionDate: string; 
+  };
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   useEffect(() => {
     axios
       .get("https://finance-back-heee.onrender.com/transactions/transaction")
       .then((response) => {
         const filteredData = response.data.slice(0, 5);
-        setTransactions(filteredData); // Save the filtered data in the state
+        setTransactions(filteredData); 
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -129,7 +135,7 @@ export default function PotsAndTransaction() {
         <div className="mt-[35px] flex flex-col gap-[20px]">
           {transactions.map((user, index) => (
             <div
-              key={user.id}
+              key={index}
               className="flex justify-between items-center py-4 md:px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
             >
               <div className="flex items-center space-x-3  md:w-[240px] lg:w-[428px]  ">
