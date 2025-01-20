@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import {  userIcon, userTransaction } from "@/utility/images/ImgExport";
+import Image from "next/image";
+
 
 interface Transaction {
   id: string;
@@ -37,9 +40,9 @@ export default function Pagination({
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>(
-    []
-  );
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    Transaction[]
+  >([]);
 
   const indexOfLastTransaction = currentPage * usersPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - usersPerPage;
@@ -87,7 +90,6 @@ export default function Pagination({
           );
         }
 
-        
         setTransactions(transactions);
         setFilteredTransactions(
           transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
@@ -97,7 +99,7 @@ export default function Pagination({
   }, [search, category, sort, currentPage]);
 
   const pageNumbers = [];
-  const totalPosts = transactions.length; 
+  const totalPosts = transactions.length;
 
   for (let i = 1; i <= Math.ceil(totalPosts / usersPerPage); i++) {
     pageNumbers.push(i);
@@ -128,12 +130,18 @@ export default function Pagination({
             <motion.div
               key={transaction.id}
               variants={itemVariants}
-              custom={index} 
+              custom={index}
               initial="hidden"
               animate="visible"
               className="flex justify-between items-center py-4 md:px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
             >
               <div className="flex items-center space-x-3 md:w-[240px] lg:w-[428px]">
+              <Image
+                    src={userIcon}
+                    width={25}
+                    height={25}
+                    alt="User"
+                  ></Image>
                 <div>
                   <h3 className="font-medium text-gray-800">
                     {transaction.RecipientOrSender}
@@ -147,18 +155,22 @@ export default function Pagination({
                 {transaction.category}
               </h3>
               <h3 className="text-gray-600 sm:hidden md:flex">
-                {new Date(transaction.TransactionDate)
-                  .toISOString()
-                  .split("T")[0]}
+                {
+                  new Date(transaction.TransactionDate)
+                    .toISOString()
+                    .split("T")[0]
+                }
               </h3>
               <div>
                 <h3 className="font-semibold text-gray-800">
                   {transaction.Amount}$
                 </h3>
                 <h3 className="text-gray-600 md:hidden">
-                  {new Date(transaction.TransactionDate)
-                    .toISOString()
-                    .split("T")[0]}
+                  {
+                    new Date(transaction.TransactionDate)
+                      .toISOString()
+                      .split("T")[0]
+                  }
                 </h3>
               </div>
             </motion.div>

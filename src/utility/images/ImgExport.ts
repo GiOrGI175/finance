@@ -38,6 +38,7 @@ import Active from "./Active.svg";
 import Overdue from "./overdue.svg";
 import billIcon from "./BillIcon.png";
 import userIcon from "./user.png";
+import userTransaction from "./transaction.png"
 
 export {
   Logo,
@@ -80,4 +81,5 @@ export {
   Overdue,
   billIcon,
   userIcon,
+  userTransaction,
 };
