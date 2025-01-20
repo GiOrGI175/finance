@@ -12,12 +12,15 @@ export default function OverViewBalances() {
   const [user, setUser] = useState<any>(null);
   const [loading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [remainingBalance, setRemainingBalance] = useState<number | null>(null);
 
   const router = useRouter();
-
+  
+  
   const getCurrentUser = async (token: string) => {
     try {
       setIsLoading(true); 
+      const res1 = axios.get("https://finance-back-heee.onrender.com/transactions/transaction")
       const res = await axios.get(
         "https://finance-back-heee.onrender.com/auth/current-user",
         {
@@ -26,6 +29,20 @@ export default function OverViewBalances() {
           },
         }
       );
+      console.log((await res1).data)
+      const newData = (await res1).data.map((transaction:any)=>transaction.Amount)
+      console.log(newData)
+      const totalAmount = newData.reduce((sum: number, amount: number) => sum + amount, 0);
+      let initialBalance = 9597.25
+      
+
+      const calculatedRemainingBalance = initialBalance - totalAmount;
+
+      
+      setRemainingBalance(calculatedRemainingBalance);
+    
+      console.log('Total Amount:', totalAmount);
+      
       setUser(res.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -64,6 +81,7 @@ export default function OverViewBalances() {
   if (!user) {
     return <div>User not found. Please log in.</div>;
   }
+  
   return (
     <>
       <motion.div className="m-auto">
@@ -114,7 +132,7 @@ export default function OverViewBalances() {
                 Balance
               </h5>
               <h3 className="text-[32px] font-bold leading-8 text-[#FFFFFF] mt-[12px]">
-                ${user.balance}
+                ${remainingBalance}
               </h3>
             </div>
           </motion.div>
