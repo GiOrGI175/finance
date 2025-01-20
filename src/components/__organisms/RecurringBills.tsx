@@ -6,6 +6,7 @@ import Image from "next/image";
 import SubscriptionList from "../__atoms/SubscriptionList";
 import AddNewBill from "../__atoms/AddNewBill";
 import BillPopUp from "../__molecules/BillPopUp";
+import { motion } from "framer-motion";
 
 export default function RecurringBills() {
   const [value, setValue] = useState("");
@@ -32,7 +33,9 @@ export default function RecurringBills() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://finance-back-heee.onrender.com/bills");
+        const response = await fetch(
+          "https://finance-back-heee.onrender.com/bills"
+        );
         const data = await response.json();
         setBills(data);
       } catch (error) {
@@ -58,12 +61,28 @@ export default function RecurringBills() {
   return (
     <div className="w-full overflow-x-hidden overflow-scroll h-screen py-[24px] px-[16px] sm:pt-[32px] sm:pb-[100px] sm:px-[32px] bg-[#F8F4F0]">
       <div className="w-full mb-[32px] flex justify-between">
-        <h2 className="text-[32px] font-bold text-gray-900">Recurring Bills</h2>
+        <motion.h2
+          className="text-[32px] font-bold text-gray-900"
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          viewport={{
+            once: true,
+          }}
+        >
+          Recurring Bills
+        </motion.h2>
         <AddNewBill handleClickShow={handleClickShow} />
       </div>
       <div className="w-full flex flex-col gap-[24px] sm:flex-col md:flex-row">
         <div className="flex flex-col md:flex-col gap-y-[24px] max-w-[337px] sm:max-w-none md:max-w-[337px] sm:gap-x-[24px] w-full">
-          <div className="p-[24px] sm:flex-[1] md:flex-none h-[190px] bg-gray-900 rounded-[12px]">
+          <motion.div className="p-[24px] sm:flex-[1] md:flex-none h-[190px] bg-gray-900 rounded-[12px]"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{
+            once: true,
+          }}>
             <div className="mb-[32px]">
               <Image src={NoteRe} width={40} height={40} alt="" />
             </div>
@@ -73,8 +92,14 @@ export default function RecurringBills() {
                 ${totalBills}
               </span>
             </div>
-          </div>
-          <div className="bg-white sm:flex-[1] md:flex-none h-[190px] rounded-[12px] p-[20px]">
+          </motion.div>
+          <motion.div className="bg-white sm:flex-[1] md:flex-none h-[190px] rounded-[12px] p-[20px]"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{
+            once: true,
+          }}>
             <h5 className="text-[16px] text-gray-900 font-bold mb-[20px]">
               Summary
             </h5>
@@ -90,9 +115,15 @@ export default function RecurringBills() {
               <span>Due Soon</span>
               <span className="font-bold text-gray-900">{dueSoon}</span>
             </div>
-          </div>
+          </motion.div>
         </div>
-        <div className="w-full  rounded-[12px] p-[32px] bg-white">
+        <motion.div className="w-full  rounded-[12px] p-[32px] bg-white"
+        initial={{ opacity: 0, x: 100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1, delay: 0.5 }}
+        viewport={{
+          once: true,
+        }}>
           <div className="flex sm:gap-x-[146px] gap-x-[10px] mb-[20px]">
             <div className="w-full">
               <input
@@ -126,7 +157,7 @@ export default function RecurringBills() {
               bills={bills}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {show && <BillPopUp setShow={setShow} addBill={addBill} />}

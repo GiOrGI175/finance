@@ -109,7 +109,7 @@ export default function BudgetAndBills() {
             once: true,
           }}
         >
-          <div className="flex justify-between">
+          <div className="flex justify-between mb-3">
             <h5 className="text-[#201F24] text-[20px] font-bold leading-6">
               Recurring Bills
             </h5>

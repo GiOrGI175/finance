@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "@/components/__molecules/Pagination";
 import Image from "next/image";
-import { Category, Sort } from "@/utility/images/ImgExport";
+import { Category, CloseBtn, Sort } from "@/utility/images/ImgExport";
 import axios from "axios";
 import Spinner from "../__molecules/Spinner";
 import { motion } from "framer-motion";
@@ -68,7 +68,7 @@ export default function TransactionsPage() {
     <div className="p-8 w-full overflow-x-hidden overflow-scroll h-screen  ">
       <div className="mx-auto sm:mb-10 lg:mb-[0px]">
         <div className="flex  justify-between">
-          <motion.h2 className="font-publicSans font-bold text-4xl text-[#201F24] mb-6"
+          <motion.h2 className="font-publicSans font-bold sm:text-3xl md:text-4xl text-[#201F24] mb-6"
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.1 }}
@@ -99,12 +99,16 @@ export default function TransactionsPage() {
                 <h3 className="font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]  max-ss:text-[20px] ">
                   Add New Transaction
                 </h3>
-                <button
+                <Image
                   onClick={() => setIsModalOpen(false)}
-                  className=" text-red-500 hover:text-red-700"
+                  className=" text-red-500 hover:text-red- cursor-pointer"
+                  src={CloseBtn}
+                  width={32}
+                  height={32}
+                  alt="close btn"
                 >
-                  Close
-                </button>
+                  
+                </Image>
               </div>
               <p className="mb-[20px] font-publicSans font-normal text-[14px] leading-[21px] text-[#696868]">
                 By creating a transaction, you’ll be able to get insights into
@@ -131,7 +135,7 @@ export default function TransactionsPage() {
                   }}
                   name="category"
                   id="category"
-                  className="sm:hidden md:flex w-full p-2 mb-4 border border-gray-300 rounded-md"
+                  className=" md:flex w-full p-2 mb-4 border border-gray-300 rounded-md"
                   value={newTransaction.category}
                   required
                   
