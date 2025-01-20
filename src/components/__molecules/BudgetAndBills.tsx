@@ -1,9 +1,6 @@
 'use client';
 import React, { useEffect, useReducer, useState } from 'react';
 
-import { useRouter } from 'next/navigation';
-import { BudgetChart } from './BudgetChart';
-import { BudgetView } from '@/commons/hooks/BudgetData';
 import { BudgetChart2 } from './BudgetCart2';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 import { budgetsT } from '../__organisms/BudgetPage';
@@ -11,7 +8,6 @@ import { colorOptions } from '@/commons/hooks/PotsData';
 import { useRouter } from 'next/navigation';
 import { BudgetChart } from './BudgetChart';
 import { BudgetView } from '@/commons/hooks/BudgetData';
-import { BudgetChart2 } from './BudgetCart2';
 import { motion } from 'framer-motion';
 
 export default function BudgetAndBills() {
