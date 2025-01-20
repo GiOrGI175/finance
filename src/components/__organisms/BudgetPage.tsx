@@ -13,6 +13,8 @@ import { BudgetChart } from '../__molecules/BudgetChart';
 import { useEffect, useState } from 'react';
 import axiosInstance from '@/commons/hooks/lib/axiosInstance';
 import { colorOptions } from '@/commons/hooks/PotsData';
+import { motion } from 'framer-motion';
+import Spinner from '../__molecules/Spinner';
 
 type TransactionT = {
   _id: string;
@@ -75,13 +77,7 @@ const BudgetPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className='w-full h-[100dvh] flex justify-center items-center'>
-        <span className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
-          Loading...
-        </span>
-      </div>
-    );
+    return <Spinner />;
   }
 
   if (error) {
@@ -107,15 +103,31 @@ const BudgetPage = () => {
   return (
     <div className='w-full overflow-x-hidden overflow-scroll h-screen py-[40px]  px-[40px] bg-[#F8F4F0] max-sm:px-[16px] max-sm:py-[24px]'>
       <div className='w-full mb-[32px] flex justify-between'>
-        <h2 className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'>
+        <motion.h2
+          className='font-publicSans font-bold text-[32px] leading-[38px] text-[#201F24]'
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1 }}
+          viewport={{
+            once: true,
+          }}
+        >
           Budgets
-        </h2>
+        </motion.h2>
         <>
           <AddNewBudget />
         </>
       </div>
       <div className='w-full flex  justify-center gap-[24px] max-md:flex-col'>
-        <div className='basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex'>
+        <motion.div
+          className='basis-[485px] rounded-[12px] p-[30px] max-h-fit bg-white max-sm:flex-col max-md:flex'
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{
+            once: true,
+          }}
+        >
           <div className='max-sm:flex max-sm:justify-center '>
             <div className='relative w-full max-md:w-[400px]  justify-center flex   '>
               <BudgetChart budgetsData={budgetsData} />
@@ -130,9 +142,15 @@ const BudgetPage = () => {
             </div>
             <div className=' w-full max-w-[374px]  '>
               {budgetsData.map((item) => (
-                <div
+                <motion.div
                   key={item._id}
                   className='mb-[33px] w-full  flex justify-between \ '
+                  initial={{ opacity: 0, x: 100 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                  viewport={{
+                    once: true,
+                  }}
                 >
                   <div className='flex items-center'>
                     <div
@@ -153,12 +171,20 @@ const BudgetPage = () => {
                       of ${item.Target}
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
-        <div className='basis-[608px]  grow w-full  flex flex-col justify-between '>
+        </motion.div>
+        <motion.div
+          className='basis-[608px]  grow w-full  flex flex-col justify-between '
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.9 }}
+          viewport={{
+            once: true,
+          }}
+        >
           {budgetsData.map((item, Index) => (
             <div
               key={item._id}
@@ -282,7 +308,7 @@ const BudgetPage = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
       <>
         <CreateBudget fetchData={fetchData} setError={setError} />

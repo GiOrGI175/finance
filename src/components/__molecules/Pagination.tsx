@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import axios from "axios";
+import { motion } from "framer-motion";
+import {  userIcon, userTransaction } from "@/utility/images/ImgExport";
+import Image from "next/image";
 
-// Define the type for each transaction
+
 interface Transaction {
-  id: string; // Assuming id is a string
+  id: string;
   RecipientOrSender: string;
   category: string;
   Amount: string;
@@ -18,6 +20,18 @@ type PaginationProps = {
   sort: "A" | "Z" | "High" | "Low" | "Latest";
 };
 
+const itemVariants = {
+  hidden: (custom: number) => ({
+    opacity: 0,
+    y: custom % 2 === 0 ? -100 : 100,
+  }),
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 1, delay: custom * 0.2 },
+  }),
+};
+
 export default function Pagination({
   search,
   category,
@@ -25,8 +39,10 @@ export default function Pagination({
 }: PaginationProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
-  const [transactions, setTransactions] = useState<Transaction[]>([]); // Use the Transaction type
-  const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]); // Use the Transaction type
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    Transaction[]
+  >([]);
 
   const indexOfLastTransaction = currentPage * usersPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - usersPerPage;
@@ -35,23 +51,24 @@ export default function Pagination({
     axios
       .get("https://finance-back-heee.onrender.com/transactions/transaction")
       .then((response) => {
-        let transactions: Transaction[] = response.data; 
+        console.log(response.data);
+        let transactions: Transaction[] = response.data;
 
-        
         if (search) {
           transactions = transactions.filter((transaction) =>
-            transaction.RecipientOrSender.toLowerCase().includes(search.toLowerCase())
+            transaction.RecipientOrSender.toLowerCase().includes(
+              search.toLowerCase()
+            )
           );
         }
-        
-        
+
         if (category) {
           transactions = transactions.filter(
             (transaction) => transaction.category === category
           );
         }
 
-        
+        // Apply sorting
         if (sort === "A") {
           transactions.sort((a, b) =>
             a.RecipientOrSender.localeCompare(b.RecipientOrSender)
@@ -73,7 +90,6 @@ export default function Pagination({
           );
         }
 
-        
         setTransactions(transactions);
         setFilteredTransactions(
           transactions.slice(indexOfFirstTransaction, indexOfLastTransaction)
@@ -83,7 +99,7 @@ export default function Pagination({
   }, [search, category, sort, currentPage]);
 
   const pageNumbers = [];
-  const totalPosts = filteredTransactions.length;
+  const totalPosts = transactions.length;
 
   for (let i = 1; i <= Math.ceil(totalPosts / usersPerPage); i++) {
     pageNumbers.push(i);
@@ -106,16 +122,26 @@ export default function Pagination({
 
   return (
     <>
-      <div className="space-y-3">
+      <motion.div className="space-y-3">
         {filteredTransactions.length === 0 ? (
           <p>No transactions found</p>
         ) : (
-          filteredTransactions.map((transaction) => (
-            <div
+          filteredTransactions.map((transaction, index) => (
+            <motion.div
               key={transaction.id}
+              variants={itemVariants}
+              custom={index}
+              initial="hidden"
+              animate="visible"
               className="flex justify-between items-center py-4 md:px-6 bg-white shadow-sm rounded-lg hover:bg-gray-50 transition ease-in-out"
             >
               <div className="flex items-center space-x-3 md:w-[240px] lg:w-[428px]">
+              <Image
+                    src={userIcon}
+                    width={25}
+                    height={25}
+                    alt="User"
+                  ></Image>
                 <div>
                   <h3 className="font-medium text-gray-800">
                     {transaction.RecipientOrSender}
@@ -129,20 +155,28 @@ export default function Pagination({
                 {transaction.category}
               </h3>
               <h3 className="text-gray-600 sm:hidden md:flex">
-                {transaction.TransactionDate}
+                {
+                  new Date(transaction.TransactionDate)
+                    .toISOString()
+                    .split("T")[0]
+                }
               </h3>
               <div>
                 <h3 className="font-semibold text-gray-800">
                   {transaction.Amount}$
                 </h3>
                 <h3 className="text-gray-600 md:hidden">
-                  {transaction.TransactionDate}
+                  {
+                    new Date(transaction.TransactionDate)
+                      .toISOString()
+                      .split("T")[0]
+                  }
                 </h3>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
-      </div>
+      </motion.div>
 
       <div className="flex justify-between mt-[48px]">
         <button

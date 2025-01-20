@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/__molecules/Spinner";
 import axios from "axios";
-import { LoginFormData, loginSchema } from "@/commons/hooks/LoginValidation"; // Import the schema and type
+import { LoginFormData, loginSchema } from "@/commons/hooks/LoginValidation"; 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { setCookie } from "cookies-next";
 
