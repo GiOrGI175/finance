@@ -67,8 +67,8 @@ export function BudgetChart2({ budgetsData }: { budgetsData: BudgetData[] }) {
   const totalLimit = chartData.reduce((acc, curr) => acc + curr.limit, 0);
 
   return (
-    <Card className='flex flex-col border-none  w-full max-md:w-[270px]'>
-      <CardContent className='flex-1 w-full max-md:!p-[0px] '>
+    <Card className='flex flex-col border-none  w-full max-md:w-[270px] '>
+      <CardContent className='flex-1 w-full max-md:!p-[0px]'>
         <ChartContainer
           config={chartConfig}
           className='mx-auto aspect-square max-h-[250px] '
