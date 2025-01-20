@@ -43,7 +43,7 @@ export default function TransactionsPage() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "https://finance-back-heee.onrender.com/transactions/transaction",
+        "http://localhost:3001/transactions/transaction",
         newTransaction
       );
       setIsModalOpen(false);
