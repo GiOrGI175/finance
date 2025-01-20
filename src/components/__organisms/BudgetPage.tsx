@@ -300,7 +300,11 @@ const BudgetPage = () => {
                         -${translation.Amount}
                       </span>
                       <span className='font-publicSans font-normal text-[12px] leading-[18px] text-[#696868]'>
-                        {translation.TransactionDate}
+                        {
+                          new Date(translation.TransactionDate)
+                            .toISOString()
+                            .split('T')[0]
+                        }
                       </span>
                     </div>
                   </div>

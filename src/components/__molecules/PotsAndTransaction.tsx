@@ -93,7 +93,7 @@ export default function PotsAndTransaction() {
           </button>
         </div>
         <div className='flex md:space-x-6 mt-[20px] sm:flex-col md:flex-row'>
-          <div className='flex-1 bg-[#F8F4F0] h-[110px] rounded-xl flex items-center '>
+          <div className='flex-1 bg-[#F8F4F0]  rounded-xl flex items-center '>
             <Image
               src={Money}
               width={27}
@@ -110,12 +110,12 @@ export default function PotsAndTransaction() {
               </h3>
             </div>
           </div>
-          <div className='flex-1 flex flex-col justify-between h-[110px] rounded-xl sm:mt-5 md:mt-0'>
-            <div className='flex flex-wrap gap-[16px]'>
+          <div className='flex-1 flex flex-col justify-between h-full rounded-xl sm:mt-5 md:mt-0 '>
+            <div className='flex flex-wrap gap-[16px] justify-center items-center'>
               {potsData.slice(-4).map((item) => (
                 <div
                   key={item._id}
-                  className='basis-[130px] h-[43px] flex flex-1 rounded-l-lg'
+                  className='grow w-full basis-[130px] h-[43px] flex flex-1 rounded-l-lg '
                 >
                   <div
                     className='w-[4px] h-[43px] rounded-[8px]'
@@ -169,7 +169,7 @@ export default function PotsAndTransaction() {
                   {user.RecipientOrSender}
                 </h3>
               </div>
-              <div>
+              <div className='w-full flex flex-col items-end'>
                 <h3 className='font-semibold text-gray-800'>{user.Amount}$</h3>
                 <h3 className='text-gray-600'>
                   {new Date(user.TransactionDate).toISOString().split('T')[0]}
