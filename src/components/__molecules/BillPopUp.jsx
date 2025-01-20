@@ -32,18 +32,21 @@ const BillPopUp = ({ setShow, addBill }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/bills", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          amount: Number(formData.amount),
-          dueDate: `${formData.dueDate}th`,
-          status: `${formData.status}`,
-        }),
-      });
+      const response = await fetch(
+        "https://finance-back-heee.onrender.com/bills",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...formData,
+            amount: Number(formData.amount),
+            dueDate: `${formData.dueDate}th`,
+            status: `${formData.status}`,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add the bill. Please try again.");
