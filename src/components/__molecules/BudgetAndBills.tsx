@@ -73,7 +73,7 @@ export default function BudgetAndBills() {
   });
 
   return (
-    <motion.div className='grow basis-[428px]'>
+    <motion.div className='grow basis-[428px] relative -z-10'>
       <motion.div className='mt-8 flex flex-col w-full space-y-6 '>
         <motion.div
           className='bg-[#FFFFFF] p-[32px] md:h-[410px] h-[466px] rounded-xl flex-1'
@@ -96,8 +96,8 @@ export default function BudgetAndBills() {
             </button>
           </div>
           <div className='flex flex-col w-full h-full justify-start items-center md:flex-row'>
-            <div className='flex-[0.7] flex justify-center mb-[16px]'>
-              <div className='relative w-[357px] flex justify-center '>
+            <div className='relative flex-[0.7] flex justify-center mb-[16px]'>
+              <div className=' w-[357px] flex justify-center z-30'>
                 <BudgetChart2 budgetsData={budgetsData} />
                 {/* <div className='absolute  md:left-[135px] top-[45px] left-[135px] transform -translate-x-1/2 w-[155px] h-[155px] rounded-full shadow-[0_0_0px_15px_rgba(225,225,225,0.5)] z-10' /> */}
               </div>

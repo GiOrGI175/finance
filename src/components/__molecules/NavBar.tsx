@@ -6,7 +6,7 @@ import { Logo, BanerArrow, BanerArowHover } from '@/utility/images/ImgExport';
 import logo_Short from '../../utility/images/Logo_short.svg';
 import NavLinks from './NavLinks';
 import ResponsiveNavLinks from './ResponsiveNavLinks';
-import {motion} from "framer-motion"
+import { motion } from 'framer-motion';
 
 const NavBar = () => {
   const [arrowhover, setArrowhover] = useState(false);
@@ -31,15 +31,15 @@ const NavBar = () => {
 
   return (
     <motion.div
-      className={`w-[300px] min-h-screen pt-[32px]  pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between  overflow-hidden ${
+      className={`w-[300px] min-h-screen  pt-[32px]  pr-[24px] bg-[#201F24] rounded-tr-[25px] rounded-br-[25px]  flex flex-col justify-between  overflow-hidden relative z-30 duration-700 ${
         popUpNavBar && 'w-[88px] pl-[0px] !pt-[40px]  !pr-[0px] '
       }  max-md:w-full max-md:min-h-fit max-md:h-[74px] max-md:rounded-br-[0px] max-md:rounded-tr-[8px] max-md:rounded-tl-[8px] max-md:pl-[0px] max-md:pr-[0px] max-md:pt-[10px]  max-sm:h-[52px] `}
       initial={{ opacity: 0, x: -300 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay:1.5  }}
-            viewport={{
-              once: true,
-            }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 1, delay: 1.5 }}
+      viewport={{
+        once: true,
+      }}
     >
       <div>
         <div
