@@ -21,6 +21,8 @@ const AddBudget: React.FC<AddBudgetPropsType> = ({
   const toggleOverlay = useAppBtn((state) => state.toggleOverlay);
 
   const postReq = async (formData: FormType2) => {
+    await console.log(formData);
+
     await axiosInstance.post('/budgets', formData);
 
     setFormData({

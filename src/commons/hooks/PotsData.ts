@@ -103,3 +103,30 @@ export const options: optionsType[] = [
   { id: 12, color: '#826CB0', value: 'Pink' },
   { id: 13, color: '#BE6C49', value: 'Orange' },
 ];
+
+export const colorMap: Record<string, string> = {
+  Green: '#277C78',
+  Yellow: '#F2CDAC',
+  Cyan: '#82C9D7',
+  Navy: '#626070',
+  Red: '#C94736',
+  Purple: '#826CB0',
+  Turquoise: '#597C7C',
+  Brown: '#93674F',
+  Magenta: '#934F6F',
+  Blue: '#3F82B2',
+  'Navy Grey': '#97A0AC',
+  'Army Green': '#7F9161',
+  Pink: '#826CB0',
+  Orange: '#BE6C49',
+};
+
+export const CategoryOptions = [
+  { id: 1, value: 'Entertainment' },
+  { id: 2, value: 'Bills' },
+  { id: 3, value: 'Groceries' },
+  { id: 4, value: 'Dining Out' },
+  { id: 5, value: 'Transportation' },
+  { id: 6, value: 'Personal Care' },
+  { id: 7, value: 'Education' },
+];

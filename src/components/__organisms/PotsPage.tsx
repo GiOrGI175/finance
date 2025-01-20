@@ -15,7 +15,7 @@ import axiosInstance from "@/commons/hooks/lib/axiosInstance";
 import { motion } from "framer-motion";
 import Spinner from "../__molecules/Spinner";
 
-type PotT = {
+export type PotT = {
   _id: string;
   potName: string;
   procent: number;
