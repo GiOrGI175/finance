@@ -68,7 +68,6 @@ export default function PotsAndTransaction() {
     return color ? color.color : '#000';
   };
 
-  // Dynamically calculate total saved amount
   const totalSaved = potsData.reduce((total, pot) => total + pot.Amount, 0);
 
   return (
@@ -115,7 +114,7 @@ export default function PotsAndTransaction() {
             <div className='flex flex-wrap gap-[16px]'>
               {potsData.slice(-4).map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className='basis-[130px] h-[43px] flex flex-1 rounded-l-lg'
                 >
                   <div
