@@ -1,11 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { Active, billIcon, Overdue } from "@/utility/images/ImgExport";
+import { filter } from "framer-motion/client";
 
 type SubscriptionListProps = {
   inputValue: string;
   option: string;
-  bills: any[]; // Changed to accept bills as a prop
+  bills: any[];
 };
 
 const SubscriptionList: React.FC<SubscriptionListProps> = ({
@@ -33,6 +34,7 @@ const SubscriptionList: React.FC<SubscriptionListProps> = ({
   };
 
   const filtered = filterFunction(option, filteredDataByName);
+  console.log(filtered);
 
   return (
     <>
@@ -41,7 +43,7 @@ const SubscriptionList: React.FC<SubscriptionListProps> = ({
           className={`mt-[24px] w-full sm:h-[53px] h-[61px] border-b-[1px] sm:flex gap-x-[10px] sm:justify-between border-gray-500 border-opacity-[15%] items-${
             index === 0 ? "start" : "center"
           }`}
-          key={subscription.id}
+          key={subscription._id}
         >
           <div className="max-w-[319px]  w-full flex gap-[16px]">
             <Image alt="Icon" src={billIcon} width={30} height={30} />
@@ -53,19 +55,13 @@ const SubscriptionList: React.FC<SubscriptionListProps> = ({
             <div className="max-w-[120px] w-full flex gap-[8px]">
               <span
                 className={`${
-                  subscription.status == "paid"
+                  subscription?.status?.toLowerCase() === "paid"
                     ? "text-green-700"
-                    : "text-red-500"
+                    : "text-gray-400"
                 }`}
               >
                 {subscription.frequency}-{subscription.dueDate}
               </span>
-              {subscription.status === "active" && (
-                <Image src={Active} alt="Active status" />
-              )}
-              {subscription.status === "overdue" && (
-                <Image src={Overdue} alt="Overdue status" />
-              )}
             </div>
             <div className="max-w-[100px] w-full">
               <span className="text-[14px] font-bold">

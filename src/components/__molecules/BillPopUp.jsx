@@ -9,6 +9,7 @@ const BillPopUp = ({ setShow, addBill }) => {
     billName: "",
     frequency: "",
     dueDate: "",
+    status: "",
     amount: "",
   });
 
@@ -16,6 +17,8 @@ const BillPopUp = ({ setShow, addBill }) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  console.log(formData.status);
 
   const sendPostRequest = async () => {
     if (
@@ -36,9 +39,9 @@ const BillPopUp = ({ setShow, addBill }) => {
         },
         body: JSON.stringify({
           ...formData,
-          amount: Number(formData.amount), // Ensure amount is a number
-          dueDate: `${formData.dueDate}th`, // Format due date if necessary
-          status: "none",
+          amount: Number(formData.amount),
+          dueDate: `${formData.dueDate}th`,
+          status: `${formData.status}`,
         }),
       });
 
@@ -57,8 +60,8 @@ const BillPopUp = ({ setShow, addBill }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent page reload
-    sendPostRequest(); // Directly call sendPostRequest on form submit
+    e.preventDefault();
+    sendPostRequest();
   };
 
   return (
@@ -97,23 +100,51 @@ const BillPopUp = ({ setShow, addBill }) => {
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
             />
           </div>
-
-          <div>
-            <label
-              htmlFor="frequency"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Frequency
-            </label>
-            <input
-              id="frequency"
-              name="frequency"
-              value={formData.frequency}
-              onChange={handleChange}
-              type="text"
-              placeholder="e.g. Monthly"
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm p-2"
-            />
+          <div className="flex gap-[30px]">
+            <div>
+              <label
+                htmlFor="frequency"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Frequency
+              </label>
+              <select
+                className="p-2 border-gray-300 border-[2px] rounded-[8px]"
+                name="frequency"
+                id="frequency"
+                value={formData.frequency}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select frequency
+                </option>
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+                <option value="daily">Daily</option>
+              </select>
+            </div>
+            <div>
+              <label
+                htmlFor="status"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Status
+              </label>
+              <select
+                className="p-2 border-gray-300 border-[2px] rounded-[8px]"
+                name="status"
+                id="status"
+                value={formData.status}
+                onChange={handleChange}
+              >
+                <option value="" disabled>
+                  Select Status
+                </option>
+                <option value="due">Due</option>
+                <option value="paid">Paid</option>
+                <option value="unpaid">Unpaid</option>
+              </select>
+            </div>
           </div>
 
           <div>
